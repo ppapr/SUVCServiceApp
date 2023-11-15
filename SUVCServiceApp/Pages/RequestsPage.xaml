@@ -10,7 +10,7 @@
     <Grid>
         <Rectangle Fill="White"/>
         <StackPanel >
-            <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,100">
+            <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,90">
                 <DataGridTextColumn Header="Заявитель"/>
                 <DataGridTextColumn Header="Описание заявки"/>
                 <DataGridTextColumn Header="Дата создания"/>
