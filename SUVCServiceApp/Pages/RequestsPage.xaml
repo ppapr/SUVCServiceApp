@@ -1,0 +1,26 @@
+﻿<Page x:Class="SUVCServiceApp.Pages.RequestsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SUVCServiceApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="720"
+      Title="RequestsPage">
+    <Grid>
+        <Rectangle Fill="White"/>
+        <StackPanel >
+            <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,100">
+                <DataGridTextColumn Header="Заявитель"/>
+                <DataGridTextColumn Header="Описание заявки"/>
+                <DataGridTextColumn Header="Дата создания"/>
+                <DataGridTextColumn Header="Дата исполнения"/>
+                <DataGridTextColumn Header="Ответственный"/>
+                <DataGridTextColumn Header="Статус"/>
+                <DataGridTextColumn Header="Приоритет"/>
+                <DataGridTextColumn Header="Оборудование"/>
+            </DataGrid>
+            <Button x:Name="button" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,44 @@
+﻿<Window x:Class="SUVCServiceApp.Windows.AdministratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SUVCServiceApp.Windows"
+        mc:Ignorable="d"
+        Title="AdministratorWindow" Height="550" Width="900"
+        WindowStyle="None"
+         AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BitmapImage x:Key="IconDocument" UriSource="/Resources/icondocument.png"/>
+        <BitmapImage x:Key="IconMonitor" UriSource="/Resources/iconmonitor.png"/>
+        <BitmapImage x:Key="IconWrench" UriSource="/Resources/iconwrench.png"/>
+        <BitmapImage x:Key="IconPeople" UriSource="/Resources/iconpeople.png"/>
+        <BitmapImage x:Key="IconInfo" UriSource="/Resources/iconinfo.png"/>
+        <BitmapImage x:Key="IconBoxes" UriSource="/Resources/iconboxes.png"/>
+        <BitmapImage x:Key="IconExit" UriSource="/Resources/iconexit.png"/>
+        <BitmapImage x:Key="IconRequest" UriSource="/Resources/iconrequest.png"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="#E4E4E4"/>
+        <Rectangle Grid.Column="1" Fill="White"/>
+        <Grid>
+            <StackPanel VerticalAlignment="Top">
+                <Button Content="Заявки" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconRequest}" Margin="0,35,0,0" Height="35"/>
+                <Button Content="Сотрудники" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconPeople}" Margin="0,25,0,0" Height="35"/>
+                <Button Content="Оборудование" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMonitor}" Margin="0,25,0,0" Height="35"/>
+                <Button Content="Инвентаризация" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconBoxes}" Margin="0,25,0,0" Height="35"/>
+                <Button Content="Отчетность" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconDocument}" Margin="0,25,0,0" Height="35"/>
+                <Button Content="Запчасти" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconWrench}" Margin="0,25,0,0" Height="35"/>
+                <Button Content="Реестр ПО" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35"/>
+            </StackPanel>
+            <Button VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35"/>
+        </Grid>
+        <Frame Grid.Column="1" x:Name="frameWorkspace" Margin="15,35,15,15"/>
+    </Grid>
+</Window>

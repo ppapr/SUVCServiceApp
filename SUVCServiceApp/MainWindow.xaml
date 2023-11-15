@@ -1,0 +1,37 @@
+﻿<Window x:Class="SUVCServiceApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SUVCServiceApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="800"
+        WindowStyle="None"
+         AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BitmapImage x:Key="IconKey" UriSource="/Resources/iconkey.png"/>
+        <BitmapImage x:Key="IconPerson" UriSource="/Resources/iconperson.png"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="#E4E4E4"/>
+        <Rectangle Grid.Column="1" Fill="White"/>        
+        <Image Source="/Resources/logo.png" Width="200"/>
+        <Button x:Name="buttonFAQ" Content="?" Style="{StaticResource RoundButtonStyle}" Foreground="White" FontSize="20pt"
+                Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,20" FontFamily="Michroma"/>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Text="SUVC.SERVICE" FontFamily="Michroma" FontSize="15pt" Margin="20,0,0,0"/>
+            <TextBlock Text="Здравствуйте! Авторизуйтесь, чтобы начать работу" Margin="20,0,0,30" Foreground="Gray"/>
+            <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconPerson}" Width="250" Margin="10"/>
+            <TextBox x:Name="textBoxPassword" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconKey}" Width="250" Margin="10"/>
+            
+            <Button x:Name="buttonAuthorization" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Авторизоваться" Margin="0,30,0,10"/>
+            <Button x:Name="buttonExit" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Выход" Click="buttonExit_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
