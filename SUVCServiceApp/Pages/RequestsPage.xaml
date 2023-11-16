@@ -10,6 +10,12 @@
     <Grid>
         <Rectangle Fill="White"/>
         <StackPanel >
+            <ComboBox>
+                <ComboBoxItem Content="Все"/>
+                <ComboBoxItem Content="Заявки"/>
+                <ComboBoxItem Content="Обращения"/>
+                <ComboBoxItem Content="Задачи"/>
+            </ComboBox>
             <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,90">
                 <DataGridTextColumn Header="Заявитель"/>
                 <DataGridTextColumn Header="Описание заявки"/>
