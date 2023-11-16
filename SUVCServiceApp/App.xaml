@@ -111,10 +111,13 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#cecece" />
-                </Trigger>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                    <Setter Property="Background" Value="#CECECE"/>
+                </DataTrigger>
             </Style.Triggers>
+            <Style.Resources>
+                <SolidColorBrush x:Key="PressedBackgroundBrush" Color="LightBlue"/>
+            </Style.Resources>
         </Style>
     </Application.Resources>
 </Application>

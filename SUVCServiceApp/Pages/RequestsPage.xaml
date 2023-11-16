@@ -7,15 +7,22 @@
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="720"
       Title="RequestsPage">
+    <Page.Resources>
+        <BitmapImage x:Key="IconSearch" UriSource="/Resources/iconsearch.png"/>
+    </Page.Resources>
     <Grid>
         <Rectangle Fill="White"/>
-        <StackPanel >
-            <ComboBox>
-                <ComboBoxItem Content="Все"/>
-                <ComboBoxItem Content="Заявки"/>
-                <ComboBoxItem Content="Обращения"/>
-                <ComboBoxItem Content="Задачи"/>
-            </ComboBox>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="30"/>
+                <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="20">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Заявки"/>
+                    <ComboBoxItem Content="Обращения"/>
+                    <ComboBoxItem Content="Задачи"/>
+                </ComboBox>
+            </StackPanel>
+
             <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,90">
                 <DataGridTextColumn Header="Заявитель"/>
                 <DataGridTextColumn Header="Описание заявки"/>

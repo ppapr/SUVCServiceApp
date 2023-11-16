@@ -28,14 +28,14 @@
         <Rectangle Grid.Column="0" Fill="#E4E4E4"/>
         <Rectangle Grid.Column="1" Fill="White"/>
         <Grid>
-            <StackPanel VerticalAlignment="Top">
-                <Button Content="Заявки" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconRequest}" Margin="0,35,0,0" Height="35"/>
-                <Button Content="Сотрудники" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconPeople}" Margin="0,25,0,0" Height="35"/>
-                <Button Content="Оборудование" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMonitor}" Margin="0,25,0,0" Height="35"/>
-                <Button Content="Инвентаризация" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconBoxes}" Margin="0,25,0,0" Height="35"/>
-                <Button Content="Отчетность" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconDocument}" Margin="0,25,0,0" Height="35"/>
-                <Button Content="Запчасти" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconWrench}" Margin="0,25,0,0" Height="35"/>
-                <Button Content="Реестр ПО" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35"/>
+            <StackPanel x:Name="buttonsPanel" VerticalAlignment="Top">
+                <Button x:Name="buttonRequests" Content="Заявки" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconRequest}" Margin="0,35,0,0" Height="35" Click="buttonRequests_Click"/>
+                <Button x:Name="buttonEmployees" Content="Сотрудники" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconPeople}" Margin="0,25,0,0" Height="35" Click="buttonEmployees_Click"/>
+                <Button x:Name="buttonEquipment" Content="Оборудование" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMonitor}" Margin="0,25,0,0" Height="35" Click="buttonEquipment_Click"/>
+                <Button x:Name="buttonInventory" Content="Инвентаризация" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconBoxes}" Margin="0,25,0,0" Height="35" Click="buttonInventory_Click"/>
+                <Button x:Name="buttonReports" Content="Отчетность" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconDocument}" Margin="0,25,0,0" Height="35" Click="buttonReports_Click"/>
+                <Button x:Name="buttonSpareParts" Content="Запчасти" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconWrench}" Margin="0,25,0,0" Height="35" Click="buttonSpareParts_Click"/>
+                <Button x:Name="buttonRegistryProgram" Content="Реестр ПО" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35" Click="buttonRegistryProgram_Click"/>
             </StackPanel>
             <Button VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35"/>
         </Grid>
