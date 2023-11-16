@@ -9,21 +9,26 @@
       Title="RequestsPage">
     <Page.Resources>
         <BitmapImage x:Key="IconSearch" UriSource="/Resources/iconsearch.png"/>
+        <BitmapImage x:Key="IconPencil" UriSource="/Resources/iconpencil.png"/>
     </Page.Resources>
     <Grid>
-        <Rectangle Fill="White"/>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="30"/>
-                <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="20">
-                    <ComboBoxItem Content="Все"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="White" Grid.RowSpan="3"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
+                <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
+                          VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="Все" IsSelected="True"/>
                     <ComboBoxItem Content="Заявки"/>
                     <ComboBoxItem Content="Обращения"/>
                     <ComboBoxItem Content="Задачи"/>
                 </ComboBox>
             </StackPanel>
-
-            <DataGrid x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,90">
+            <DataGrid Grid.Row="1" x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,0">
                 <DataGridTextColumn Header="Заявитель"/>
                 <DataGridTextColumn Header="Описание заявки"/>
                 <DataGridTextColumn Header="Дата создания"/>
@@ -33,7 +38,11 @@
                 <DataGridTextColumn Header="Приоритет"/>
                 <DataGridTextColumn Header="Оборудование"/>
             </DataGrid>
-            <Button x:Name="button" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="buttonSetExecutor" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconPencil}" Height="35" Width="300"/>
+            <Button x:Name="buttonAddTask" Content="Добавить задачу" Width="180" Height="30" Margin="10,0,0,0" Style="{StaticResource RoundedButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>
