@@ -28,9 +28,9 @@
             <TextBlock Text="SUVC.SERVICE" FontFamily="Michroma" FontSize="15pt" Margin="20,0,0,0"/>
             <TextBlock Text="Здравствуйте! Авторизуйтесь, чтобы начать работу" Margin="20,0,0,30" Foreground="Gray"/>
             <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconPerson}" Width="250" Margin="10"/>
-            <TextBox x:Name="textBoxPassword" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconKey}" Width="250" Margin="10"/>
+            <PasswordBox x:Name="textBoxPassword" Style="{StaticResource RoundedPasswordBoxWithIcon}" Tag="{StaticResource IconKey}" Width="250" Margin="10"/>
             
-            <Button x:Name="buttonAuthorization" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Авторизоваться" Margin="0,30,0,10"/>
+            <Button x:Name="buttonAuthorization" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Авторизоваться" Margin="0,30,0,10" Click="buttonAuthorization_Click"/>
             <Button x:Name="buttonExit" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Выход" Click="buttonExit_Click"/>
         </StackPanel>
     </Grid>

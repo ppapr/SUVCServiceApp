@@ -29,15 +29,17 @@
                 </ComboBox>
             </StackPanel>
             <DataGrid Grid.Row="1" x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,0">
-                <DataGridTextColumn Header="Заявитель"/>
-                <DataGridTextColumn Header="Описание заявки"/>
-                <DataGridTextColumn Header="Дата создания"/>
-                <DataGridTextColumn Header="Дата исполнения"/>
-                <DataGridTextColumn Header="Ответственный"/>
-                <DataGridTextColumn Header="Статус"/>
-                <DataGridTextColumn Header="Приоритет"/>
-                <DataGridTextColumn Header="Оборудование"/>
-            </DataGrid>
+            <DataGrid.Columns>
+            <DataGridTextColumn Header="Заявитель" Binding="{Binding UserRequestName}"/>
+            <DataGridTextColumn Header="Описание заявки" Binding="{Binding Description}"/>
+            <DataGridTextColumn Header="Дата создания" Binding="{Binding DateCreateRequest}"/>
+            <DataGridTextColumn Header="Дата исполнения" Binding="{Binding DateExecuteRequest}"/>
+            <DataGridTextColumn Header="Ответственный" Binding="{Binding UserExecutorName}"/>
+            <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}"/>
+            <DataGridTextColumn Header="Приоритет" Binding="{Binding PriorityName}"/>
+            <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentName}"/>                
+            </DataGrid.Columns>
+        </DataGrid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonSetExecutor" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>

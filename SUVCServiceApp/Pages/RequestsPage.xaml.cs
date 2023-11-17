@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Controller;
 
 namespace SUVCServiceApp.Pages
 {
@@ -25,41 +26,19 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class RequestsPage : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private readonly DataGridLoader dataGridLoader;
+
         public RequestsPage()
         {
             InitializeComponent();
-        }
-
-        private const string ApiBaseUrl = "http://yourapiurl/api/";
-
-        private async Task<List<ResponseRequests>> GetRequestsFromApi()
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ApiBaseUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("Requests");
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseData = await response.Content.ReadAsStringAsync();
-                    List<ResponseRequests> requests = JsonConvert.DeserializeObject<List<ResponseRequests>>(responseData);
-                    return requests;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
         }
 
         private async void LoadDataGrid()
         {
-            List<ResponseRequests> requests = await GetRequestsFromApi();
-            if (requests != null)
-            {
-                dataGridRequests.ItemsSource = requests;
-            }
+            await dataGridLoader.LoadDataGrid<ResponseRequests>(dataGridRequests, "Requests");
         }
     }
 }

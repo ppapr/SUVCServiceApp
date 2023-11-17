@@ -22,6 +22,7 @@ namespace SUVCServiceApp.Windows
         public AdministratorWindow()
         {
             InitializeComponent();
+            frameWorkspace.Navigate(new Pages.RequestsPage());
         }
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)

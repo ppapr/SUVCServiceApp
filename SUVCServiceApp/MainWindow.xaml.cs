@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +32,34 @@ namespace SUVCServiceApp
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private async void buttonAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            string login = textBoxLogin.Text;
+            string password = textBoxPassword.Password;
+
+            using (HttpClient client = new HttpClient())
+            {
+                // Замените URL на соответствующий
+                string apiUrl = $"http://localhost:61895/api/Users?login={login}&password={password}";
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
+                    ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
+                    new AdministratorWindow().Show();
+                    Close();
+                    // Здесь вы можете использовать информацию о пользователе, если аутентификация прошла успешно
+                }
+                else
+                {
+                    // Обработка ошибок аутентификации
+                    MessageBox.Show("Ошибка аутентификации");
+                }
+            }
         }
     }
 }
