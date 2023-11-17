@@ -19,27 +19,39 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
-                <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
+            <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
                           VerticalContentAlignment="Center">
-                    <ComboBoxItem Content="Все" IsSelected="True"/>
-                    <ComboBoxItem Content="Заявки"/>
-                    <ComboBoxItem Content="Обращения"/>
-                    <ComboBoxItem Content="Задачи"/>
-                </ComboBox>
-            </StackPanel>
-            <DataGrid Grid.Row="1" x:Name="dataGridRequests" AutoGenerateColumns="False" Margin="0,0,0,0">
-            <DataGrid.Columns>
-            <DataGridTextColumn Header="Заявитель" Binding="{Binding UserRequestName}"/>
-            <DataGridTextColumn Header="Описание заявки" Binding="{Binding Description}"/>
-            <DataGridTextColumn Header="Дата создания" Binding="{Binding DateCreateRequest}"/>
-            <DataGridTextColumn Header="Дата исполнения" Binding="{Binding DateExecuteRequest}"/>
-            <DataGridTextColumn Header="Ответственный" Binding="{Binding UserExecutorName}"/>
-            <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}"/>
-            <DataGridTextColumn Header="Приоритет" Binding="{Binding PriorityName}"/>
-            <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentName}"/>                
-            </DataGrid.Columns>
-        </DataGrid>
+                <ComboBoxItem Content="Все" IsSelected="True"/>
+                <ComboBoxItem Content="Заявки"/>
+                <ComboBoxItem Content="Обращения"/>
+                <ComboBoxItem Content="Задачи"/>
+            </ComboBox>
+        </StackPanel>
+        <ListView x:Name="listRequests" Grid.Row="1" Margin="20">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                            <TextBlock Text="{Binding UserRequestName, StringFormat={} Заявитель: {0}}"/>
+                            <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
+                            <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
+                            <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
+                            <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
+                            <TextBlock Text="{Binding PriorityName, StringFormat={} Приоритет: {0}}"/>
+                            <TextBlock Text="{Binding StatusName, StringFormat={} Статус: {0}}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonSetExecutor" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>

@@ -39,6 +39,6 @@
             </StackPanel>
             <Button VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35"/>
         </Grid>
-        <Frame Grid.Column="1" x:Name="frameWorkspace" Margin="15,35,15,15"/>
+        <Frame Grid.Column="1" x:Name="frameWorkspace" NavigationUIVisibility="Hidden" Margin="15,35,15,15"/>
     </Grid>
 </Window>

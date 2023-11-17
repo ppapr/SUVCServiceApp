@@ -38,7 +38,7 @@ namespace SUVCServiceApp.Pages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseRequests>(dataGridRequests, "Requests");
+            await dataGridLoader.LoadDataGrid<ResponseRequests>(listRequests, "Requests");
         }
     }
 }
