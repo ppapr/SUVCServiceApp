@@ -5,10 +5,54 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SUVCServiceApp.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="720"
       Title="RegsitryProgramPage">
-
+    <Page.Resources>
+        <BitmapImage x:Key="IconSearch" UriSource="/Resources/iconsearch.png"/>
+        <BitmapImage x:Key="IconPencil" UriSource="/Resources/iconpencil.png"/>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="White" Grid.RowSpan="3"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
+            <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
+                          VerticalContentAlignment="Center">
+                <ComboBoxItem Content="Все" IsSelected="True"/>
+                <ComboBoxItem Content="Заявки"/>
+                <ComboBoxItem Content="Обращения"/>
+                <ComboBoxItem Content="Задачи"/>
+            </ComboBox>
+        </StackPanel>
+        <ListView x:Name="listPrograms" Grid.Row="1" Margin="20">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                            <TextBlock Text="{Binding Specialization, StringFormat={} Специальность: {0}}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding NameProgram, StringFormat={} Название: {0}}"/>
+                            <TextBlock Text="{Binding VersionProgram, StringFormat={} Версия: {0}}"/>
+                            <TextBlock Text="{Binding DescriptionProgram, StringFormat={} Описание: {0}}" Margin="0,0,0,30"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="buttonAddProgram" Content="Добавить программу" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+            <Button x:Name="buttonDeleteProgram" Content="Удалить программу" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+        </StackPanel>
     </Grid>
 </Page>

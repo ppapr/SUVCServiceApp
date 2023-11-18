@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,18 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class RegsitryProgramPage : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private readonly DataGridLoader dataGridLoader;
         public RegsitryProgramPage()
         {
             InitializeComponent();
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
+        }
+
+        private async void LoadDataGrid()
+        {
+            await dataGridLoader.LoadDataGrid<ResponseRegistry>(listPrograms, "RegistryPrograms");
         }
     }
 }

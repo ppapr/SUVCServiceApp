@@ -85,6 +85,7 @@
     <Compile Include="Pages\SparePartsPage.xaml.cs">
       <DependentUpon>SparePartsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ResponseRegistry.cs" />
     <Compile Include="ViewModel\ResponseRequests.cs" />
     <Compile Include="ViewModel\ResponseUsers.cs" />
     <Compile Include="Windows\AdministratorWindow.xaml.cs">
