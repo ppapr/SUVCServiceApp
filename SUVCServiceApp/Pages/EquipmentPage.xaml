@@ -5,10 +5,51 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SUVCServiceApp.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="720"
       Title="EquipmentPage">
-
+    <Page.Resources>
+        <BitmapImage x:Key="IconSearch" UriSource="/Resources/iconsearch.png"/>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="White" Grid.RowSpan="3"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" MinWidth="700" Margin="10" Height="35"/>
+        </StackPanel>
+        <ListView x:Name="listEquipments" Grid.Row="1" Margin="20">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Location, StringFormat={} Кабинет: {0}}" Margin="0,0,20,0"/>
+                        <StackPanel Grid.Column="1" Margin="0,0,20,0">
+                            <TextBlock Text="{Binding EquipmentName, StringFormat={} Оборудование: {0}}"/>
+                            <TextBlock Text="{Binding EquipmentDescription, StringFormat={} Описание: {0}}" MaxWidth="250" 
+                                       TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding NetworkName, StringFormat={} Сетевое имя: {0}}"/>
+                            <TextBlock Text="{Binding InventoryName, StringFormat={} Инвентарный номер: {0}}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="{Binding OwnerName, StringFormat={} Владелец: {0}}"/>
+                            <TextBlock Text="{Binding StatusName, StringFormat={} Состояние оборудования: {0}}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="buttonAddEquipment" Content="Добавить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+            <Button x:Name="buttonDeleteEqipment" Content="Удалить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+        </StackPanel>
     </Grid>
 </Page>
