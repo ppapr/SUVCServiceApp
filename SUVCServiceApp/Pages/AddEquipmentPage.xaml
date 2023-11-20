@@ -1,4 +1,4 @@
-﻿<Page x:Class="SUVCServiceApp.Pages.AddEmployeePage"
+﻿<Page x:Class="SUVCServiceApp.Pages.AddEquipmentPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:SUVCServiceApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="720"
-      Title="AddEmployeePage">
+      Title="AddEquipmentPage">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        
+
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAdd" Content="Добавить " Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>
