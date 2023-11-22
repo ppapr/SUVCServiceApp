@@ -24,6 +24,7 @@ namespace SUVCServiceApp.Windows
         {
             InitializeComponent();
             this.authenticatedUserId = authenticatedUserId;
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUserId));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -34,7 +35,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUserId));
         }
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
