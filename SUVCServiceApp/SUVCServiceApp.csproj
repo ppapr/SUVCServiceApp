@@ -94,6 +94,9 @@
     <Compile Include="Pages\AdministratorPages\SparePartsPage.xaml.cs">
       <DependentUpon>SparePartsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EmployeePages\EquipmentEmployeePage.xaml.cs">
+      <DependentUpon>EquipmentEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EmployeePages\RequestsEmployeePage.xaml.cs">
       <DependentUpon>RequestsEmployeePage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AdministratorPages\SparePartsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeePages\EquipmentEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

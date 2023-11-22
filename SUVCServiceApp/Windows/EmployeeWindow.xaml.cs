@@ -36,7 +36,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.EmployeePages.EquipmentEmployeePage(authenticatedUserId));
         }
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
