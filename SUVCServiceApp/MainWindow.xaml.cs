@@ -41,7 +41,6 @@ namespace SUVCServiceApp
 
             using (HttpClient client = new HttpClient())
             {
-                // Замените URL на соответствующий
                 string apiUrl = $"http://localhost:61895/api/Users?login={login}&password={password}";
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
@@ -50,13 +49,24 @@ namespace SUVCServiceApp
                 {
                     string responseData = await response.Content.ReadAsStringAsync();
                     ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
+                    if (authenticatedUser.IDRole == 1)
+                    {
                     new AdministratorWindow().Show();
                     Close();
-                    // Здесь вы можете использовать информацию о пользователе, если аутентификация прошла успешно
+                    }
+                    else if (authenticatedUser.IDRole == 2)
+                    {
+                        new EmployeeITWindow().Show();
+                        Close();
+                    }
+                    else if (authenticatedUser.IDRole == 3)
+                    {
+                        new EmployeeWindow().Show();
+                        Close();
+                    }
                 }
                 else
                 {
-                    // Обработка ошибок аутентификации
                     MessageBox.Show("Ошибка аутентификации");
                 }
             }

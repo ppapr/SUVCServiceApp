@@ -15,23 +15,29 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Вернуться назад" Width="150" Height="25" HorizontalAlignment="Left" Margin="20"/>
+        <Button x:Name="buttonBack" Style="{StaticResource RoundedButtonStyle}" Content="Вернуться назад" Width="150" Height="30" 
+                HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonBack_Click"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
-                <TextBlock Text="Фамилия сотрудника:" Margin="0,10,0,0"/>
-                <TextBlock Text="Имя сотрудника:" Margin="0,20,0,0"/>
-                <TextBlock Text="Отчество сотрудника:" Margin="0,15,0,0"/>
-                <TextBlock Text="Логин сотрудника:" Margin="0,20,0,0"/>
-                <TextBlock Text="Пароль сотрудника:" Margin="0,20,0,0"/>
-                <TextBlock Text="Отдел сотрудника:" Margin="0,20,0,0"/>
+                <TextBlock Text="Фамилия сотрудника:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Имя сотрудника:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Отчество сотрудника:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Логин сотрудника:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Пароль сотрудника:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Отдел сотрудника:" Margin="0,10,0,0" Height="35"/>
             </StackPanel>
             <StackPanel>
-                <TextBox x:Name="textBoxSurName" Style="{StaticResource RoundedTextBoxWithIcon}" Width="200" Height="25" Margin="5"/>
-                <TextBox x:Name="textBoxName" Style="{StaticResource RoundedTextBoxWithIcon}" Width="200" Height="25" Margin="5"/>
-                <TextBox x:Name="textBoxMiddleName" Style="{StaticResource RoundedTextBoxWithIcon}" Width="200" Height="25" Margin="5"/>
-                <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBoxWithIcon}" Width="200" Height="25" Margin="5"/>
-                <TextBox x:Name="textBoxPassword" Style="{StaticResource RoundedTextBoxWithIcon}" Width="200" Height="25" Margin="5"/>
-                <ComboBox x:Name="comboBoxRole" Width="200" Height="25" Margin="5"/>
+                <TextBox x:Name="textBoxSurName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxMiddleName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxPassword" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <ComboBox x:Name="comboBoxRole" Width="200" Height="25" Margin="5">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="ИТ-отдел" />
+                        <ComboBoxItem Content="Сотрудник" IsSelected="True"/>
+                    </ComboBox.Items>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

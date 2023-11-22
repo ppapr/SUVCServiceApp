@@ -19,6 +19,10 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class AdministratorWindow : Window
     {
+        public Frame FrameWorkspace
+        {
+            get { return frameWorkspace; }
+        }
         public AdministratorWindow()
         {
             InitializeComponent();
@@ -32,7 +36,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEmployees_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePage());
+            frameWorkspace.Navigate(new Pages.EmployeePage(this));
         }
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
@@ -58,6 +62,12 @@ namespace SUVCServiceApp.Windows
         private void buttonRegistryProgram_Click(object sender, RoutedEventArgs e)
         {
             frameWorkspace.Navigate(new Pages.RegsitryProgramPage());
+        }
+
+        private void buttonExit_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

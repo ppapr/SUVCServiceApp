@@ -33,6 +33,21 @@ namespace SUVCServiceApp.Controller
                 }
             }
         }
+
+        public async Task<bool> AddDataToApi<T>(string apiEndpoint, T data)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                string jsonData = JsonConvert.SerializeObject(data);
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync(apiEndpoint, content);
+                return response.IsSuccessStatusCode;
+            }
+        }
     }
 
 }

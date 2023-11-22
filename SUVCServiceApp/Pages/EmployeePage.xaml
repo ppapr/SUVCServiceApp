@@ -38,7 +38,7 @@
         </DataGrid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10"/>
+                          Margin="10" Click="buttonAddUser_Click"/>
             <Button x:Name="buttonChangeUser" Content="Изменить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}"/>
             <Button x:Name="buttonDeleteUser" Content="Удалить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}"/>
         </StackPanel>

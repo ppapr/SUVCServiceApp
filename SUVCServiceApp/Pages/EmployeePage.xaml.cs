@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 
 namespace SUVCServiceApp.Pages
 {
@@ -24,9 +25,11 @@ namespace SUVCServiceApp.Pages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public EmployeePage()
+        private readonly AdministratorWindow administratorWindow;
+        public EmployeePage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
+            this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
         }
@@ -34,6 +37,11 @@ namespace SUVCServiceApp.Pages
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadDataGrid<ResponseUsers>(dataGridUsers, "Users");
+        }
+
+        private void buttonAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            administratorWindow.FrameWorkspace.Navigate(new AddEmployeePage());
         }
     }
 }

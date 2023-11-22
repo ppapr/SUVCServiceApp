@@ -16,5 +16,6 @@ namespace SUVCServiceApp.ViewModel
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; }
+        public int IDRole { get; set; }
     }
 }

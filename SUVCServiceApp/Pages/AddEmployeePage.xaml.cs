@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +27,34 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
         }
 
-        private void buttonAddUser_Click(object sender, RoutedEventArgs e)
+        private async void buttonAddUser_Click(object sender, RoutedEventArgs e)
         {
+            int role = comboBoxRole.Text == "Сотрудник" ? 3 : 2;
+            ApiDataProvider apiDataProvider = new ApiDataProvider();
+            ResponseUsers user = new ResponseUsers
+            {
+                Name = textBoxName.Text,
+                Surname = textBoxSurName.Text,
+                MiddleName = textBoxMiddleName.Text,
+                Login = textBoxLogin.Text,
+                Password = textBoxPassword.Text,
+                IDRole = role,
+            };
 
+            bool isSuccess = await apiDataProvider.AddDataToApi("Users", user);
+            if (isSuccess)
+            {
+                MessageBox.Show($"Сотрудник {textBoxSurName.Text} {textBoxName.Text} {textBoxMiddleName.Text} успешно добавлен!");
+            }
+            else
+            {
+                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+            }
+        }
+
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
