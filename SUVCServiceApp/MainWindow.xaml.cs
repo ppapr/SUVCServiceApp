@@ -49,17 +49,17 @@ namespace SUVCServiceApp
                 {
                     string responseData = await response.Content.ReadAsStringAsync();
                     ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
-                    if (authenticatedUser.IDRole == 1)
+                    if (authenticatedUser.Role == "Администратор")
                     {
                     new AdministratorWindow().Show();
                     Close();
                     }
-                    else if (authenticatedUser.IDRole == 2)
+                    else if (authenticatedUser.Role == "ИТ-Отдел")
                     {
                         new EmployeeITWindow().Show();
                         Close();
                     }
-                    else if (authenticatedUser.IDRole == 3)
+                    else if (authenticatedUser.Role == "Сотрудник")
                     {
                         new EmployeeWindow().Show();
                         Close();

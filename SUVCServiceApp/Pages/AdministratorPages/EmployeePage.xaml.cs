@@ -41,7 +41,7 @@ namespace SUVCServiceApp.Pages
 
         private void buttonAddUser_Click(object sender, RoutedEventArgs e)
         {
-            administratorWindow.FrameWorkspace.Navigate(new AddEmployeePage());
+            administratorWindow.FrameWorkspace.Navigate(new AddEmployeePage(administratorWindow));
         }
     }
 }

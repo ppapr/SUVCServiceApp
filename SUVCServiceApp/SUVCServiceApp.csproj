@@ -61,37 +61,37 @@
     </ApplicationDefinition>
     <Compile Include="Controller\ApiDataProvider.cs" />
     <Compile Include="Controller\DataGridLoader.cs" />
-    <Compile Include="Pages\AddEmployeePage.xaml.cs">
+    <Compile Include="Pages\AddPagesAdministrator\AddEmployeePage.xaml.cs">
       <DependentUpon>AddEmployeePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddEquipmentPage.xaml.cs">
+    <Compile Include="Pages\AddPagesAdministrator\AddEquipmentPage.xaml.cs">
       <DependentUpon>AddEquipmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddProgramPage.xaml.cs">
+    <Compile Include="Pages\AddPagesAdministrator\AddProgramPage.xaml.cs">
       <DependentUpon>AddProgramPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddSparePartsPage.xaml.cs">
+    <Compile Include="Pages\AddPagesAdministrator\AddSparePartsPage.xaml.cs">
       <DependentUpon>AddSparePartsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EmployeePage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\EmployeePage.xaml.cs">
       <DependentUpon>EmployeePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EquipmentPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\EquipmentPage.xaml.cs">
       <DependentUpon>EquipmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InventoryPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RegsitryProgramPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\RegsitryProgramPage.xaml.cs">
       <DependentUpon>RegsitryProgramPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ReportsPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\ReportsPage.xaml.cs">
       <DependentUpon>ReportsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RequestsPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\RequestsPage.xaml.cs">
       <DependentUpon>RequestsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SparePartsPage.xaml.cs">
+    <Compile Include="Pages\AdministratorPages\SparePartsPage.xaml.cs">
       <DependentUpon>SparePartsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ResponseEquipment.cs" />
@@ -120,47 +120,47 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AddEmployeePage.xaml">
+    <Page Include="Pages\AddPagesAdministrator\AddEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddEquipmentPage.xaml">
+    <Page Include="Pages\AddPagesAdministrator\AddEquipmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddProgramPage.xaml">
+    <Page Include="Pages\AddPagesAdministrator\AddProgramPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddSparePartsPage.xaml">
+    <Page Include="Pages\AddPagesAdministrator\AddSparePartsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\EmployeePage.xaml">
+    <Page Include="Pages\AdministratorPages\EmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\EquipmentPage.xaml">
+    <Page Include="Pages\AdministratorPages\EquipmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\InventoryPage.xaml">
+    <Page Include="Pages\AdministratorPages\InventoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\RegsitryProgramPage.xaml">
+    <Page Include="Pages\AdministratorPages\RegsitryProgramPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ReportsPage.xaml">
+    <Page Include="Pages\AdministratorPages\ReportsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\RequestsPage.xaml">
+    <Page Include="Pages\AdministratorPages\RequestsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SparePartsPage.xaml">
+    <Page Include="Pages\AdministratorPages\SparePartsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
