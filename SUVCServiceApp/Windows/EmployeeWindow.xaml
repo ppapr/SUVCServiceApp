@@ -11,12 +11,7 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <BitmapImage x:Key="IconDocument" UriSource="/Resources/icondocument.png"/>
         <BitmapImage x:Key="IconMonitor" UriSource="/Resources/iconmonitor.png"/>
-        <BitmapImage x:Key="IconWrench" UriSource="/Resources/iconwrench.png"/>
-        <BitmapImage x:Key="IconPeople" UriSource="/Resources/iconpeople.png"/>
-        <BitmapImage x:Key="IconInfo" UriSource="/Resources/iconinfo.png"/>
-        <BitmapImage x:Key="IconBoxes" UriSource="/Resources/iconboxes.png"/>
         <BitmapImage x:Key="IconExit" UriSource="/Resources/iconexit.png"/>
         <BitmapImage x:Key="IconRequest" UriSource="/Resources/iconrequest.png"/>
     </Window.Resources>

@@ -94,6 +94,9 @@
     <Compile Include="Pages\AdministratorPages\SparePartsPage.xaml.cs">
       <DependentUpon>SparePartsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EmployeePages\RequestsEmployeePage.xaml.cs">
+      <DependentUpon>RequestsEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ResponseEquipment.cs" />
     <Compile Include="ViewModel\ResponseRegistry.cs" />
     <Compile Include="ViewModel\ResponseRequests.cs" />
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AdministratorPages\SparePartsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeePages\RequestsEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\iconpencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\ITEmployeePages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -56,12 +56,12 @@ namespace SUVCServiceApp
                     }
                     else if (authenticatedUser.Role == "ИТ-Отдел")
                     {
-                        new EmployeeITWindow().Show();
+                        new EmployeeITWindow(authenticatedUser.ID).Show();
                         Close();
                     }
                     else if (authenticatedUser.Role == "Сотрудник")
                     {
-                        new EmployeeWindow().Show();
+                        new EmployeeWindow(authenticatedUser.ID).Show();
                         Close();
                     }
                 }

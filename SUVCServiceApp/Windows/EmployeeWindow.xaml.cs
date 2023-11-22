@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,12 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class EmployeeWindow : Window
     {
-        public EmployeeWindow()
+        private readonly int authenticatedUserId;
+        public EmployeeWindow(int authenticatedUserId)
         {
             InitializeComponent();
+            this.authenticatedUserId = authenticatedUserId;
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -37,7 +41,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId));
         }
     }
 }

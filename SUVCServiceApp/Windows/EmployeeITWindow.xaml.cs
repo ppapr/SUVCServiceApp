@@ -19,9 +19,11 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class EmployeeITWindow : Window
     {
-        public EmployeeITWindow()
+        private readonly int authenticatedUserId;
+        public EmployeeITWindow(int authenticatedUserId)
         {
             InitializeComponent();
+            this.authenticatedUserId = authenticatedUserId;
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
