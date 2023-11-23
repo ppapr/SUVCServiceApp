@@ -23,7 +23,7 @@
         <Rectangle Grid.Column="1" Fill="White"/>        
         <Image Source="/Resources/logo.png" Width="200"/>
         <Button x:Name="buttonFAQ" Content="?" Style="{StaticResource RoundButtonStyle}" Foreground="White" FontSize="20pt"
-                Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,20" FontFamily="Michroma"/>
+                Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,20" FontFamily="Michroma" />
         <StackPanel Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Text="SUVC.SERVICE" FontFamily="Michroma" FontSize="15pt" Margin="20,0,0,0"/>
             <TextBlock Text="Здравствуйте! Авторизуйтесь, чтобы начать работу" Margin="20,0,0,30" Foreground="Gray"/>
