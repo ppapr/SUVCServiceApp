@@ -40,17 +40,17 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.EquipmentITEmployeePage());
         }
 
         private void buttonSpareParts_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.SparePartsITEmployeePage());
         }
 
         private void buttonRegistryProgram_Click(object sender, RoutedEventArgs e)
         {
-
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.RegistryProgramITEmployeePage());
         }
     }
 }

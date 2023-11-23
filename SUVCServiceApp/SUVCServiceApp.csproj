@@ -100,8 +100,17 @@
     <Compile Include="Pages\EmployeePages\RequestsEmployeePage.xaml.cs">
       <DependentUpon>RequestsEmployeePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ITEmployeePages\EquipmentITEmployeePage.xaml.cs">
+      <DependentUpon>EquipmentITEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ITEmployeePages\RegistryProgramITEmployeePage.xaml.cs">
+      <DependentUpon>RegistryProgramITEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ITEmployeePages\RequestITEmployeePage.xaml.cs">
       <DependentUpon>RequestITEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ITEmployeePages\SparePartsITEmployeePage.xaml.cs">
+      <DependentUpon>SparePartsITEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ResponseEquipment.cs" />
     <Compile Include="ViewModel\ResponseRegistry.cs" />
@@ -181,7 +190,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ITEmployeePages\EquipmentITEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ITEmployeePages\RegistryProgramITEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ITEmployeePages\RequestITEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ITEmployeePages\SparePartsITEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

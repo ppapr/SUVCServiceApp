@@ -1,4 +1,4 @@
-﻿<Page x:Class="SUVCServiceApp.Pages.ITEmployeePages.RequestITEmployeePage"
+﻿<Page x:Class="SUVCServiceApp.Pages.ITEmployeePages.RegistryProgramITEmployeePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:SUVCServiceApp.Pages.ITEmployeePages"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="720"
-      Title="RequestITEmployeePage">
+      Title="RegistryProgramITEmployeePage">
     <Page.Resources>
         <BitmapImage x:Key="IconSearch" UriSource="/Resources/iconsearch.png"/>
         <BitmapImage x:Key="IconPencil" UriSource="/Resources/iconpencil.png"/>
@@ -15,7 +15,6 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
@@ -28,7 +27,7 @@
                 <ComboBoxItem Content="Задачи"/>
             </ComboBox>
         </StackPanel>
-        <ListView x:Name="listRequests" Grid.Row="1" Margin="20">
+        <ListView x:Name="listPrograms" Grid.Row="1" Margin="20">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -37,25 +36,17 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                            <TextBlock Text="{Binding UserRequestName, StringFormat={} Заявитель: {0}}"/>
-                            <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
-                            <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
-                            <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
+                            <TextBlock Text="{Binding Specialization, StringFormat={} Специальность: {0}}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
-                            <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
-                            <TextBlock Text="{Binding PriorityName, StringFormat={} Приоритет: {0}}"/>
-                            <TextBlock Text="{Binding StatusName, StringFormat={} Статус: {0}}"/>
+                            <TextBlock Text="{Binding NameProgram, StringFormat={} Название: {0}}"/>
+                            <TextBlock Text="{Binding VersionProgram, StringFormat={} Версия: {0}}"/>
+                            <TextBlock Text="{Binding DescriptionProgram, StringFormat={} Описание: {0}}" Margin="0,0,0,30"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="buttonStartExecute" Content="Начать выполнение" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
-            <Button x:Name="buttonAddTask" Content="Отменить выполненной" Width="180" Height="30" Margin="10,0,0,0" Style="{StaticResource RoundedButtonStyle}"/>
-        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
