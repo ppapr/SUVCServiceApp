@@ -10,43 +10,37 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <Button x:Name="buttonRequestReport" Content="Отчет по заявкам" Margin="5" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" />
-            <Button x:Name="buttonSpareReport" Content="Отчет по запчастям" Width="180" Margin="5" Height="30"  Style="{StaticResource RoundedButtonStyle}"/>
-            <Button x:Name="buttonEquipmentReport" Content="Отчет по списанию" Width="180" Margin="5" Height="30"  Style="{StaticResource RoundedButtonStyle}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="White" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+        <Rectangle Fill="#e4e4e4" Grid.Column="0" Grid.RowSpan="3"/>
+        <Rectangle Fill="#e4e4e4" Grid.Column="2" Grid.RowSpan="3"/>
+        <TextBlock Grid.Column="0" Text="Формирование отчета по заявкам за определенный период" TextWrapping="Wrap"  
+                   Width="180" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+            <TextBlock Grid.Column="1" Text="Формирование отчета по закупке необходимых запчастей" TextWrapping="Wrap" 
+                       Width="180" Height="30"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+        <TextBlock Grid.Column="2" Text="Формирование отчета по списанию оборудования" TextWrapping="Wrap" 
+                   Width="180"  Height="30"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Выберите дату начала" Margin="5"/>
+            <DatePicker Width="200" />
+            <TextBlock Text="Выберите дату завершения" Margin="5"/>
+            <DatePicker Width="200"/>
         </StackPanel>
-        <ListView x:Name="listRequests" Grid.Row="1" Margin="20">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                            <TextBlock Text="{Binding UserRequestName, StringFormat={} Заявитель: {0}}"/>
-                            <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
-                            <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
-                            <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
-                            <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
-                            <TextBlock Text="{Binding PriorityName, StringFormat={} Приоритет: {0}}"/>
-                            <TextBlock Text="{Binding StatusName, StringFormat={} Статус: {0}}"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="buttonPrintReport" Content="Распечатать отчет" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
-        </StackPanel>
+        <Button x:Name="buttonRequestReport" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Content="Сформировать отчет" 
+                    Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Количество необходимых к покупке запчастей на данный момент: " TextWrapping="Wrap" Margin="5"/>
+        <Button x:Name="buttonSpareReport" Grid.Column="1" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Top"
+                    Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" />
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="Количество необходимых к списанию оборудования на данный момент: " TextWrapping="Wrap" Margin="5"/>
+        <Button x:Name="buttonEquipmentReport" Grid.Column="2" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Top"
+                    Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" />
     </Grid>
 </Page>
