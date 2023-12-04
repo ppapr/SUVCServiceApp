@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,11 @@ namespace SUVCServiceApp.Pages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public EquipmentPage()
+        private readonly AdministratorWindow administratorWindow;
+        public EquipmentPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
+            this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
         }
@@ -34,6 +37,11 @@ namespace SUVCServiceApp.Pages
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadDataGrid<ResponseEquipment>(listEquipments, "Equipments");
+        }
+
+        private void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            administratorWindow.FrameWorkspace.Navigate(new AddEquipmentPage(administratorWindow));
         }
     }
 }

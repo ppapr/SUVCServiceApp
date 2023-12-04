@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,9 +25,11 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class AddEquipmentPage : Page
     {
-        public AddEquipmentPage()
+        private readonly AdministratorWindow administratorWindow;
+        public AddEquipmentPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
+            this.administratorWindow = administratorWindow;
         }
 
         private async void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
@@ -56,7 +59,7 @@ namespace SUVCServiceApp.Pages
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
-
+            administratorWindow.FrameWorkspace.Navigate(new EquipmentPage(administratorWindow));
         }
     }
 }

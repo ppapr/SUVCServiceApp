@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +25,23 @@ namespace SUVCServiceApp.Pages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public RegsitryProgramPage()
+        private readonly AdministratorWindow administratorWindow;
+        public RegsitryProgramPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
+            this.administratorWindow = administratorWindow;
             LoadDataGrid();
         }
 
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadDataGrid<ResponseRegistry>(listPrograms, "RegistryPrograms");
+        }
+
+        private void buttonAddProgram_Click(object sender, RoutedEventArgs e)
+        {
+            administratorWindow.FrameWorkspace.Navigate(new AddProgramPage(administratorWindow));
         }
     }
 }

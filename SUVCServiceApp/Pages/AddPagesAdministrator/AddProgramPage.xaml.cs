@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,11 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class AddProgramPage : Page
     {
-        public AddProgramPage()
+        private readonly AdministratorWindow administratorWindow;
+        public AddProgramPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
+            this.administratorWindow = administratorWindow;
         }
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -51,7 +54,7 @@ namespace SUVCServiceApp.Pages
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
-
+            administratorWindow.FrameWorkspace.Navigate(new RegsitryProgramPage(administratorWindow));
         }
     }
 }

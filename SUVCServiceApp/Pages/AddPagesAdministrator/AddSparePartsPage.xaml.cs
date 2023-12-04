@@ -25,9 +25,11 @@ namespace SUVCServiceApp.Pages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public AddSparePartsPage()
+        private readonly AdministratorWindow administratorWindow;
+        public AddSparePartsPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
+            this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
         }
@@ -59,7 +61,7 @@ namespace SUVCServiceApp.Pages
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
-
+            administratorWindow.FrameWorkspace.Navigate(new SparePartsPages(administratorWindow));
         }
     }
 }

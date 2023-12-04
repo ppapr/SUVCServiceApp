@@ -41,7 +41,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EquipmentPage());
+            frameWorkspace.Navigate(new Pages.EquipmentPage(this));
         }
 
         private void buttonInventory_Click(object sender, RoutedEventArgs e)
@@ -56,12 +56,12 @@ namespace SUVCServiceApp.Windows
 
         private void buttonSpareParts_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.SparePartsPages());
+            frameWorkspace.Navigate(new Pages.SparePartsPages(this));
         }
 
         private void buttonRegistryProgram_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.RegsitryProgramPage());
+            frameWorkspace.Navigate(new Pages.RegsitryProgramPage(this));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
