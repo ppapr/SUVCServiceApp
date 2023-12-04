@@ -33,6 +33,14 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data;
             }
         }
+        public async Task LoadDataGrid<T>(ComboBox comboBox, string apiEndpoint)
+        {
+            List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
+            if (data != null)
+            {
+                comboBox.ItemsSource = data;
+            }
+        }
     }
 
 }

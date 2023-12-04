@@ -24,7 +24,11 @@
                 <TextBlock Text="Запасная часть:" Margin="0,10,0,0" Height="35"/>
             </StackPanel>
             <StackPanel>
-                <ComboBox x:Name="comboBoxEquipment"  Width="200" Height="25" Margin="5"></ComboBox>
+                <ComboBox x:Name="comboBoxEquipment"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="EquipmentName"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID">
+                </ComboBox>
                 <TextBox x:Name="textBoxSpareName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
             </StackPanel>
         </StackPanel>

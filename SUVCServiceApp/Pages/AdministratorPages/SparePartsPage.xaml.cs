@@ -35,5 +35,10 @@ namespace SUVCServiceApp.Pages
         {
             await dataGridLoader.LoadDataGrid<ResponseSpare>(listSpares, "SparesEquipments");
         }
+
+        private void buttonAddSpare_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

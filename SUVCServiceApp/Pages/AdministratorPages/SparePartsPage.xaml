@@ -41,7 +41,7 @@
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddSpare" Content="Добавить запчасть" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonAddSpare_Click"/>
             <Button x:Name="buttonDeleteSpare" Content="Удалить запчасть" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>
             <Button x:Name="buttonPrintSpare" Content="Вывести на печать запчасти" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 

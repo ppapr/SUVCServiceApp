@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,18 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class AddSparePartsPage : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private readonly DataGridLoader dataGridLoader;
         public AddSparePartsPage()
         {
             InitializeComponent();
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
+        }
+
+        private async void LoadDataGrid()
+        {
+            await dataGridLoader.LoadDataGrid<ResponseUsers>(comboBoxEquipment, "Equipment");
         }
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -45,6 +55,11 @@ namespace SUVCServiceApp.Pages
             {
                 MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
             }
+        }
+
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

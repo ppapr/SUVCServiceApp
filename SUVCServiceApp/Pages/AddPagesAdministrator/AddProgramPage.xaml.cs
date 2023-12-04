@@ -48,5 +48,10 @@ namespace SUVCServiceApp.Pages
                 MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
             }
         }
+
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
