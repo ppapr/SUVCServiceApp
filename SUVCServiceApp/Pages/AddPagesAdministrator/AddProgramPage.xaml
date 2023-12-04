@@ -28,7 +28,10 @@
                 <TextBox x:Name="textBoxNameProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
                 <TextBox x:Name="textBoxVersionProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
                 <TextBox x:Name="textBoxDescriptionProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
-                <ComboBox x:Name="comboBoxSpecialization"  Width="200" Height="25" Margin="5"></ComboBox>
+                <ComboBox x:Name="comboBoxSpecialization"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="NameSpecialization"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID"></ComboBox>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

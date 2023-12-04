@@ -116,6 +116,7 @@
     <Compile Include="ViewModel\ResponseRegistry.cs" />
     <Compile Include="ViewModel\ResponseRequests.cs" />
     <Compile Include="ViewModel\ResponseSpare.cs" />
+    <Compile Include="ViewModel\ResponseSpecialization.cs" />
     <Compile Include="ViewModel\ResponseUsers.cs" />
     <Compile Include="Windows\AdministratorWindow.xaml.cs">
       <DependentUpon>AdministratorWindow.xaml</DependentUpon>

@@ -24,15 +24,22 @@ namespace SUVCServiceApp.Pages
     public partial class AddProgramPage : Page
     {
         private readonly AdministratorWindow administratorWindow;
+        private readonly DataGridLoader dataGridLoader;
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         public AddProgramPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             this.administratorWindow = administratorWindow;
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
+        }
+        private async void LoadDataGrid()
+        {
+            await dataGridLoader.LoadDataGrid<ResponseSpecialization>(comboBoxSpecialization, "Specializations");
         }
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
         {
-            ApiDataProvider apiDataProvider = new ApiDataProvider();
             ResponseRegistry program = new ResponseRegistry
             {
                 NameProgram = textBoxNameProgram.Text,
