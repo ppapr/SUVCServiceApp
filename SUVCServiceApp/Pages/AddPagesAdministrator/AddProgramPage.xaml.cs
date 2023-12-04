@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +27,26 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
         }
 
-        private void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
+        private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
         {
+            ApiDataProvider apiDataProvider = new ApiDataProvider();
+            ResponseRegistry program = new ResponseRegistry
+            {
+                NameProgram = textBoxNameProgram.Text,
+                DescriptionProgram = textBoxDescriptionProgram.Text,
+                VersionProgram = textBoxVersionProgram.Text,
+                IDSpecialization = Convert.ToInt16(comboBoxSpecialization.Text)
+            };
 
+            bool isSuccess = await apiDataProvider.AddDataToApi("RegistryProgram", program);
+            if (isSuccess)
+            {
+                MessageBox.Show($"Программа {textBoxNameProgram.Text} успешно добавлен!");
+            }
+            else
+            {
+                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+            }
         }
     }
 }

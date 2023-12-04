@@ -13,5 +13,6 @@ namespace SUVCServiceApp.ViewModel
         public string VersionProgram { get; set; }
         public string DescriptionProgram { get; set; }
         public string Specialization { get; set; }
+        public int IDSpecialization { get; set; }
     }
 }
