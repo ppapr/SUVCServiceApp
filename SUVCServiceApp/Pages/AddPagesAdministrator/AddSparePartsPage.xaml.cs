@@ -36,7 +36,7 @@ namespace SUVCServiceApp.Pages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseUsers>(comboBoxEquipment, "Equipment");
+            await dataGridLoader.LoadDataGrid<ResponseEquipment>(comboBoxEquipment, "Equipment");
         }
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
