@@ -15,9 +15,32 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-
+        <Button x:Name="buttonBack" Style="{StaticResource RoundedButtonStyle}" Content="Вернуться назад" Width="150" Height="30" 
+                HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonBack_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Название оборудования:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Описание:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Сетевое имя:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Инвентарный номер:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Владелец:" Margin="0,5,0,0" Height="35"/>
+                <TextBlock Text="Статус:" Margin="0,00,0,0" Height="35"/>
+                <TextBlock Text="Аудитория:" Margin="0,00,0,0" Height="35"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox x:Name="textBoxNameEquipment" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxDescriptionEquipment" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxNetworkName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxInventoryName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <ComboBox x:Name="comboBoxOwner"  Width="200" Height="25" Margin="5"></ComboBox>
+                <ComboBox x:Name="comboBoxStatus"  Width="200" Height="25" Margin="5"></ComboBox>
+                <TextBox x:Name="textBoxAuditoriumName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="buttonAdd" Content="Добавить " Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+            <Button x:Name="buttonAddEquipment" Content="Добавить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10" Click="buttonAddEquipment_Click" />
+            <Button x:Name="buttonAddFromExcel" Content="Добавить из файла Excel" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>
         </StackPanel>
     </Grid>

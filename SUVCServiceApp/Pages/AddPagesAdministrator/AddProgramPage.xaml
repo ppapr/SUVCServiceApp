@@ -15,9 +15,26 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-
+        <Button x:Name="buttonBack" Style="{StaticResource RoundedButtonStyle}" Content="Вернуться назад" Width="150" Height="30" 
+                HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonBack_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Название программы:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Версия программы:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Описание программы:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Специальность:" Margin="0,10,0,0" Height="35"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox x:Name="textBoxNameProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxVersionProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxDescriptionProgram" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <ComboBox x:Name="comboBoxSpecialization"  Width="200" Height="25" Margin="5"></ComboBox>
+            </StackPanel>
+        </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="buttonAdd" Content="Добавить " Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+            <Button x:Name="buttonAddProgram" Content="Добавить программу" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10" Click="buttonAddEquipment_Click" />
+            <Button x:Name="buttonAddFromExcel" Content="Добавить из файла Excel" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10"/>
         </StackPanel>
     </Grid>

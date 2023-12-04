@@ -24,5 +24,10 @@ namespace SUVCServiceApp.Pages
         {
             InitializeComponent();
         }
+
+        private void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
