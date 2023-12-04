@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,26 @@ namespace SUVCServiceApp.Pages
         public AddSparePartsPage()
         {
             InitializeComponent();
+        }
+
+        private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
+        {
+            ApiDataProvider apiDataProvider = new ApiDataProvider();
+            ResponseSpare spare = new ResponseSpare
+            {
+                SpareName = textBoxSpareName.Text,
+                EquipmentID = Convert.ToInt32(comboBoxEquipment.Text)
+            };
+
+            bool isSuccess = await apiDataProvider.AddDataToApi("SpareParts", spare);
+            if (isSuccess)
+            {
+                MessageBox.Show($"Запасная часть {textBoxSpareName.Text} успешно добавлен!");
+            }
+            else
+            {
+                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+            }
         }
     }
 }
