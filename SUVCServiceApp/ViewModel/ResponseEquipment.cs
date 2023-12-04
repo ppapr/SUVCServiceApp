@@ -19,5 +19,6 @@ namespace SUVCServiceApp.ViewModel
         public int IDStatus { get; set; }
         public string Location { get; set; }
         public int IDLocation { get; set; }
+        public string FullNameEquipment => NetworkName + " " + EquipmentName + " " + EquipmentDescription + " " + InventoryName;
     }
 }
