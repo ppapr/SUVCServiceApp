@@ -32,8 +32,14 @@
                 <TextBox x:Name="textBoxDescriptionEquipment" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
                 <TextBox x:Name="textBoxNetworkName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
                 <TextBox x:Name="textBoxInventoryName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
-                <ComboBox x:Name="comboBoxOwner"  Width="200" Height="25" Margin="5"></ComboBox>
-                <ComboBox x:Name="comboBoxStatus"  Width="200" Height="25" Margin="5"></ComboBox>
+                <ComboBox x:Name="comboBoxOwner"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="FullName"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID"></ComboBox>
+                <ComboBox x:Name="comboBoxStatus"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="NameStatus"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID"></ComboBox>
                 <TextBox x:Name="textBoxAuditoriumName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
             </StackPanel>
         </StackPanel>

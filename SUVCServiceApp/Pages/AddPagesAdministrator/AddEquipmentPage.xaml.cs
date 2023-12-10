@@ -25,24 +25,35 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class AddEquipmentPage : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private readonly DataGridLoader dataGridLoader;
         private readonly AdministratorWindow administratorWindow;
         public AddEquipmentPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             this.administratorWindow = administratorWindow;
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
+        }
+        private async void LoadDataGrid()
+        {
+            await dataGridLoader.LoadDataGrid<ResponseStatusEqipment>(comboBoxStatus, "StatusEquipments");
+            await dataGridLoader.LoadDataGrid<ResponseUsers>(comboBoxOwner, "Users");
         }
 
         private async void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
         {
             ApiDataProvider apiDataProvider = new ApiDataProvider();
+            int ownerID = (int)comboBoxOwner.SelectedValue;
+            int statusID = (int)comboBoxStatus.SelectedValue;
             ResponseEquipment equipment = new ResponseEquipment
             {
                 EquipmentName = textBoxNameEquipment.Text,
                 EquipmentDescription = textBoxDescriptionEquipment.Text,
                 InventoryName = textBoxInventoryName.Text,
                 NetworkName = textBoxNetworkName.Text,
-                StatusName = comboBoxStatus.Text,
-                OwnerName = comboBoxOwner.Text,
+                IDStatus = statusID,
+                IDOwner = ownerID,
                 Location = textBoxAuditoriumName.Text
             };
 
