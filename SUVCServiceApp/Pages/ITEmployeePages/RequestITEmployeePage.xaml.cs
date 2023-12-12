@@ -37,6 +37,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadDataGrid<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUserId}");
+            await dataGridLoader.LoadDataGrid<ResponseRequests>(listRequests, $"Requests?userExecutor=10");
         }
     }
 }

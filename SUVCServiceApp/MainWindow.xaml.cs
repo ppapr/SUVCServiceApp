@@ -38,38 +38,43 @@ namespace SUVCServiceApp
         {
             string login = textBoxLogin.Text;
             string password = textBoxPassword.Password;
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                string apiUrl = $"http://localhost:61895/api/Users?login={login}&password={password}";
 
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                using (HttpClient client = new HttpClient())
+                {
+                    string apiUrl = $"http://localhost:61895/api/Users?login={login}&password={password}";
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseData = await response.Content.ReadAsStringAsync();
-                    ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
-                    if (authenticatedUser.Role == "Администратор")
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                    new AdministratorWindow().Show();
-                    Close();
+                        string responseData = await response.Content.ReadAsStringAsync();
+                        ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
+                        if (authenticatedUser.Role == "Администратор")
+                        {
+                            new AdministratorWindow().Show();
+                            Close();
+                        }
+                        else if (authenticatedUser.Role == "ИТ-Отдел")
+                        {
+                            new EmployeeITWindow(authenticatedUser.ID).Show();
+                            Close();
+                        }
+                        else if (authenticatedUser.Role == "Сотрудник")
+                        {
+                            new EmployeeWindow(authenticatedUser.ID).Show();
+                            Close();
+                        }
                     }
-                    else if (authenticatedUser.Role == "ИТ-Отдел")
+                    else
                     {
-                        new EmployeeITWindow(authenticatedUser.ID).Show();
-                        Close();
+                        MessageBox.Show("Ошибка аутентификации");
                     }
-                    else if (authenticatedUser.Role == "Сотрудник")
-                    {
-                        new EmployeeWindow(authenticatedUser.ID).Show();
-                        Close();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ошибка аутентификации");
                 }
             }
+            catch
+            { MessageBox.Show("Произошла ошибка. Проверьте подключение к интернету!"); }
         }
     }
 }

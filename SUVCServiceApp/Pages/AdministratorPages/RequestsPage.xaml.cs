@@ -39,5 +39,29 @@ namespace SUVCServiceApp.Pages
         {
             await dataGridLoader.LoadDataGrid<ResponseRequests>(listRequests, "Requests");
         }
+
+        private async void buttonAddTask_Click(object sender, RoutedEventArgs e)
+        {
+            ResponseRequests request = new ResponseRequests
+            {
+                Description = textBoxTask.Text,
+                DateCreateRequest = DateTime.Now,
+                DateExecuteRequest = DateTime.Parse("01.01.0001"),
+                IDUserRequest = 1,
+                IDExecutorRequest = 10,
+                IDStatus = 1,
+                IDPriority = 2,
+                IDEquipment = 42,
+            };
+            bool isSuccess = await apiDataProvider.AddDataToApi("Requests", request);
+            if (isSuccess)
+            {
+                MessageBox.Show($"Задача успешно добавлена!");
+            }
+            else
+            {
+                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+            }
+        }
     }
 }
