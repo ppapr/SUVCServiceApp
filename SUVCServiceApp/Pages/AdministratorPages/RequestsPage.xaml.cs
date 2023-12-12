@@ -32,12 +32,12 @@ namespace SUVCServiceApp.Pages
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadData();
         }
 
-        private async void LoadDataGrid()
+        private async void LoadData()
         {
-            await dataGridLoader.LoadDataGrid<ResponseRequests>(listRequests, "Requests");
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests");
         }
 
         private async void buttonAddTask_Click(object sender, RoutedEventArgs e)
@@ -57,11 +57,22 @@ namespace SUVCServiceApp.Pages
             if (isSuccess)
             {
                 MessageBox.Show($"Задача успешно добавлена!");
+                LoadData();
+                textBoxTask.Clear();
             }
             else
             {
                 MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
             }
         }
+
+        private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearch.Text;
+            Func<ResponseRequests, string> searchProperty = item => item.Description;
+            await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm);
+        }
+
+
     }
 }

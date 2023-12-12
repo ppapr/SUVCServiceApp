@@ -36,7 +36,7 @@ namespace SUVCServiceApp.Pages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseUsers>(dataGridUsers, "Users");
+            await dataGridLoader.LoadData<ResponseUsers>(dataGridUsers, "Users");
         }
 
         private void buttonAddUser_Click(object sender, RoutedEventArgs e)

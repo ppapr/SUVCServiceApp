@@ -35,7 +35,7 @@ namespace SUVCServiceApp.Pages
         }
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseSpecialization>(comboBoxSpecialization, "Specializations");
+            await dataGridLoader.LoadData<ResponseSpecialization>(comboBoxSpecialization, "Specializations");
         }
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)

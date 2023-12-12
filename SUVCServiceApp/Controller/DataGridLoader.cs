@@ -16,7 +16,7 @@ namespace SUVCServiceApp.Controller
             this.apiDataProvider = apiDataProvider;
         }
 
-        public async Task LoadDataGrid<T>(DataGrid dataGrid, string apiEndpoint)
+        public async Task LoadData<T>(DataGrid dataGrid, string apiEndpoint)
         {
             List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
             if (data != null)
@@ -25,7 +25,7 @@ namespace SUVCServiceApp.Controller
             }
         }
 
-        public async Task LoadDataGrid<T>(ListView listView, string apiEndpoint)
+        public async Task LoadData<T>(ListView listView, string apiEndpoint)
         {
             List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
             if (data != null)
@@ -33,7 +33,7 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data;
             }
         }
-        public async Task LoadDataGrid<T>(ComboBox comboBox, string apiEndpoint)
+        public async Task LoadData<T>(ComboBox comboBox, string apiEndpoint)
         {
             List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
             if (data != null)
@@ -41,6 +41,13 @@ namespace SUVCServiceApp.Controller
                 comboBox.ItemsSource = data;
             }
         }
+        public async Task LoadData<T>(ListView listView, string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
+        {
+            List<T> data = await apiDataProvider.SearchData<T>(apiEndpoint, searchProperty, searchTerm);
+            if (data != null)
+            {
+                listView.ItemsSource = data;
+            }
+        }
     }
-
 }

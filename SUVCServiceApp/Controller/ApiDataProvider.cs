@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace SUVCServiceApp.Controller
 {
@@ -48,6 +49,21 @@ namespace SUVCServiceApp.Controller
                 return response.IsSuccessStatusCode;
             }
         }
-    }
 
+        public async Task<List<T>> SearchData<T>(string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
+        {
+            List<T> data = await GetDataFromApi<T>(apiEndpoint);
+            if (data != null)
+            {
+                var filteredData = data.Where(item =>
+                {
+                    string value = searchProperty(item);
+                    return value != null && value.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
+                }).ToList();
+
+                return filteredData;
+            }
+            return null;
+        }
+    }
 }

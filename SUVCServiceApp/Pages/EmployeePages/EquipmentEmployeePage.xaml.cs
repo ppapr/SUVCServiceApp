@@ -35,7 +35,7 @@ namespace SUVCServiceApp.Pages.EmployeePages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseEquipment>(listEquipments, $"Equipments?user={authenticatedUserId}");
+            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, $"Equipments?user={authenticatedUserId}");
         }
     }
 }

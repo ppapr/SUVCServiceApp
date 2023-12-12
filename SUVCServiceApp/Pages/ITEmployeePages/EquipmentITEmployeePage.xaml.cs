@@ -33,7 +33,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadDataGrid<ResponseEquipment>(listEquipments, "Equipments");
+            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments");
         }
     }
 }
