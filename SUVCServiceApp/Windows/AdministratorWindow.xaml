@@ -19,6 +19,7 @@
         <BitmapImage x:Key="IconBoxes" UriSource="/Resources/iconboxes.png"/>
         <BitmapImage x:Key="IconExit" UriSource="/Resources/iconexit.png"/>
         <BitmapImage x:Key="IconRequest" UriSource="/Resources/iconrequest.png"/>
+        <BitmapImage x:Key="IconProfile" UriSource="/Resources/iconprofile.png"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,6 +38,7 @@
                 <Button x:Name="buttonSpareParts" Content="Запчасти" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconWrench}" Margin="0,25,0,0" Height="35" Click="buttonSpareParts_Click"/>
                 <Button x:Name="buttonRegistryProgram" Content="Реестр ПО" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35" Click="buttonRegistryProgram_Click"/>
             </StackPanel>
+            <Button x:Name="buttonProfile" VerticalAlignment="Bottom" Content="Личный кабинет" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconProfile}" Margin="0,0,0,50" Height="35"/>
             <Button x:Name="buttonExit" VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35" Click="buttonExit_Click"/>
         </Grid>
         <Frame Grid.Column="1" x:Name="frameWorkspace" NavigationUIVisibility="Hidden" Margin="15,35,15,15"/>

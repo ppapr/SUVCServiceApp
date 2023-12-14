@@ -1,0 +1,26 @@
+﻿<Window x:Class="SUVCServiceApp.Windows.InteractiveMapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SUVCServiceApp.Windows"
+        mc:Ignorable="d"
+        Title="InteractiveMapWindow" Height="400" Width="400"
+    WindowStyle="None"
+         AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BitmapImage x:Key="DefaultMap" UriSource="/Resources/mapDefault.png"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="#797979" Grid.RowSpan="2"/>
+        <Image Source="{StaticResource DefaultMap}" Margin="10"  Stretch="Fill"/>
+        <Button Grid.Row="1" x:Name="buttonCloseMap" Content="Закрыть карту" VerticalAlignment="Bottom" Width="180" Height="30" 
+                Style="{StaticResource RoundedButtonStyle}" Margin="20" Click="buttonCloseMap_Click" />
+    </Grid>
+</Window>

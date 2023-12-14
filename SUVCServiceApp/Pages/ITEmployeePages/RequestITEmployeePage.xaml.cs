@@ -39,5 +39,10 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUserId}");
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor=10");
         }
+
+        private void buttonShowMap_Click(object sender, RoutedEventArgs e)
+        {
+            new Windows.InteractiveMapWindow().ShowDialog();
+        }
     }
 }
