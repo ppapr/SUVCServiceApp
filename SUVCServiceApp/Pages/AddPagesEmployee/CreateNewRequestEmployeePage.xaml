@@ -1,0 +1,42 @@
+﻿<Page x:Class="SUVCServiceApp.Pages.AddPagesEmployee.CreateNewRequestEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SUVCServiceApp.Pages.AddPagesEmployee"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="720"
+      Title="CreateNewRequestEmployeePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="White" Grid.RowSpan="3"/>
+        <Button x:Name="buttonBack" Style="{StaticResource RoundedButtonStyle}" Content="Вернуться назад" Width="150" Height="30" 
+                HorizontalAlignment="Left" VerticalAlignment="Center" Click="buttonBack_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Описание произошедшей ситуации:" Margin="5"/>
+                <TextBox x:Name="textBoxRequest" Style="{StaticResource RoundedTextBox}" Width="500" Height="120" TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Text="Тип заявки:" Margin="5"/>
+                <RadioButton Content="Заявка" IsChecked="True" Margin="5"/>
+                <RadioButton Content="Обращение" Margin="5"/>
+                <TextBlock Text="Выберите Ваше оборудование: (обязательно для заявки)" Margin="5"/>
+                <ComboBox x:Name="comboBoxEquipment" Width="500" Height="25" Margin="5">
+                    
+                </ComboBox>
+                <TextBlock Text="Укажите кабинет: (только для обращения)" Margin="5"/>
+                <ComboBox x:Name="comboBoxAuditorium" Width="500" Height="25" Margin="5">
+
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="buttonCreateRequest" Content="Создать заявку/обращение" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10"/>
+        </StackPanel>
+    </Grid>
+</Page>

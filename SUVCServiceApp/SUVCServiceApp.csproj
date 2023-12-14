@@ -73,6 +73,9 @@
     <Compile Include="Pages\AddPagesAdministrator\AddSparePartsPage.xaml.cs">
       <DependentUpon>AddSparePartsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddPagesEmployee\CreateNewRequestEmployeePage.xaml.cs">
+      <DependentUpon>CreateNewRequestEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdministratorPages\EmployeePage.xaml.cs">
       <DependentUpon>EmployeePage.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AddPagesAdministrator\AddSparePartsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddPagesEmployee\CreateNewRequestEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

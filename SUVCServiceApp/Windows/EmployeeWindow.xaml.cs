@@ -21,11 +21,15 @@ namespace SUVCServiceApp.Windows
     public partial class EmployeeWindow : Window
     {
         private readonly int authenticatedUserId;
+        public Frame FrameWorkspace
+        {
+            get { return frameWorkspace; }
+        }
         public EmployeeWindow(int authenticatedUserId)
         {
             InitializeComponent();
             this.authenticatedUserId = authenticatedUserId;
-            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId));
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId, this));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -36,12 +40,12 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePages.EquipmentEmployeePage(authenticatedUserId));
+            frameWorkspace.Navigate(new Pages.EmployeePages.EquipmentEmployeePage(authenticatedUserId, this));
         }
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId));
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId, this));
         }
     }
 }
