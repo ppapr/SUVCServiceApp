@@ -40,7 +40,7 @@
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddSpare" Content="Добавить запчасть" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonAddSpare_Click"/>
         </StackPanel>
     </Grid>
 </Page>

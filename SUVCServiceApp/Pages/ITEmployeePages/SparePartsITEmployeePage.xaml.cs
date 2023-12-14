@@ -24,16 +24,23 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public SparePartsITEmployeePage()
+        private readonly Windows.EmployeeITWindow employeeITWindow;
+        public SparePartsITEmployeePage(Windows.EmployeeITWindow employeeITWindow)
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
+            this.employeeITWindow = employeeITWindow;
         }
 
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadData<ResponseSpare>(listSpares, "SparesEquipments");
+        }
+
+        private void buttonAddSpare_Click(object sender, RoutedEventArgs e)
+        {
+            employeeITWindow.FrameWorkspace.Navigate(new Pages.AddPagesITEmployee.AddSpareITEmployee(employeeITWindow));
         }
     }
 }

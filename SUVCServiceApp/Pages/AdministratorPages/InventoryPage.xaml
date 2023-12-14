@@ -29,16 +29,12 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Location, StringFormat={} Кабинет: {0}}" Margin="0,0,20,0"/>
                         <StackPanel Grid.Column="1" Margin="0,0,20,0">
                             <TextBlock Text="{Binding EquipmentName, StringFormat={} Оборудование: {0}}"/>
-                            <TextBlock Text="{Binding EquipmentDescription, StringFormat={} Описание: {0}}" MaxWidth="250" 
-                                       TextWrapping="Wrap" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding NetworkName, StringFormat={} Сетевое имя: {0}}"/>
                             <TextBlock Text="{Binding InventoryName, StringFormat={} Инвентарный номер: {0}}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="{Binding OwnerName, StringFormat={} Владелец: {0}}"/>
                             <TextBlock Text="{Binding StatusName, StringFormat={} Состояние оборудования: {0}}"/>
                         </StackPanel>
                     </Grid>

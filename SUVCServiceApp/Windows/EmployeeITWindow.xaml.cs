@@ -20,6 +20,10 @@ namespace SUVCServiceApp.Windows
     public partial class EmployeeITWindow : Window
     {
         private readonly int authenticatedUserId;
+        public Frame FrameWorkspace
+        {
+            get { return frameWorkspace; }
+        }
         public EmployeeITWindow(int authenticatedUserId)
         {
             InitializeComponent();
@@ -45,7 +49,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonSpareParts_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.ITEmployeePages.SparePartsITEmployeePage());
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.SparePartsITEmployeePage(this));
         }
 
         private void buttonRegistryProgram_Click(object sender, RoutedEventArgs e)
