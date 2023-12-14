@@ -69,5 +69,10 @@ namespace SUVCServiceApp.Windows
             new MainWindow().Show();
             Close();
         }
+
+        private void buttonProfile_Click(object sender, RoutedEventArgs e)
+        {
+            frameWorkspace.Navigate(new Pages.AdministratorPages.ProfileAdministrator());
+        }
     }
 }

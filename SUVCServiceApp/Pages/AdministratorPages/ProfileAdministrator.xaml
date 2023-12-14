@@ -1,0 +1,61 @@
+﻿<Page x:Class="SUVCServiceApp.Pages.AdministratorPages.ProfileAdministrator"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SUVCServiceApp.Pages.AdministratorPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="720"
+      Title="ProfileAdministrator">
+
+    <Grid>
+        <Rectangle Fill="White" Grid.RowSpan="3"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Ваша фамилия:" Margin="0,10,0,0" Height="35"/>
+                    <TextBlock Text="Ваше имя:" Margin="0,10,0,0" Height="35"/>
+                    <TextBlock Text="Ваше отчество:" Margin="0,10,0,0" Height="35"/>
+                    <TextBlock Text="Логин:" Margin="0,10,0,0" Height="35"/>
+                    <TextBlock Text="Пароль:" Margin="0,10,0,0" Height="35"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox x:Name="textBoxSurName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                    <TextBox x:Name="textBoxName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                    <TextBox x:Name="textBoxMiddleName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                    <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                    <TextBox x:Name="textBoxPassword" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="История сформированных отчетов:" Margin="5"/>
+                <ListView Margin="5">
+                    <ListViewItem Content="Отчет о выполнении заявок. От 15.11.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 15.11.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимости списания. От 15.11.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 16.09.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                </ListView>
+            </StackPanel>
+        <Button Grid.Column="0" Grid.Row="2" x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" 
+                Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10"/>
+            <Button Grid.Column="1" Grid.Row="2" x:Name="buttonCreateReport" Content="Сформировать отчет" Width="180" Height="30" 
+                    Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10"/>
+        </Grid>
+    </Grid>
+</Page>

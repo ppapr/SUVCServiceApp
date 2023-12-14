@@ -28,7 +28,7 @@
                 <Button x:Name="buttonRequests" Content="Заявки" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconRequest}" Margin="0,35,0,0" Height="35" Click="buttonRequests_Click"/>
                 <Button x:Name="buttonEquipment" Content="Оборудование" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMonitor}" Margin="0,25,0,0" Height="35" Click="buttonEquipment_Click"/>
             </StackPanel>
-            <Button x:Name="buttonProfile" VerticalAlignment="Bottom" Content="Личный кабинет" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconProfile}" Margin="0,0,0,50" Height="35"/>
+            <Button x:Name="buttonProfile" VerticalAlignment="Bottom" Content="Личный кабинет" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconProfile}" Margin="0,0,0,50" Height="35" Click="buttonProfile_Click"/>
             <Button x:Name="buttonExit" VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35" Click="buttonExit_Click"/>
         </Grid>
         <Frame Grid.Column="1" x:Name="frameWorkspace" NavigationUIVisibility="Hidden" Margin="15,35,15,15"/>

@@ -85,6 +85,9 @@
     <Compile Include="Pages\AdministratorPages\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdministratorPages\ProfileAdministrator.xaml.cs">
+      <DependentUpon>ProfileAdministrator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdministratorPages\RegsitryProgramPage.xaml.cs">
       <DependentUpon>RegsitryProgramPage.xaml</DependentUpon>
     </Compile>
@@ -100,11 +103,17 @@
     <Compile Include="Pages\EmployeePages\EquipmentEmployeePage.xaml.cs">
       <DependentUpon>EquipmentEmployeePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EmployeePages\ProfileEmployee.xaml.cs">
+      <DependentUpon>ProfileEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EmployeePages\RequestsEmployeePage.xaml.cs">
       <DependentUpon>RequestsEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ITEmployeePages\EquipmentITEmployeePage.xaml.cs">
       <DependentUpon>EquipmentITEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ITEmployeePages\ProfileITEmployee.xaml.cs">
+      <DependentUpon>ProfileITEmployee.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ITEmployeePages\RegistryProgramITEmployeePage.xaml.cs">
       <DependentUpon>RegistryProgramITEmployeePage.xaml</DependentUpon>
@@ -178,6 +187,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AdministratorPages\ProfileAdministrator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdministratorPages\RegsitryProgramPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,11 +211,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\EmployeePages\ProfileEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\EmployeePages\RequestsEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ITEmployeePages\EquipmentITEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ITEmployeePages\ProfileITEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
