@@ -31,13 +31,14 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
             this.administratorWindow = administratorWindow;
-            LoadDataGrid();
+                LoadDataGrid();
         }
 
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadData<ResponseRegistry>(listPrograms, "RegistryPrograms");
             await dataGridLoader.LoadData<ResponseSpecialization>(comboBoxSpecialization, "Specializations");
+            // ПЕРЕДЕЛАТЬ. Добавить список отдельно, не через АПИ и добавить строчку ВСЕ, чтобы выводились все элементы!
         }
 
         private void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -50,6 +51,18 @@ namespace SUVCServiceApp.Pages
             string searchTerm = textBoxSearchProgram.Text;
             Func<ResponseRegistry, string> searchProperty = item => item.NameProgram;
             await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, searchTerm);
+        }
+
+        private async void comboBoxSpecialization_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxSpecialization.SelectedItem != null)
+            {
+                var selectedSpecialization = (ResponseSpecialization)comboBoxSpecialization.SelectedItem;
+                string searchTerm = selectedSpecialization.NameSpecialization;
+
+                Func<ResponseRegistry, string> searchProperty = item => item.Specialization;
+                await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, searchTerm);
+            }
         }
     }
 }
