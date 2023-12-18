@@ -50,6 +50,21 @@ namespace SUVCServiceApp.Controller
             }
         }
 
+        public async Task<bool> UpdateDataToApi<T>(string apiEndpoint, int id, T data)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                string jsonData = JsonConvert.SerializeObject(data);
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PutAsync($"{apiEndpoint}/{id}", content);
+                return response.IsSuccessStatusCode;
+            }
+        }
+
         public async Task<List<T>> SearchData<T>(string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
         {
             List<T> data = await GetDataFromApi<T>(apiEndpoint);

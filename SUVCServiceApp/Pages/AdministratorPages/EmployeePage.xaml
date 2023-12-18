@@ -28,7 +28,7 @@
             </ComboBox>
         </StackPanel>
         <DataGrid Grid.Row="1" x:Name="dataGridUsers" AutoGenerateColumns="False" Margin="0,20,0,0" Background="White" 
-                  CanUserAddRows="False" BorderThickness="0" HorizontalAlignment="Center">
+                  CanUserAddRows="False" BorderThickness="0" HorizontalAlignment="Center" SelectionChanged="dataGridUsers_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Сотрудник" Binding="{Binding FullName}"/>
                 <DataGridTextColumn Header="Логин сотрудника" Binding="{Binding Login}"/>
@@ -39,7 +39,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10" Click="buttonAddUser_Click"/>
-            <Button x:Name="buttonChangeUser" Content="Изменить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="buttonChangeUser" Content="Изменить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonChangeUser_Click"/>
             <Button x:Name="buttonDeleteUser" Content="Удалить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}"/>
         </StackPanel>
     </Grid>

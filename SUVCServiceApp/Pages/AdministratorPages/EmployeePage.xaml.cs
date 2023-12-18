@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
+using SUVCServiceApp.Windows.ChangeWIndowsAdministrator;
 
 namespace SUVCServiceApp.Pages
 {
@@ -26,6 +27,7 @@ namespace SUVCServiceApp.Pages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         private readonly AdministratorWindow administratorWindow;
+        public ResponseUsers selectedEmployee;
         public EmployeePage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
@@ -42,6 +44,19 @@ namespace SUVCServiceApp.Pages
         private void buttonAddUser_Click(object sender, RoutedEventArgs e)
         {
             administratorWindow.FrameWorkspace.Navigate(new AddEmployeePage(administratorWindow));
+        }
+
+        private void buttonChangeUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedEmployee != null)
+                new ChangeEmployee(selectedEmployee).ShowDialog();
+            else
+                MessageBox.Show("Выберите сотрудника!");
+        }
+
+        private void dataGridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedEmployee = (ResponseUsers)dataGridUsers.SelectedItem;
         }
     }
 }

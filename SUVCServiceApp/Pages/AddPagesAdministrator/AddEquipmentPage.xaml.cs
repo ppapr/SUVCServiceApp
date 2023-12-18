@@ -43,28 +43,36 @@ namespace SUVCServiceApp.Pages
 
         private async void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
         {
-            ApiDataProvider apiDataProvider = new ApiDataProvider();
-            int ownerID = (int)comboBoxOwner.SelectedValue;
-            int statusID = (int)comboBoxStatus.SelectedValue;
-            ResponseEquipment equipment = new ResponseEquipment
+            try
             {
-                EquipmentName = textBoxNameEquipment.Text,
-                EquipmentDescription = textBoxDescriptionEquipment.Text,
-                InventoryName = textBoxInventoryName.Text,
-                NetworkName = textBoxNetworkName.Text,
-                IDStatus = statusID,
-                IDOwner = ownerID,
-                Location = textBoxAuditoriumName.Text
-            };
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int ownerID = (int)comboBoxOwner.SelectedValue;
+                int statusID = (int)comboBoxStatus.SelectedValue;
+                ResponseEquipment equipment = new ResponseEquipment
+                {
+                    EquipmentName = textBoxNameEquipment.Text,
+                    EquipmentDescription = textBoxDescriptionEquipment.Text,
+                    InventoryName = textBoxInventoryName.Text,
+                    NetworkName = textBoxNetworkName.Text,
+                    IDStatus = statusID,
+                    IDOwner = ownerID,
+                    Location = textBoxAuditoriumName.Text
+                };
 
-            bool isSuccess = await apiDataProvider.AddDataToApi("Equipment", equipment);
-            if (isSuccess)
-            {
-                MessageBox.Show($"Оборудование {textBoxNameEquipment.Text} {textBoxInventoryName.Text} {textBoxNetworkName.Text} успешно добавлен!");
+                bool isSuccess = await apiDataProvider.AddDataToApi("Equipment", equipment);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Оборудование {textBoxNameEquipment.Text} {textBoxInventoryName.Text} {textBoxNetworkName.Text} успешно добавлен!");
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
 

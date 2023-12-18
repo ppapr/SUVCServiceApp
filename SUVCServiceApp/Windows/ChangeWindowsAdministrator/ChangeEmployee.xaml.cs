@@ -1,6 +1,5 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
-using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,59 +12,63 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SUVCServiceApp.Pages
+namespace SUVCServiceApp.Windows.ChangeWIndowsAdministrator
 {
     /// <summary>
-    /// Логика взаимодействия для AddEmployeePage.xaml
+    /// Логика взаимодействия для ChangeEmployee.xaml
     /// </summary>
-    public partial class AddEmployeePage : Page
+    public partial class ChangeEmployee : Window
     {
-        private readonly AdministratorWindow administratorWindow;
-        public AddEmployeePage(AdministratorWindow administratorWindow)
+        ResponseUsers response;
+        public ChangeEmployee(ResponseUsers responseUsers)
         {
             InitializeComponent();
-            this.administratorWindow = administratorWindow;
+            this.response = responseUsers;
+            textBoxName.Text = response.Name;
+            textBoxMiddleName.Text = response.MiddleName;
+            textBoxLogin.Text = response.Login;
+            textBoxSurName.Text = response.Surname;
+            textBoxPassword.Text = response.Password;
         }
 
-        private async void buttonAddUser_Click(object sender, RoutedEventArgs e)
+        private void buttonExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private async void buttonSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int role = comboBoxRole.Text == "Сотрудник" ? 3 : 2;
                 ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int currentUserID = response.ID;
                 ResponseUsers user = new ResponseUsers
                 {
+                    ID = response.ID,
                     Name = textBoxName.Text,
                     Surname = textBoxSurName.Text,
                     MiddleName = textBoxMiddleName.Text,
                     Login = textBoxLogin.Text,
                     Password = textBoxPassword.Text,
-                    IDRole = role,
+                    IDRole = response.IDRole,
                 };
 
-                bool isSuccess = await apiDataProvider.AddDataToApi("Users", user);
+                bool isSuccess = await apiDataProvider.UpdateDataToApi("Users", currentUserID, user);
                 if (isSuccess)
                 {
-                    MessageBox.Show($"Сотрудник {textBoxSurName.Text} {textBoxName.Text} {textBoxMiddleName.Text} успешно добавлен!");
+                    MessageBox.Show($"Изменения сотрудника {response.FullName} произошли успешно!");
                 }
                 else
                 {
                     MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
                 }
             }
-
             catch
             {
                 MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
-        }
-
-        private void buttonBack_Click(object sender, RoutedEventArgs e)
-        {
-            administratorWindow.FrameWorkspace.Navigate(new EmployeePage(administratorWindow));
         }
     }
 }

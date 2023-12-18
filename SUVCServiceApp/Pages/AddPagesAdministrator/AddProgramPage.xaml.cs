@@ -40,22 +40,30 @@ namespace SUVCServiceApp.Pages
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
         {
-            ResponseRegistry program = new ResponseRegistry
+            try
             {
-                NameProgram = textBoxNameProgram.Text,
-                DescriptionProgram = textBoxDescriptionProgram.Text,
-                VersionProgram = textBoxVersionProgram.Text,
-                IDSpecialization = Convert.ToInt16(comboBoxSpecialization.Text)
-            };
+                ResponseRegistry program = new ResponseRegistry
+                {
+                    NameProgram = textBoxNameProgram.Text,
+                    DescriptionProgram = textBoxDescriptionProgram.Text,
+                    VersionProgram = textBoxVersionProgram.Text,
+                    IDSpecialization = Convert.ToInt16(comboBoxSpecialization.Text)
+                };
 
-            bool isSuccess = await apiDataProvider.AddDataToApi("RegistryProgram", program);
-            if (isSuccess)
-            {
-                MessageBox.Show($"Программа {textBoxNameProgram.Text} успешно добавлен!");
+                bool isSuccess = await apiDataProvider.AddDataToApi("RegistryProgram", program);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Программа {textBoxNameProgram.Text} успешно добавлен!");
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                }
+                
             }
-            else
+            catch
             {
-                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
 

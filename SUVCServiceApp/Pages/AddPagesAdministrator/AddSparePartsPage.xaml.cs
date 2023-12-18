@@ -41,21 +41,28 @@ namespace SUVCServiceApp.Pages
 
         private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
         {
-            ApiDataProvider apiDataProvider = new ApiDataProvider();
-            ResponseSpare spare = new ResponseSpare
+            try
             {
-                SpareName = textBoxSpareName.Text,
-                EquipmentID = Convert.ToInt32(comboBoxEquipment.Text)
-            };
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                ResponseSpare spare = new ResponseSpare
+                {
+                    SpareName = textBoxSpareName.Text,
+                    EquipmentID = Convert.ToInt32(comboBoxEquipment.Text)
+                };
 
-            bool isSuccess = await apiDataProvider.AddDataToApi("SpareParts", spare);
-            if (isSuccess)
-            {
-                MessageBox.Show($"Запасная часть {textBoxSpareName.Text} успешно добавлен!");
+                bool isSuccess = await apiDataProvider.AddDataToApi("SpareParts", spare);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Запасная часть {textBoxSpareName.Text} успешно добавлена!");
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
 
