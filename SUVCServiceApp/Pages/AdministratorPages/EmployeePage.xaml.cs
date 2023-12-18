@@ -49,7 +49,14 @@ namespace SUVCServiceApp.Pages
         private void buttonChangeUser_Click(object sender, RoutedEventArgs e)
         {
             if (selectedEmployee != null)
-                new ChangeEmployee(selectedEmployee).ShowDialog();
+            {
+                ChangeEmployee changeWindow = new ChangeEmployee(selectedEmployee);
+                changeWindow.Closed += (s, args) =>
+                {
+                    LoadDataGrid();
+                };
+                changeWindow.ShowDialog();
+            }
             else
                 MessageBox.Show("Выберите сотрудника!");
         }
@@ -57,6 +64,11 @@ namespace SUVCServiceApp.Pages
         private void dataGridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedEmployee = (ResponseUsers)dataGridUsers.SelectedItem;
+        }
+
+        private void buttonDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

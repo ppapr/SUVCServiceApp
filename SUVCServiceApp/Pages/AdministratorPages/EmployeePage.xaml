@@ -40,7 +40,7 @@
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10" Click="buttonAddUser_Click"/>
             <Button x:Name="buttonChangeUser" Content="Изменить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonChangeUser_Click"/>
-            <Button x:Name="buttonDeleteUser" Content="Удалить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="buttonDeleteUser" Content="Удалить сотрудника" Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonDeleteUser_Click"/>
         </StackPanel>
     </Grid>
 </Page>
