@@ -49,5 +49,13 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data;
             }
         }
+        public async Task LoadData<T>(DataGrid dataGrid, string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
+        {
+            List<T> data = await apiDataProvider.SearchData<T>(apiEndpoint, searchProperty, searchTerm);
+            if (data != null)
+            {
+                dataGrid.ItemsSource = data;
+            }
+        }
     }
 }

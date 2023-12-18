@@ -43,5 +43,12 @@ namespace SUVCServiceApp.Pages
         {
             administratorWindow.FrameWorkspace.Navigate(new AddEquipmentPage(administratorWindow));
         }
+
+        private async void textBoxSearchEquipment_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearchEquipment.Text;
+            Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
+            await dataGridLoader.LoadData(listEquipments, "Equipments", searchProperty, searchTerm);
+        }
     }
 }

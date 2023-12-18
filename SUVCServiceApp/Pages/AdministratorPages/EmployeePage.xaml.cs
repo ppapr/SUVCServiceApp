@@ -65,5 +65,12 @@ namespace SUVCServiceApp.Pages
         {
             selectedEmployee = (ResponseUsers)dataGridUsers.SelectedItem;
         }
+
+        private async void textBoxSearchUser_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearchUser.Text;
+            Func<ResponseUsers, string> searchProperty = item => item.FullName;
+            await dataGridLoader.LoadData(dataGridUsers, "Users", searchProperty, searchTerm);
+        }
     }
 }

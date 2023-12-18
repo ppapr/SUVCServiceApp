@@ -43,5 +43,12 @@ namespace SUVCServiceApp.Pages
         {
             administratorWindow.FrameWorkspace.Navigate(new AddSparePartsPage(administratorWindow));
         }
+
+        private async void textBoxSearchSpares_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearchSpares.Text;
+            Func<ResponseSpare, string> searchProperty = item => item.SpareName;
+            await dataGridLoader.LoadData(listSpares, "SparesEquipments", searchProperty, searchTerm);
+        }
     }
 }

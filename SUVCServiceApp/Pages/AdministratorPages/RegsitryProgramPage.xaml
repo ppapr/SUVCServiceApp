@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
+            <TextBox x:Name="textBoxSearchProgram" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35" TextChanged="textBoxSearchProgram_TextChanged"/>
             <ComboBox x:Name="comboBoxSpecialization" Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
                           VerticalContentAlignment="Center"
                       DisplayMemberPath="NameSpecialization"

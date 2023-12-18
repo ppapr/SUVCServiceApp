@@ -44,5 +44,12 @@ namespace SUVCServiceApp.Pages
         {
             administratorWindow.FrameWorkspace.Navigate(new AddProgramPage(administratorWindow));
         }
+
+        private async void textBoxSearchProgram_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearchProgram.Text;
+            Func<ResponseRegistry, string> searchProperty = item => item.NameProgram;
+            await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, searchTerm);
+        }
     }
 }
