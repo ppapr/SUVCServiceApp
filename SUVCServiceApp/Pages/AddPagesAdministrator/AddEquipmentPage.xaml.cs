@@ -48,6 +48,7 @@ namespace SUVCServiceApp.Pages
                 ApiDataProvider apiDataProvider = new ApiDataProvider();
                 int ownerID = (int)comboBoxOwner.SelectedValue;
                 int statusID = (int)comboBoxStatus.SelectedValue;
+                int location = Convert.ToInt32(textBoxAuditoriumName.Text);
                 ResponseEquipment equipment = new ResponseEquipment
                 {
                     EquipmentName = textBoxNameEquipment.Text,
@@ -55,11 +56,11 @@ namespace SUVCServiceApp.Pages
                     InventoryName = textBoxInventoryName.Text,
                     NetworkName = textBoxNetworkName.Text,
                     IDStatus = statusID,
-                    IDOwner = ownerID,
-                    Location = textBoxAuditoriumName.Text
+                    IDOwnerEquipment = ownerID,
+                    LocationAuditorium = location
                 };
 
-                bool isSuccess = await apiDataProvider.AddDataToApi("Equipment", equipment);
+                bool isSuccess = await apiDataProvider.AddDataToApi("Equipments", equipment);
                 if (isSuccess)
                 {
                     MessageBox.Show($"Оборудование {textBoxNameEquipment.Text} {textBoxInventoryName.Text} {textBoxNetworkName.Text} успешно добавлен!");

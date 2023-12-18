@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Windows;
 
 namespace SUVCServiceApp.Controller
 {
@@ -44,8 +45,11 @@ namespace SUVCServiceApp.Controller
 
                 string jsonData = JsonConvert.SerializeObject(data);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
+                                
                 HttpResponseMessage response = await client.PostAsync(apiEndpoint, content);
+
+                string responseContent = await response.Content.ReadAsStringAsync();
+                MessageBox.Show(responseContent);
                 return response.IsSuccessStatusCode;
             }
         }
@@ -61,6 +65,18 @@ namespace SUVCServiceApp.Controller
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PutAsync($"{apiEndpoint}/{id}", content);
+                return response.IsSuccessStatusCode;
+            }
+        }
+
+        public async Task<bool> DeleteDataFromApi<T>(string apiEndpoint, int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.DeleteAsync($"{apiEndpoint}/{id}");
                 return response.IsSuccessStatusCode;
             }
         }

@@ -65,10 +65,5 @@ namespace SUVCServiceApp.Pages
         {
             selectedEmployee = (ResponseUsers)dataGridUsers.SelectedItem;
         }
-
-        private void buttonDeleteUser_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

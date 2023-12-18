@@ -14,11 +14,10 @@ namespace SUVCServiceApp.ViewModel
         public string NetworkName { get; set; }
         public string InventoryName { get; set; }
         public string OwnerName { get; set; }
-        public int IDOwner { get; set; }
+        public int IDOwnerEquipment { get; set; }
         public string StatusName { get; set; }
         public int IDStatus { get; set; }
-        public string Location { get; set; }
-        public int IDLocation { get; set; }
+        public int LocationAuditorium { get; set; }
         public string FullNameEquipment => NetworkName + " " + EquipmentName + " " + EquipmentDescription + " " + InventoryName;
     }
 }

@@ -29,7 +29,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Location, StringFormat={} Кабинет: {0}}" Margin="0,0,20,0"/>
+                        <TextBlock Text="{Binding LocationAuditorium, StringFormat={} Кабинет: {0}}" Margin="0,0,20,0"/>
                         <StackPanel Grid.Column="1" Margin="0,0,20,0">
                             <TextBlock Text="{Binding EquipmentName, StringFormat={} Оборудование: {0}}"/>
                             <TextBlock Text="{Binding EquipmentDescription, StringFormat={} Описание: {0}}" MaxWidth="250" 
