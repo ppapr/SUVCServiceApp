@@ -48,8 +48,6 @@ namespace SUVCServiceApp.Controller
                                 
                 HttpResponseMessage response = await client.PostAsync(apiEndpoint, content);
 
-                string responseContent = await response.Content.ReadAsStringAsync();
-                MessageBox.Show(responseContent);
                 return response.IsSuccessStatusCode;
             }
         }

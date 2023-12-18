@@ -42,18 +42,19 @@ namespace SUVCServiceApp.Pages
         {
             try
             {
+                int specializationID = (int)comboBoxSpecialization.SelectedValue;
                 ResponseRegistry program = new ResponseRegistry
                 {
                     NameProgram = textBoxNameProgram.Text,
                     DescriptionProgram = textBoxDescriptionProgram.Text,
                     VersionProgram = textBoxVersionProgram.Text,
-                    IDSpecialization = Convert.ToInt16(comboBoxSpecialization.Text)
+                    IDSpecialization = specializationID
                 };
 
-                bool isSuccess = await apiDataProvider.AddDataToApi("RegistryProgram", program);
+                bool isSuccess = await apiDataProvider.AddDataToApi("RegistryPrograms", program);
                 if (isSuccess)
                 {
-                    MessageBox.Show($"Программа {textBoxNameProgram.Text} успешно добавлен!");
+                    MessageBox.Show($"Программа {textBoxNameProgram.Text} успешно добавлена!");
                 }
                 else
                 {
