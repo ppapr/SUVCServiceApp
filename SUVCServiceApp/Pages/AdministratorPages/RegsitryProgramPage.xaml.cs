@@ -31,14 +31,13 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
             this.administratorWindow = administratorWindow;
-                LoadDataGrid();
+            LoadDataGrid();
+            comboBoxSpecialization.SelectedIndex = 0;
         }
 
         private async void LoadDataGrid()
         {
             await dataGridLoader.LoadData<ResponseRegistry>(listPrograms, "RegistryPrograms");
-            await dataGridLoader.LoadData<ResponseSpecialization>(comboBoxSpecialization, "Specializations");
-            // ПЕРЕДЕЛАТЬ. Добавить список отдельно, не через АПИ и добавить строчку ВСЕ, чтобы выводились все элементы!
         }
 
         private void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -55,13 +54,16 @@ namespace SUVCServiceApp.Pages
 
         private async void comboBoxSpecialization_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBoxSpecialization.SelectedItem != null)
+            if (comboBoxSpecialization.SelectedItem is ComboBoxItem selectedItem)
             {
-                var selectedSpecialization = (ResponseSpecialization)comboBoxSpecialization.SelectedItem;
-                string searchTerm = selectedSpecialization.NameSpecialization;
-
-                Func<ResponseRegistry, string> searchProperty = item => item.Specialization;
-                await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, searchTerm);
+                string selectedSpecialization = selectedItem.Content.ToString();
+                if (!string.IsNullOrEmpty(selectedSpecialization) && selectedSpecialization != "Все")
+                {
+                    Func<ResponseRegistry, string> searchProperty = item => item.Specialization;
+                    await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, selectedSpecialization);
+                }
+                else 
+                    LoadDataGrid();
             }
         }
     }
