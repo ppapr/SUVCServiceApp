@@ -140,6 +140,9 @@
     <Compile Include="Windows\ChangeWindowsAdministrator\ChangeEmployee.xaml.cs">
       <DependentUpon>ChangeEmployee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ChangeWindowsAdministrator\ChangeExecutor.xaml.cs">
+      <DependentUpon>ChangeExecutor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\EmployeeITWindow.xaml.cs">
       <DependentUpon>EmployeeITWindow.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ChangeWindowsAdministrator\ChangeEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangeWindowsAdministrator\ChangeExecutor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

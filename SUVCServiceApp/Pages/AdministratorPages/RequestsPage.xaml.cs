@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Controller;
+using SUVCServiceApp.Windows.ChangeWindowsAdministrator;
 
 namespace SUVCServiceApp.Pages
 {
@@ -27,7 +28,7 @@ namespace SUVCServiceApp.Pages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-
+        public ResponseRequests selectedRequest;
         public RequestsPage()
         {
             InitializeComponent();
@@ -73,6 +74,24 @@ namespace SUVCServiceApp.Pages
             await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm);
         }
 
+        private void buttonSetExecutor_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedRequest != null)
+            {
+                ChangeExecutor changeWindow = new ChangeExecutor(selectedRequest);
+                changeWindow.Closed += (s, args) =>
+                {
+                    LoadData();
+                };
+                changeWindow.ShowDialog();
+            }
+            else
+                MessageBox.Show("Выберите заявку!");
+        }
 
+        private void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedRequest = (ResponseRequests)listRequests.SelectedItem;
+        }
     }
 }
