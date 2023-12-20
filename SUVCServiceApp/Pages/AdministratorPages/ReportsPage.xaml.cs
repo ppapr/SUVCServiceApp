@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,24 @@ namespace SUVCServiceApp.Pages
     /// </summary>
     public partial class ReportsPage : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         public ReportsPage()
         {
             InitializeComponent();
+            LoadQuery();
+
         }
+        async void LoadQuery()
+        {
+            var spares = await apiDataProvider.GetDataFromApi<ResponseSpare>("SparesEquipments");
+            textBlockCountSpares.Text += spares.Count.ToString();
+        }
+        //public async Task<List<ResponseEquipment>> GetEquipmentForDisposal()
+        //{
+        //    //string apiEndpoint = "Equipments";
+        //    //Func<ResponseEquipment, bool> searchCondition = equipment => equipment.StatusName.Equals("Требуется списание", StringComparison.OrdinalIgnoreCase);
+
+        //    //return await apiDataProvider.SearchData<ResponseEquipment>(apiEndpoint, searchCondition);
+        //}
     }
 }

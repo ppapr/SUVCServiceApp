@@ -39,18 +39,20 @@ namespace SUVCServiceApp.Pages
             await dataGridLoader.LoadData<ResponseEquipment>(comboBoxEquipment, "Equipments");
         }
 
-        private async void buttonAddProgram_Click(object sender, RoutedEventArgs e)
+        private async void buttonAddSpare_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 ApiDataProvider apiDataProvider = new ApiDataProvider();
+                var equipment = (ResponseEquipment)comboBoxEquipment.SelectedItem;
+                int equipmentID = (int)equipment.ID;
                 ResponseSpare spare = new ResponseSpare
                 {
                     SpareName = textBoxSpareName.Text,
-                    EquipmentID = Convert.ToInt32(comboBoxEquipment.Text)
+                    IDEquipment = equipmentID
                 };
 
-                bool isSuccess = await apiDataProvider.AddDataToApi("SpareParts", spare);
+                bool isSuccess = await apiDataProvider.AddDataToApi("SparesEquipments", spare);
                 if (isSuccess)
                 {
                     MessageBox.Show($"Запасная часть {textBoxSpareName.Text} успешно добавлена!");
@@ -60,9 +62,9 @@ namespace SUVCServiceApp.Pages
                     MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!" + ex.ToString());
             }
         }
 

@@ -23,11 +23,11 @@
         <Rectangle Fill="#e4e4e4" Grid.Column="0" Grid.RowSpan="3"/>
         <Rectangle Fill="#e4e4e4" Grid.Column="2" Grid.RowSpan="3"/>
         <TextBlock Grid.Column="0" Text="Формирование отчета по заявкам за определенный период" TextWrapping="Wrap"  
-                   Width="180" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+                   Width="180" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
             <TextBlock Grid.Column="1" Text="Формирование отчета по закупке необходимых запчастей" TextWrapping="Wrap" 
-                       Width="180" Height="30"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+                       Width="180" Height="50"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
         <TextBlock Grid.Column="2" Text="Формирование отчета по списанию оборудования" TextWrapping="Wrap" 
-                   Width="180"  Height="30"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+                   Width="180"  Height="50"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
         <StackPanel Grid.Row="1">
             <TextBlock Text="Выберите дату начала" Margin="5"/>
             <DatePicker Width="200" />
@@ -36,7 +36,7 @@
         </StackPanel>
         <Button x:Name="buttonRequestReport" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Content="Сформировать отчет" 
                     Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Количество необходимых к покупке запчастей на данный момент: " TextWrapping="Wrap" Margin="5"/>
+        <TextBlock x:Name="textBlockCountSpares" Grid.Row="1" Grid.Column="1" Text="Количество необходимых к покупке запчастей на данный момент: " TextWrapping="Wrap" Margin="5"/>
         <Button x:Name="buttonSpareReport" Grid.Column="1" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Top"
                     Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" />
         <TextBlock Grid.Row="1" Grid.Column="2" Text="Количество необходимых к списанию оборудования на данный момент: " TextWrapping="Wrap" Margin="5"/>

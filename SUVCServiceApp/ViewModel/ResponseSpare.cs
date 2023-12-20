@@ -11,6 +11,6 @@ namespace SUVCServiceApp.ViewModel
         public int ID { get; set; }
         public string SpareName { get; set; }
         public string Equipment { get; set; }
-        public int EquipmentID { get; set; }
+        public int IDEquipment { get; set; }
     }
 }
