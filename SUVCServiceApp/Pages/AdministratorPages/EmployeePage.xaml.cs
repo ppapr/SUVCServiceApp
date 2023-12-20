@@ -34,6 +34,7 @@ namespace SUVCServiceApp.Pages
             this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
+            comboBoxCategoryUser.SelectedIndex = 0;
         }
 
         private async void LoadDataGrid()
@@ -71,6 +72,21 @@ namespace SUVCServiceApp.Pages
             string searchTerm = textBoxSearchUser.Text;
             Func<ResponseUsers, string> searchProperty = item => item.FullName;
             await dataGridLoader.LoadData(dataGridUsers, "Users", searchProperty, searchTerm);
+        }
+
+        private async void comboBoxCategoryUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxCategoryUser.SelectedItem is ComboBoxItem selectedItem)
+            {
+                string selectedCategory = selectedItem.Content.ToString();
+                if (!string.IsNullOrEmpty(selectedCategory) && selectedCategory != "Все")
+                {
+                    Func<ResponseUsers, string> searchProperty = item => item.Role;
+                    await dataGridLoader.LoadData(dataGridUsers, "Users", searchProperty, selectedCategory);
+                }
+                else
+                    LoadDataGrid();
+            }
         }
     }
 }

@@ -23,14 +23,14 @@
             <ComboBox x:Name="comboBoxSpecialization" Width="150" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center"
                       SelectionChanged="comboBoxSpecialization_SelectionChanged">
                 <ComboBoxItem Content="Все"/>
-                    <ComboBoxItem Content="Программисты"/>
-                    <ComboBoxItem Content="Черная металлургия"/>
-                    <ComboBoxItem Content="Обработка металлов давлением"/>
-                    <ComboBoxItem Content="Мехатроники"/>
-                    <ComboBoxItem Content="Электрики"/>
-                    <ComboBoxItem Content="Механники"/>
-                    <ComboBoxItem Content="Гидравлики"/>
-                    <ComboBoxItem Content="КиП"/>
+                <ComboBoxItem Content="Программисты"/>
+                <ComboBoxItem Content="Черная металлургия"/>
+                <ComboBoxItem Content="Обработка металлов давлением"/>
+                <ComboBoxItem Content="Мехатроники"/>
+                <ComboBoxItem Content="Электрики"/>
+                <ComboBoxItem Content="Механники"/>
+                <ComboBoxItem Content="Гидравлики"/>
+                <ComboBoxItem Content="КиП"/>
                 <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
         </StackPanel>
