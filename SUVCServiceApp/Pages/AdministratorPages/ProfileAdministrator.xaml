@@ -40,22 +40,13 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История сформированных отчетов:" Margin="5"/>
-                <ListView Margin="5">
-                    <ListViewItem Content="Отчет о выполнении заявок. От 15.11.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 15.11.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимости списания. От 15.11.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 16.09.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
-                    <ListViewItem Content="Отчет о необходимых запчастях. От 21.10.2023" Margin="10"/>
+                <ListView x:Name="listViewReports" Margin="5" SelectionChanged="listViewReports_SelectionChanged">
                 </ListView>
             </StackPanel>
         <Button Grid.Column="0" Grid.Row="2" x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" 
                 Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10"/>
-            <Button Grid.Column="1" Grid.Row="2" x:Name="buttonCreateReport" Content="Сформировать отчет" Width="180" Height="30" 
-                    Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10"/>
+            <Button Grid.Column="1" Grid.Row="2" x:Name="buttonCreateReport" Content="Просмотреть отчет" Width="180" Height="30" 
+                    Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10" Click="buttonCreateReport_Click"/>
         </Grid>
     </Grid>
 </Page>
