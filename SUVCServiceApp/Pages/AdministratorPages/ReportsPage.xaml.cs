@@ -100,6 +100,98 @@ namespace SUVCServiceApp.Pages
             }
         }
 
+
+        async Task CreateSpareEquipmentReport(string reportTitle)
+        {
+            List<ResponseSpare> sparesData = await apiDataProvider.GetDataFromApi<ResponseSpare>("SparesEquipments");
+            using (PdfDocument document = new PdfDocument())
+            {
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Arial", 12);
+                gfx.DrawString(reportTitle, font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormats.TopCenter);
+                int startX = 10;
+                int startY = 40;
+                int rowHeight = 20;
+                gfx.DrawString("Наименование", font, XBrushes.Black, new XRect(startX + 60, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Оборудование", font, XBrushes.Black, new XRect(startX + 220, startY, 150, rowHeight), XStringFormats.TopLeft);
+                startY += rowHeight;
+                foreach (var spare in sparesData)
+                {
+                    gfx.DrawString(spare.SpareName, font, XBrushes.Black, new XRect(startX + 60, startY, 150, rowHeight), XStringFormats.TopLeft);
+                    gfx.DrawString(spare.Equipment, font, XBrushes.Black, new XRect(startX + 220, startY, 150, rowHeight), XStringFormats.TopLeft);
+                    startY += rowHeight;
+                }
+
+                string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
+                string reportFilePath = System.IO.Path.Combine(reportsFolderPath, $"Отчет по запчастям за {DateTime.Now.ToShortDateString()}.pdf");
+                document.Save(reportFilePath);
+            }
+        }
+        async Task CreateWriteOffEquipmentReport(string reportTitle)
+        {
+
+            List<ResponseEquipment> writeOffEquipmentData = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
+            writeOffEquipmentData = writeOffEquipmentData.Where(equipment => equipment.IDStatus == 4).ToList();
+            using (PdfDocument document = new PdfDocument())
+            {
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Arial", 6);
+                gfx.DrawString(reportTitle, font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormats.TopCenter);
+                int startX = 10;
+                int startY = 40;
+                int rowHeight = 10;
+                int columnWidth = 150;
+                gfx.DrawString("Наименование", font, XBrushes.Black,    new XRect(startX, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Описание", font, XBrushes.Black,        new XRect(startX + 80, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Имя в сети", font, XBrushes.Black,      new XRect(startX + 230, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Инвентарный номер", font, XBrushes.Black, new XRect(startX + 290, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Владелец", font, XBrushes.Black,        new XRect(startX + 360, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Расположение", font, XBrushes.Black,    new XRect(startX + 450, startY, 150, rowHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Статус", font, XBrushes.Black,          new XRect(startX + 500, startY, 150, rowHeight), XStringFormats.TopLeft);
+                startY += rowHeight;
+                foreach (var equipment in writeOffEquipmentData)
+                {
+                    DrawCellWithWordWrap(gfx, equipment.EquipmentName, font, startX, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.EquipmentDescription, font, startX + 80, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.NetworkName, font, startX + 230, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.InventoryName, font, startX + 290, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.OwnerName, font, startX + 360, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.LocationAuditorium.ToString(), font, startX + 470, startY, columnWidth, rowHeight);
+                    DrawCellWithWordWrap(gfx, equipment.StatusName, font, startX + 500, startY, columnWidth, rowHeight);
+
+                    startY += rowHeight * equipment.EquipmentDescription.Split(' ').Length;
+                }
+                string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
+                string reportFilePath = System.IO.Path.Combine(reportsFolderPath, $"Отчет по оборудованию за {DateTime.Now.ToShortDateString()}.pdf");
+                document.Save(reportFilePath);
+            }
+        }
+        static void DrawCellWithWordWrap(XGraphics gfx, string text, XFont font, int x, int y, int width, int height, int maxCharactersPerLine = 40)
+        {
+            string[] words = text.Split(' ');
+            double currentX = x;
+            double currentY = y;
+            string currentLine = "";
+
+            foreach (var word in words)
+            {
+                if ((currentLine + " " + word).Length > maxCharactersPerLine)
+                {
+                    gfx.DrawString(currentLine, font, XBrushes.Black, new XRect(x, currentY, width, height), XStringFormats.TopLeft);
+                    currentLine = word;
+                    currentY += height;
+                }
+                else
+                {
+                    currentLine += " " + word;
+                }
+            }
+            gfx.DrawString(currentLine.Trim(), font, XBrushes.Black, new XRect(x, currentY, width, height), XStringFormats.TopLeft);
+        }
+
+
         void CreateReportDirectory()
         {
             string exePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -122,6 +214,36 @@ namespace SUVCServiceApp.Pages
             {
                 CreateReportDirectory();
                 ReportForRequests();
+                MessageBox.Show("Отчет создан!");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось создать отчет! Возможно произошла ошибка, " +
+                    "проверьте соединение с интернетом или попробуйте позже!");
+            }
+        }
+
+        private async void buttonSpareReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CreateReportDirectory();
+                await CreateSpareEquipmentReport($"Отчет по запчастям за {DateTime.Now.ToShortDateString()}");
+                MessageBox.Show("Отчет создан!");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось создать отчет! Возможно произошла ошибка, " +
+                    "проверьте соединение с интернетом или попробуйте позже!");
+            }
+        }
+
+        private async void buttonEquipmentReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CreateReportDirectory();
+                await CreateWriteOffEquipmentReport($"Отчет по списанию за {DateTime.Now.ToShortDateString()}");
                 MessageBox.Show("Отчет создан!");
             }
             catch
