@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -23,10 +25,17 @@ namespace SUVCServiceApp.Pages.AdministratorPages
     /// </summary>
     public partial class ProfileAdministrator : Page
     {
-        public ProfileAdministrator()
+        ResponseUsers currentUser;
+        public ProfileAdministrator(ResponseUsers response)
         {
             InitializeComponent();
+            this.currentUser = response;
             LoadReportsToListView();
+            textBoxName.Text = currentUser.Name;
+            textBoxSurName.Text = currentUser.Surname;
+            textBoxLogin.Text = currentUser.Login;
+            textBoxPassword.Text = currentUser.Password;
+            textBoxMiddleName.Text = currentUser.MiddleName;
         }
 
         private void LoadReportsToListView()
@@ -59,6 +68,39 @@ namespace SUVCServiceApp.Pages.AdministratorPages
             else
             {
                 MessageBox.Show("Выберите отчет из списка.");
+            }
+        }
+
+        private async void buttonSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int currentUserID = currentUser.ID;
+                ResponseUsers user = new ResponseUsers
+                {
+                    ID = currentUser.ID,
+                    Name = textBoxName.Text,
+                    Surname = textBoxSurName.Text,
+                    MiddleName = textBoxMiddleName.Text,
+                    Login = textBoxLogin.Text,
+                    Password = textBoxPassword.Text,
+                    IDRole = currentUser.IDRole,
+                };
+
+                bool isSuccess = await apiDataProvider.UpdateDataToApi("Users", currentUserID, user);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Изменения сотрудника {currentUser.FullName} произошли успешно!");
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
     }

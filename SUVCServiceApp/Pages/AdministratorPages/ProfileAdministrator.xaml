@@ -44,7 +44,7 @@
                 </ListView>
             </StackPanel>
         <Button Grid.Column="0" Grid.Row="2" x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" 
-                Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10"/>
+                Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10" Click="buttonSaveChanges_Click"/>
             <Button Grid.Column="1" Grid.Row="2" x:Name="buttonCreateReport" Content="Просмотреть отчет" Width="180" Height="30" 
                     Style="{StaticResource RoundedButtonStyle}" Margin="10,10,30,10" Click="buttonCreateReport_Click"/>
         </Grid>

@@ -53,7 +53,7 @@ namespace SUVCServiceApp
                         ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
                         if (authenticatedUser.Role == "Администратор")
                         {
-                            new AdministratorWindow().Show();
+                            new AdministratorWindow(authenticatedUser).Show();
                             Close();
                         }
                         else if (authenticatedUser.Role == "ИТ-Отдел")

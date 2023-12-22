@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,11 @@ namespace SUVCServiceApp.Windows
         {
             get { return frameWorkspace; }
         }
-        public AdministratorWindow()
+        ResponseUsers currentUser;
+        public AdministratorWindow(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
+            this.currentUser = authenticatedUser;
             frameWorkspace.Navigate(new Pages.RequestsPage());
         }
 
@@ -72,7 +75,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonProfile_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.AdministratorPages.ProfileAdministrator());
+            frameWorkspace.Navigate(new Pages.AdministratorPages.ProfileAdministrator(currentUser));
         }
     }
 }
