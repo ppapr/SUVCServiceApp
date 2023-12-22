@@ -47,11 +47,25 @@
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История составленных заявок:" Margin="5"/>
                 <ListView Margin="5">
-                    <ListViewItem Content="Выполненная заявка. 01.01.2023. Статус: Отказано" Margin="10"/>
-                    <ListViewItem Content="Выполненная заявка. 02.01.2023. Статус: Выполнено" Margin="10"/>
-                    <ListViewItem Content="Выполненная заявка. 03.01.2023. Статус: Отказано" Margin="10"/>
-                    <ListViewItem Content="Выполненная заявка. 04.01.2023. Статус: Выполнено" Margin="10"/>
-                    <ListViewItem Content="Выполненная заявка. 05.01.2023. Статус: Выполнено" Margin="10"/>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
+                                    <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
+                                    <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
+                                    <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
         </Grid>

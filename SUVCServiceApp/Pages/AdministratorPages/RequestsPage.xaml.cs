@@ -93,5 +93,41 @@ namespace SUVCServiceApp.Pages
         {
             selectedRequest = (ResponseRequests)listRequests.SelectedItem;
         }
+
+        private async void buttonCloseRequest_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int currentRequestID = selectedRequest.ID;
+                ResponseRequests request = new ResponseRequests
+                {
+                    ID = selectedRequest.ID,
+                    Description = selectedRequest.Description,
+                    DateCreateRequest = selectedRequest.DateCreateRequest,
+                    DateExecuteRequest = selectedRequest.DateExecuteRequest,
+                    IDStatus = 4,
+                    IDPriority = selectedRequest.IDPriority,
+                    IDEquipment = selectedRequest.IDEquipment,
+                    IDUserRequest = selectedRequest.IDUserRequest,
+                    IDExecutorRequest = selectedRequest.IDExecutorRequest
+                };
+
+                bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Заявка отклонена!");
+                    LoadData();
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
+            }
+        }
     }
 }

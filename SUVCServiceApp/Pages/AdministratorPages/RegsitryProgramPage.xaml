@@ -34,7 +34,7 @@
                 <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
         </StackPanel>
-        <ListView x:Name="listPrograms" Grid.Row="1" Margin="20">
+        <ListView x:Name="listPrograms" Grid.Row="1" Margin="20" SelectionChanged="listPrograms_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -58,7 +58,7 @@
             <Button x:Name="buttonAddProgram" Content="Добавить программу" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddProgram_Click"/>
             <Button x:Name="buttonDeleteProgram" Content="Удалить программу" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonDeleteProgram_Click"/>
         </StackPanel>
     </Grid>
 </Page>

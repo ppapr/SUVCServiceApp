@@ -31,6 +31,11 @@ namespace SUVCServiceApp.Pages.AdministratorPages
             InitializeComponent();
             this.currentUser = response;
             LoadReportsToListView();
+            LoadUserInfo();
+        }
+
+        void LoadUserInfo()
+        {
             textBoxName.Text = currentUser.Name;
             textBoxSurName.Text = currentUser.Surname;
             textBoxLogin.Text = currentUser.Login;
@@ -91,7 +96,8 @@ namespace SUVCServiceApp.Pages.AdministratorPages
                 bool isSuccess = await apiDataProvider.UpdateDataToApi("Users", currentUserID, user);
                 if (isSuccess)
                 {
-                    MessageBox.Show($"Изменения сотрудника {currentUser.FullName} произошли успешно!");
+                    MessageBox.Show($"Изменения сотрудника {currentUser.FullName} произошли успешно! \nИзменения вступят в силу после перезапуска программы!");
+                    LoadUserInfo();
                 }
                 else
                 {

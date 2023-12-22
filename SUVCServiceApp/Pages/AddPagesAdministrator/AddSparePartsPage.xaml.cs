@@ -62,9 +62,9 @@ namespace SUVCServiceApp.Pages
                     MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!" + ex.ToString());
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
 

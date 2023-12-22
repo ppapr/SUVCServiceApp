@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUVCServiceApp.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,20 @@ namespace SUVCServiceApp.Pages.EmployeePages
     /// <summary>
     /// Логика взаимодействия для ProfileEmployee.xaml
     /// </summary>
+
     public partial class ProfileEmployee : Page
     {
+        private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private readonly DataGridLoader dataGridLoader;
         public ProfileEmployee()
         {
             InitializeComponent();
+            dataGridLoader = new DataGridLoader(apiDataProvider);
+        }
+
+        private async void LoadDataGrid()
+        {
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUserId}");
         }
     }
 }

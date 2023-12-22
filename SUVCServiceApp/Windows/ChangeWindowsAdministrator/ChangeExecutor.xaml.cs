@@ -54,7 +54,7 @@ namespace SUVCServiceApp.Windows.ChangeWindowsAdministrator
                     Description = response.Description,
                     DateCreateRequest = response.DateCreateRequest,
                     DateExecuteRequest = response.DateExecuteRequest,
-                    IDStatus = response.IDStatus,
+                    IDStatus = 1,
                     IDPriority = response.IDPriority,
                     IDEquipment = response.IDEquipment,
                     IDUserRequest = response.IDUserRequest,

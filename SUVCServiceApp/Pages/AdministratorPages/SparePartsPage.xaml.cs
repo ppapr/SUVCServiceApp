@@ -50,5 +50,23 @@ namespace SUVCServiceApp.Pages
             Func<ResponseSpare, string> searchProperty = item => item.SpareName;
             await dataGridLoader.LoadData(listSpares, "SparesEquipments", searchProperty, searchTerm);
         }
+        private ResponseSpare currentSpare;
+        private async void buttonDeleteSpare_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите удалить запчасть {currentSpare.SpareName}?", 
+                "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await apiDataProvider.DeleteDataFromApi<ResponseSpare>("SparesEquipments", currentSpare.ID);
+                MessageBox.Show("Удаление завершено!");
+                LoadDataGrid();
+            }
+        }
+
+        private void listSpares_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentSpare = (ResponseSpare)listSpares.SelectedItem;
+        }
     }
 }

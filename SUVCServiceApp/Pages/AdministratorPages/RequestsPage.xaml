@@ -54,8 +54,10 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="buttonSetExecutor" Content="Назначить исполнителя" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10" Click="buttonSetExecutor_Click"/>
+            <Button x:Name="buttonSetExecutor" Content="Принять" Width="100" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="5" Click="buttonSetExecutor_Click"/>
+            <Button x:Name="buttonCloseRequest" Content="Отказать" Width="100" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="5" Click="buttonCloseRequest_Click"/>
             <TextBox x:Name="textBoxTask" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconPencil}" Height="35" Width="300"/>
             <Button x:Name="buttonAddTask" Content="Добавить задачу" Width="180" Height="30" Margin="10,0,0,0" Style="{StaticResource RoundedButtonStyle}" Click="buttonAddTask_Click"/>
         </StackPanel>

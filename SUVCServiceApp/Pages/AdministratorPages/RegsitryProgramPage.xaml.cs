@@ -66,5 +66,23 @@ namespace SUVCServiceApp.Pages
                     LoadDataGrid();
             }
         }
+        ResponseRegistry currentProgram;
+        private async void buttonDeleteProgram_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите удалить программу {currentProgram.NameProgram}?",
+                "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await apiDataProvider.DeleteDataFromApi<ResponseSpare>("RegistryPrograms", currentProgram.ID);
+                MessageBox.Show("Удаление завершено!");
+                LoadDataGrid();
+            }
+        }
+
+        private void listPrograms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentProgram = (ResponseRegistry)listPrograms.SelectedItem;
+        }
     }
 }

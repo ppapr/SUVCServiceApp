@@ -21,7 +21,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBox x:Name="textBoxSearchSpares" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearchSpares_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listSpares" Grid.Row="1" Margin="20">
+        <ListView x:Name="listSpares" Grid.Row="1" Margin="20" SelectionChanged="listSpares_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -43,9 +43,7 @@
             <Button x:Name="buttonAddSpare" Content="Добавить запчасть" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddSpare_Click"/>
             <Button x:Name="buttonDeleteSpare" Content="Удалить запчасть" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
-            <Button x:Name="buttonPrintSpare" Content="Вывести на печать запчасти" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonDeleteSpare_Click"/>
         </StackPanel>
     </Grid>
 </Page>

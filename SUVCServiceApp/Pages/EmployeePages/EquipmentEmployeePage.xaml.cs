@@ -41,5 +41,11 @@ namespace SUVCServiceApp.Pages.EmployeePages
             await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, $"Equipments?user={authenticatedUserId}");
         }
 
+        private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearch.Text;
+            Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
+            await dataGridLoader.LoadData(listEquipments, $"Equipments?user={authenticatedUserId}", searchProperty, searchTerm);
+        }
     }
 }
