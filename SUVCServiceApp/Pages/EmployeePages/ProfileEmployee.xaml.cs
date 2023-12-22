@@ -32,6 +32,7 @@ namespace SUVCServiceApp.Pages.EmployeePages
             this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
+            LoadUserInfo();
         }
         void LoadUserInfo()
         {

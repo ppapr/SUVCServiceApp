@@ -24,13 +24,13 @@ namespace SUVCServiceApp.Pages.AddPagesEmployee
     public partial class CreateNewRequestEmployeePage : Page
     {
         private readonly EmployeeWindow employeeWindow;
-        private int authenticatedUserId;
+        private ResponseUsers authenticatedUser;
         private readonly DataGridLoader dataGridLoader;
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
-        public CreateNewRequestEmployeePage(int authenticatedUserId, EmployeeWindow employeeWindow)
+        public CreateNewRequestEmployeePage(ResponseUsers authenticatedUser, EmployeeWindow employeeWindow)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
+            this.authenticatedUser = authenticatedUser;
             this.employeeWindow = employeeWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadData();
@@ -38,12 +38,12 @@ namespace SUVCServiceApp.Pages.AddPagesEmployee
 
         private async void LoadData()
         {
-            await dataGridLoader.LoadData<ResponseEquipment>(comboBoxEquipment, $"Equipments?user={authenticatedUserId}");
+            await dataGridLoader.LoadData<ResponseEquipment>(comboBoxEquipment, $"Equipments?user={authenticatedUser.ID}");
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
-            employeeWindow.FrameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId, employeeWindow));
+            employeeWindow.FrameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUser, employeeWindow));
         }
         bool isRequest;
         private async void buttonCreateRequest_Click(object sender, RoutedEventArgs e)
@@ -71,7 +71,7 @@ namespace SUVCServiceApp.Pages.AddPagesEmployee
                     IDStatus = 1,
                     IDPriority = 2,
                     IDEquipment = equipmentID,
-                    IDUserRequest = authenticatedUserId,
+                    IDUserRequest = authenticatedUser.ID,
                     IDExecutorRequest = 10
                 };
                 bool isSuccess = await apiDataProvider.AddDataToApi("Requests", requests);

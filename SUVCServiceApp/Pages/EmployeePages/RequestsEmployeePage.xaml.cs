@@ -43,7 +43,7 @@ namespace SUVCServiceApp.Pages.EmployeePages
 
         private void buttonAddRequest_Click(object sender, RoutedEventArgs e)
         {
-            employeeWindow.FrameWorkspace.Navigate(new Pages.AddPagesEmployee.CreateNewRequestEmployeePage(authenticatedUser.ID, employeeWindow));
+            employeeWindow.FrameWorkspace.Navigate(new Pages.AddPagesEmployee.CreateNewRequestEmployeePage(authenticatedUser, employeeWindow));
         }
     }
 }
