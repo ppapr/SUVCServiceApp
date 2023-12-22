@@ -20,16 +20,16 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class EmployeeWindow : Window
     {
-        private readonly int authenticatedUserId;
+        private ResponseUsers authenticatedUser;
         public Frame FrameWorkspace
         {
             get { return frameWorkspace; }
         }
-        public EmployeeWindow(int authenticatedUserId)
+        public EmployeeWindow(ResponseUsers user)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
-            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId, this));
+            this.authenticatedUser = user;
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUser, this));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -40,17 +40,17 @@ namespace SUVCServiceApp.Windows
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePages.EquipmentEmployeePage(authenticatedUserId, this));
+            frameWorkspace.Navigate(new Pages.EmployeePages.EquipmentEmployeePage(authenticatedUser, this));
         }
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUserId, this));
+            frameWorkspace.Navigate(new Pages.EmployeePages.RequestsEmployeePage(authenticatedUser, this));
         }
 
         private void buttonProfile_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.EmployeePages.ProfileEmployee());
+            frameWorkspace.Navigate(new Pages.EmployeePages.ProfileEmployee(authenticatedUser));
         }
     }
 }

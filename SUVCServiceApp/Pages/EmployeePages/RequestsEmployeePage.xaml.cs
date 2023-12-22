@@ -25,12 +25,12 @@ namespace SUVCServiceApp.Pages.EmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        private int authenticatedUserId;
+        private ResponseUsers authenticatedUser;
         private readonly EmployeeWindow employeeWindow;
-        public RequestsEmployeePage(int authenticatedUserId, EmployeeWindow employeeWindow)
+        public RequestsEmployeePage(ResponseUsers authenticatedUser, EmployeeWindow employeeWindow)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
+            this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
             this.employeeWindow = employeeWindow;
@@ -38,12 +38,12 @@ namespace SUVCServiceApp.Pages.EmployeePages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUserId}");
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUser.ID}");
         }
 
         private void buttonAddRequest_Click(object sender, RoutedEventArgs e)
         {
-            employeeWindow.FrameWorkspace.Navigate(new Pages.AddPagesEmployee.CreateNewRequestEmployeePage(authenticatedUserId, employeeWindow));
+            employeeWindow.FrameWorkspace.Navigate(new Pages.AddPagesEmployee.CreateNewRequestEmployeePage(authenticatedUser.ID, employeeWindow));
         }
     }
 }

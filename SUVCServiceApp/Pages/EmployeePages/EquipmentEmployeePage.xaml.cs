@@ -25,12 +25,12 @@ namespace SUVCServiceApp.Pages.EmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        private readonly int authenticatedUserId;
+        private ResponseUsers authenticatedUser;
         private readonly EmployeeWindow employeeWindow;
-        public EquipmentEmployeePage(int authenticatedUserId, EmployeeWindow employeeWindow)
+        public EquipmentEmployeePage(ResponseUsers authenticatedUser, EmployeeWindow employeeWindow)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
+            this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
             this.employeeWindow = employeeWindow;
@@ -38,14 +38,14 @@ namespace SUVCServiceApp.Pages.EmployeePages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, $"Equipments?user={authenticatedUserId}");
+            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, $"Equipments?user={authenticatedUser.ID}");
         }
 
         private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchTerm = textBoxSearch.Text;
             Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
-            await dataGridLoader.LoadData(listEquipments, $"Equipments?user={authenticatedUserId}", searchProperty, searchTerm);
+            await dataGridLoader.LoadData(listEquipments, $"Equipments?user={authenticatedUser.ID}", searchProperty, searchTerm);
         }
     }
 }

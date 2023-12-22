@@ -63,7 +63,7 @@ namespace SUVCServiceApp
                         }
                         else if (authenticatedUser.Role == "Сотрудник")
                         {
-                            new EmployeeWindow(authenticatedUser.ID).Show();
+                            new EmployeeWindow(authenticatedUser).Show();
                             Close();
                         }
                     }

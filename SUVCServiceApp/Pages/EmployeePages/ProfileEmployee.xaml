@@ -42,11 +42,11 @@
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonSaveChanges_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История составленных заявок:" Margin="5"/>
-                <ListView Margin="5">
+                <ListView x:Name="listViewHistoryRequest" Margin="5">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="10">

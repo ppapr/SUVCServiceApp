@@ -1,4 +1,5 @@
 ﻿using SUVCServiceApp.Controller;
+using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,61 @@ namespace SUVCServiceApp.Pages.EmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        public ProfileEmployee()
+        private ResponseUsers authenticatedUser;
+        public ProfileEmployee(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
+            this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
+            LoadDataGrid();
         }
-
+        void LoadUserInfo()
+        {
+            textBoxName.Text = authenticatedUser.Name;
+            textBoxSurName.Text = authenticatedUser.Surname;
+            textBoxLogin.Text = authenticatedUser.Login;
+            textBoxPassword.Text = authenticatedUser.Password;
+            textBoxMiddleName.Text = authenticatedUser.MiddleName;
+        }
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUserId}");
+            var requestsUser = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userRequest={authenticatedUser.ID}");
+            List<ResponseRequests> requestsHistory = requestsUser.Where(x => x.IDStatus == 3 | x.IDStatus == 4).ToList();
+            listViewHistoryRequest.ItemsSource = requestsHistory;
+        }
+
+        private async void buttonSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int currentUserID = authenticatedUser.ID;
+                ResponseUsers user = new ResponseUsers
+                {
+                    ID = authenticatedUser.ID,
+                    Name = textBoxName.Text,
+                    Surname = textBoxSurName.Text,
+                    MiddleName = textBoxMiddleName.Text,
+                    Login = textBoxLogin.Text,
+                    Password = textBoxPassword.Text,
+                    IDRole = authenticatedUser.IDRole,
+                };
+
+                bool isSuccess = await apiDataProvider.UpdateDataToApi("Users", authenticatedUser.ID, user);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Изменения сотрудника {authenticatedUser.FullName} произошли успешно! \nИзменения вступят в силу после перезапуска программы!");
+                    LoadUserInfo();
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
+            }
         }
     }
 }
