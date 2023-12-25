@@ -90,7 +90,7 @@ namespace SUVCServiceApp.Pages
             using (var doc = new XWPFDocument())
             {
                 CreateNewParagraph(doc, "Государственное бюджетное профессиональное образовательное учреждение " +
-                                    "\"Южно-Уральский многопрофильный колледж\"Отчет информационного отдела", 0, ParagraphAlignment.CENTER);
+                                    "\"Южно-Уральский многопрофильный колледж\"", 0, ParagraphAlignment.CENTER);
                 CreateNewParagraph(doc, "Отчет информационного отдела", 30, ParagraphAlignment.CENTER);
                 CreateNewParagraph(doc, $"Отчет с {selectedStartDate} по {selectedEndDate}", 15, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {completedRequestsCount}", 0, ParagraphAlignment.LEFT);
