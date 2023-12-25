@@ -351,6 +351,9 @@
   <ItemGroup>
     <Resource Include="Resources\mapDefault.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\etaj.PNG" />
+    <Resource Include="Resources\kab.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

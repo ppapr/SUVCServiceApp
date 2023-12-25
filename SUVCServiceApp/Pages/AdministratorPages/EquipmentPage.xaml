@@ -21,7 +21,7 @@
             <TextBox x:Name="textBoxSearchEquipment" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}"
                      MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearchEquipment_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listEquipments" Grid.Row="1" Margin="20">
+        <ListView x:Name="listEqipments" Grid.Row="1" Margin="20">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

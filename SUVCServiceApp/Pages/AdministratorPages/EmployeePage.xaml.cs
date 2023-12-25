@@ -39,7 +39,7 @@ namespace SUVCServiceApp.Pages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseUsers>(dataGridUsers, "Users");
+            await dataGridLoader.LoadData<ResponseUsers>(listEmployees, "Users");
         }
 
         private void buttonAddUser_Click(object sender, RoutedEventArgs e)
@@ -64,14 +64,14 @@ namespace SUVCServiceApp.Pages
 
         private void dataGridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedEmployee = (ResponseUsers)dataGridUsers.SelectedItem;
+            selectedEmployee = (ResponseUsers)listEmployees.SelectedItem;
         }
 
         private async void textBoxSearchUser_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchTerm = textBoxSearchUser.Text;
             Func<ResponseUsers, string> searchProperty = item => item.FullName;
-            await dataGridLoader.LoadData(dataGridUsers, "Users", searchProperty, searchTerm);
+            await dataGridLoader.LoadData(listEmployees, "Users", searchProperty, searchTerm);
         }
 
         private async void comboBoxCategoryUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,7 +82,7 @@ namespace SUVCServiceApp.Pages
                 if (!string.IsNullOrEmpty(selectedCategory) && selectedCategory != "Все")
                 {
                     Func<ResponseUsers, string> searchProperty = item => item.Role;
-                    await dataGridLoader.LoadData(dataGridUsers, "Users", searchProperty, selectedCategory);
+                    await dataGridLoader.LoadData(listEmployees, "Users", searchProperty, selectedCategory);
                 }
                 else
                     LoadDataGrid();

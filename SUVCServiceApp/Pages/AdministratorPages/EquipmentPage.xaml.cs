@@ -36,7 +36,7 @@ namespace SUVCServiceApp.Pages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments");
+            await dataGridLoader.LoadData<ResponseEquipment>(listEqipments, "Equipments");
         }
 
         private void buttonAddEquipment_Click(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace SUVCServiceApp.Pages
         {
             string searchTerm = textBoxSearchEquipment.Text;
             Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
-            await dataGridLoader.LoadData(listEquipments, "Equipments", searchProperty, searchTerm);
+            await dataGridLoader.LoadData(listEqipments, "Equipments", searchProperty, searchTerm);
         }
     }
 }

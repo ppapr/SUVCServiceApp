@@ -12,6 +12,8 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BitmapImage x:Key="DefaultMap" UriSource="/Resources/mapDefault.png"/>
+        <BitmapImage x:Key="etaj" UriSource="/Resources/etaj.png"/>
+        <BitmapImage x:Key="kab" UriSource="/Resources/kab.png"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -19,8 +21,18 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="#797979" Grid.RowSpan="2"/>
-        <Image Source="{StaticResource DefaultMap}" Margin="10"  Stretch="Fill"/>
-        <Button Grid.Row="1" x:Name="buttonCloseMap" Content="Закрыть карту" VerticalAlignment="Bottom" Width="180" Height="30" 
-                Style="{StaticResource RoundedButtonStyle}" Margin="20" Click="buttonCloseMap_Click" />
+        <StackPanel Orientation="Vertical">
+        <Image Source="{StaticResource kab}" Margin="10" Height="280"  Stretch="Fill"/>
+        <TextBlock Text="Подняться на 4 этаж" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White"/>
+            
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Button x:Name="buttonPrevSlide" Content="Назад" VerticalAlignment="Bottom" Width="60" Height="30" 
+                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,10,20"  />
+        <Button x:Name="buttonCloseMap" Content="Закрыть карту" VerticalAlignment="Bottom" Width="180" Height="30" 
+                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,10,20" Click="buttonCloseMap_Click" />
+            <Button x:Name="buttonNextSlide" Content="Вперед" VerticalAlignment="Bottom" Width="60" Height="30" 
+                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,0,20"  />
+        </StackPanel>
     </Grid>
 </Window>

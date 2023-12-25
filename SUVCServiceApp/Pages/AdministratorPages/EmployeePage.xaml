@@ -27,15 +27,27 @@
                 <ComboBoxItem Content="Сотрудник"/>
             </ComboBox>
         </StackPanel>
-        <DataGrid Grid.Row="1" x:Name="dataGridUsers" AutoGenerateColumns="False" Margin="0,20,0,0" Background="White" 
-                  CanUserAddRows="False" BorderThickness="0" HorizontalAlignment="Center" SelectionChanged="dataGridUsers_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Сотрудник" Binding="{Binding FullName}"/>
-                <DataGridTextColumn Header="Логин сотрудника" Binding="{Binding Login}"/>
-                <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
-                <DataGridTextColumn Header="Отдел" Binding="{Binding Role}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView x:Name="listEmployees" Grid.Row="1" Margin="20">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding FullName, StringFormat={} Сотрудник: {0}}" Margin="0,0,20,0"/>
+                        <StackPanel Grid.Column="1" Margin="0,0,20,0">
+                            <TextBlock Text="{Binding Login, StringFormat={} Логин: {0}}"/>
+                            <TextBlock Text="{Binding Password, StringFormat={} Пароль: {0}}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="{Binding Role, StringFormat={} Отдел сотрудника: {0}}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10" Click="buttonAddUser_Click"/>
