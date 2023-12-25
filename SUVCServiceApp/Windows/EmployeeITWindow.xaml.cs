@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUVCServiceApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,16 +20,16 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class EmployeeITWindow : Window
     {
-        private readonly int authenticatedUserId;
+        private readonly ResponseUsers authenticatedUser;
         public Frame FrameWorkspace
         {
             get { return frameWorkspace; }
         }
-        public EmployeeITWindow(int authenticatedUserId)
+        public EmployeeITWindow(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
-            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUserId));
+            this.authenticatedUser = authenticatedUser;
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUser));
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -39,7 +40,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUserId));
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.RequestITEmployeePage(authenticatedUser));
         }
 
         private void buttonEquipment_Click(object sender, RoutedEventArgs e)
@@ -59,7 +60,7 @@ namespace SUVCServiceApp.Windows
 
         private void buttonProfile_Click(object sender, RoutedEventArgs e)
         {
-            frameWorkspace.Navigate(new Pages.ITEmployeePages.ProfileITEmployee());
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.ProfileITEmployee(authenticatedUser));
         }
     }
 }

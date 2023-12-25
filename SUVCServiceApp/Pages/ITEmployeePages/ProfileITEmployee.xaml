@@ -42,19 +42,26 @@
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonSaveChanges_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История выполненных заявок:" Margin="5"/>
-                <ListView Margin="5">
-                    <ListViewItem Content="Выполненная заявка. 01.01.2023. От: Брюханова Яна" Margin="10,10,10,0"/>
-                    <ListViewItem Content="Оборудование: K21503N12" Margin="10,0,0,0"/>
-                    <ListViewItem Content="Выполненная заявка. 02.01.2023. От: Воропанова Ирина" Margin="10,10,10,0"/>
-                    <ListViewItem Content="Оборудование: K21504N13" Margin="10,0,0,0"/>
-                    <ListViewItem Content="Выполненная заявка. 03.01.2023. От: Брюханова Яна" Margin="10,10,10,0"/>
-                    <ListViewItem Content="Оборудование: K21503N01" Margin="10,0,0,0"/>
-                    <ListViewItem Content="Выполненная заявка. 04.01.2023. От: Брюханова Яна" Margin="10,10,10,0"/>
-                    <ListViewItem Content="Оборудование: K21503N02" Margin="10,0,0,0"/>
+                <ListView x:Name="listViewHistory" Margin="5" Height="300">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
+                                    <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
+                                    <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
+                                    <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
         </Grid>

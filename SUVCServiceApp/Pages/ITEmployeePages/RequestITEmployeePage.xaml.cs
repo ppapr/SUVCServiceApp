@@ -24,19 +24,19 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
-        private int authenticatedUserId;
+        private ResponseUsers authenticatedUser;
 
-        public RequestITEmployeePage(int authenticatedUserId)
+        public RequestITEmployeePage(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
-            this.authenticatedUserId = authenticatedUserId;
+            this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
             LoadDataGrid();
         }
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUserId}");
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser}");
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor=10");
         }
 

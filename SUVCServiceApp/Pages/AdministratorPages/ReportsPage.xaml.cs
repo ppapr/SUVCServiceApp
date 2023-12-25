@@ -113,35 +113,23 @@ namespace SUVCServiceApp.Pages
         async Task CreateSpareEquipmentReport()
         {
             List<ResponseSpare> sparesData = await apiDataProvider.GetDataFromApi<ResponseSpare>("SparesEquipments");
-
-            // Создание документа Word
             using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", 
                 $"Отчет по запчастям за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
             {
                 XWPFDocument doc = new XWPFDocument();
-
-                // Добавление заголовка
                 XWPFParagraph titleParagraph = doc.CreateParagraph();
                 XWPFRun titleRun = titleParagraph.CreateRun();
                 titleRun.SetText("Отчет по запчастям");
                 titleRun.FontSize = 14;
                 titleParagraph.Alignment = ParagraphAlignment.CENTER;
-
-                // Добавление таблицы
                 XWPFTable table = doc.CreateTable(sparesData.Count + 1, 2);
-
-                // Добавление заголовков таблицы
                 table.GetRow(0).GetCell(0).SetText("Наименование");
                 table.GetRow(0).GetCell(1).SetText("Оборудование");
-
-                // Заполнение таблицы данными
                 for (int i = 0; i < sparesData.Count; i++)
                 {
                     table.GetRow(i + 1).GetCell(0).SetText(sparesData[i].SpareName);
                     table.GetRow(i + 1).GetCell(1).SetText(sparesData[i].Equipment);
                 }
-
-                // Сохранение документа
                 doc.Write(fs);
             }
         }
@@ -150,31 +138,21 @@ namespace SUVCServiceApp.Pages
 
             List<ResponseEquipment> writeOffEquipmentData = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
             writeOffEquipmentData = writeOffEquipmentData.Where(equipment => equipment.IDStatus == 4).ToList();
-
-            // Создание документа Word
             using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", 
                 $"Отчет по оборудованию за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
             {
                 XWPFDocument doc = new XWPFDocument();
-
-                // Добавление заголовка
                 XWPFParagraph titleParagraph = doc.CreateParagraph();
                 XWPFRun titleRun = titleParagraph.CreateRun();
                 titleRun.SetText("Отчет по списанию оборудования");
                 titleRun.FontSize = 14;
                 titleParagraph.Alignment = ParagraphAlignment.CENTER;
-
-                // Добавление таблицы
                 XWPFTable table = doc.CreateTable(writeOffEquipmentData.Count + 1, 7);
-
-                // Добавление заголовков таблицы
                 string[] headers = { "Наименование", "Описание", "Имя в сети", "Инвентарный номер", "Владелец", "Расположение", "Статус" };
                 for (int i = 0; i < headers.Length; i++)
                 {
                     table.GetRow(0).GetCell(i).SetText(headers[i]);
                 }
-
-                // Заполнение таблицы данными
                 for (int i = 0; i < writeOffEquipmentData.Count; i++)
                 {
                     table.GetRow(i + 1).GetCell(0).SetText(writeOffEquipmentData[i].EquipmentName);
@@ -185,35 +163,9 @@ namespace SUVCServiceApp.Pages
                     table.GetRow(i + 1).GetCell(5).SetText(writeOffEquipmentData[i].LocationAuditorium.ToString());
                     table.GetRow(i + 1).GetCell(6).SetText(writeOffEquipmentData[i].StatusName);
                 }
-
-                // Сохранение документа
                 doc.Write(fs);
             }
         }
-        static void DrawCellWithWordWrap(XGraphics gfx, string text, XFont font, int x, int y, int width, int height, int maxCharactersPerLine = 40)
-        {
-            string[] words = text.Split(' ');
-            double currentX = x;
-            double currentY = y;
-            string currentLine = "";
-
-            foreach (var word in words)
-            {
-                if ((currentLine + " " + word).Length > maxCharactersPerLine)
-                {
-                    gfx.DrawString(currentLine, font, XBrushes.Black, new XRect(x, currentY, width, height), XStringFormats.TopLeft);
-                    currentLine = word;
-                    currentY += height;
-                }
-                else
-                {
-                    currentLine += " " + word;
-                }
-            }
-            gfx.DrawString(currentLine.Trim(), font, XBrushes.Black, new XRect(x, currentY, width, height), XStringFormats.TopLeft);
-        }
-
-
         void CreateReportDirectory()
         {
             string exePath = AppDomain.CurrentDomain.BaseDirectory;
