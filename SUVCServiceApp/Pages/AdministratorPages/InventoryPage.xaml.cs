@@ -1,9 +1,11 @@
-﻿using PdfSharp.Drawing;
+﻿using NPOI.XWPF.UserModel;
+using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,17 +28,10 @@ namespace SUVCServiceApp.Pages
     public partial class InventoryPage : Page
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
-        private readonly DataGridLoader dataGridLoader;
         public InventoryPage()
         {
             InitializeComponent();
-            dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
-        }
-
-        private async void LoadDataGrid()
-        {
-            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments");
+            LoadInventoryListView();
         }
 
         void CreateInventoryDirectory()
@@ -54,36 +49,78 @@ namespace SUVCServiceApp.Pages
                 MessageBox.Show($"Ошибка при создании папки 'Inventories': {ex.Message}");
             }
         }
-
-        private async void buttonAddInventory_Click(object sender, RoutedEventArgs e)
+        private void LoadInventoryListView()
         {
-            
+            string inventoryFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Inventories");
+            if (Directory.Exists(inventoryFolder))
+            {
+                string[] inventoryFiles = Directory.GetFiles(inventoryFolder, "*.docx");
+                listViewInventory.Items.Clear();
+                foreach (string file in inventoryFiles)
+                {
+                    listViewInventory.Items.Add(System.IO.Path.GetFileName(file));
+                }
+            }
+        }
+        private void buttonAddInventory_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CreateInventoryDirectory();
+                CreateInventory();
+
+                MessageBox.Show("Инвентаризация создана!");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось создать инвентарный отчет! Возможно произошла ошибка, " +
+                    "проверьте соединение с интернетом или попробуйте позже!");
+            }
+        }
+
+        async Task CreateInventory()
+        {
             List<ResponseEquipment> equipmentData = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
             var countEquipment = equipmentData.Count.ToString();
-            using (PdfDocument document = new PdfDocument())
+            using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Inventories", $"Инвентаризация за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
             {
-                PdfPage page = document.AddPage();
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Arial", 12);
-                gfx.DrawString($"Инвентаризация от {DateTime.Now.ToShortDateString()}", font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormats.TopCenter);
-                gfx.DrawString($"Количество оборудования: {countEquipment}", font, XBrushes.Black, new XRect(10, 10, page.Width, page.Height), XStringFormats.TopCenter);
-                int startX = 10;
-                int startY = 40;
-                int rowHeight = 20;
-                gfx.DrawString("Оборудование", font, XBrushes.Black, new XRect(startX + 60, startY, 150, rowHeight), XStringFormats.TopLeft);
-                gfx.DrawString("Ответственный", font, XBrushes.Black, new XRect(startX + 220, startY, 150, rowHeight), XStringFormats.TopLeft);
-                startY += rowHeight;
-                foreach (var equipment in equipmentData)
-                {
-                    gfx.DrawString(equipment.FullNameEquipment, font, XBrushes.Black, new XRect(startX + 60, startY, 150, rowHeight), XStringFormats.TopLeft);
-                    gfx.DrawString(equipment.OwnerName, font, XBrushes.Black, new XRect(startX + 220, startY, 150, rowHeight), XStringFormats.TopLeft);
-                    startY += rowHeight;
-                }
+                XWPFDocument doc = new XWPFDocument();
+                XWPFParagraph paragraph1 = doc.CreateParagraph();
+                paragraph1.Alignment = ParagraphAlignment.CENTER;
+                paragraph1.CreateRun().SetText($"Инвентаризация от {DateTime.Now.ToShortDateString()}");
 
-                string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Inventories");
-                string reportFilePath = System.IO.Path.Combine(reportsFolderPath, $"Инвентаризация за {DateTime.Now.ToShortDateString()}.pdf");
-                document.Save(reportFilePath);
+                XWPFParagraph paragraph2 = doc.CreateParagraph();
+                paragraph2.Alignment = ParagraphAlignment.CENTER;
+                paragraph2.CreateRun().SetText($"Количество оборудования: {countEquipment}");
+                XWPFTable table = doc.CreateTable(equipmentData.Count + 1, 2);
+                table.GetRow(0).GetCell(0).SetText("Оборудование");
+                table.GetRow(0).GetCell(1).SetText("Ответственный");
+                for (int i = 0; i < equipmentData.Count; i++)
+                {
+                    table.GetRow(i + 1).GetCell(0).SetText(equipmentData[i].FullNameEquipment);
+                    table.GetRow(i + 1).GetCell(1).SetText(equipmentData[i].OwnerName);
+                }
+                doc.Write(fs);
+            }
+        }
+        private string selectedInventory;
+        private void listViewInventory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedInventory = listViewInventory.SelectedItem as string;
+        }
+
+        private void buttonCheckInventory_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(selectedInventory))
+            {
+                string reportFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Inventories", selectedInventory);
+                Process.Start(reportFilePath);
+            }
+            else
+            {
+                MessageBox.Show("Выберите инвентаризацию из списка.");
             }
         }
     }
 }
+

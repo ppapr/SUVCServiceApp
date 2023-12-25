@@ -48,7 +48,7 @@ namespace SUVCServiceApp.Pages.AdministratorPages
             string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
             if (Directory.Exists(reportsFolderPath))
             {
-                string[] reportFiles = Directory.GetFiles(reportsFolderPath, "*.pdf");
+                string[] reportFiles = Directory.GetFiles(reportsFolderPath, "*.docx");
                 listViewReports.Items.Clear();
                 foreach (string reportFile in reportFiles)
                 {

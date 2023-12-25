@@ -20,30 +20,13 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" MinWidth="700" Margin="10" Height="35"/>
         </StackPanel>
-        <ListView x:Name="listEquipments" Grid.Row="1" Margin="20">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="1" Margin="0,0,20,0">
-                            <TextBlock Text="{Binding EquipmentName, StringFormat={} Оборудование: {0}}"/>
-                            <TextBlock Text="{Binding NetworkName, StringFormat={} Сетевое имя: {0}}"/>
-                            <TextBlock Text="{Binding InventoryName, StringFormat={} Инвентарный номер: {0}}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Text="{Binding StatusName, StringFormat={} Состояние оборудования: {0}}"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <ListView x:Name="listViewInventory" Grid.Row="1" Margin="20" SelectionChanged="listViewInventory_SelectionChanged">
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddInventory" Content="Провести инвентаризацию" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddInventory_Click"/>
+            <Button x:Name="buttonCheckInventory" Content="Просмотреть инвентаризацию" Width="200" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                          Margin="10,10,30,10" Click="buttonCheckInventory_Click"/>
         </StackPanel>
     </Grid>
 </Page>
