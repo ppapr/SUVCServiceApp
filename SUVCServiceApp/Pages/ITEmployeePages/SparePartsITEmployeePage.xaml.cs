@@ -42,5 +42,12 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             employeeITWindow.FrameWorkspace.Navigate(new Pages.AddPagesITEmployee.AddSpareITEmployee(employeeITWindow));
         }
+
+        private async void textBoxSearchSpares_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearchSpares.Text;
+            Func<ResponseSpare, string> searchProperty = item => item.SpareName;
+            await dataGridLoader.LoadData(listSpares, "SparesEquipments", searchProperty, searchTerm);
+        }
     }
 }

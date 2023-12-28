@@ -45,5 +45,12 @@ namespace SUVCServiceApp.Pages.EmployeePages
         {
             employeeWindow.FrameWorkspace.Navigate(new Pages.AddPagesEmployee.CreateNewRequestEmployeePage(authenticatedUser, employeeWindow));
         }
+
+        private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearch.Text;
+            Func<ResponseRequests, string> searchProperty = item => item.Description;
+            await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm)
+        }
     }
 }

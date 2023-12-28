@@ -18,13 +18,19 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
-            <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
-                          VerticalContentAlignment="Center">
-                <ComboBoxItem Content="Все" IsSelected="True"/>
-                <ComboBoxItem Content="Заявки"/>
-                <ComboBoxItem Content="Обращения"/>
-                <ComboBoxItem Content="Задачи"/>
+            <TextBox x:Name="textBoxSearchProgram" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35" TextChanged="textBoxSearchProgram_TextChanged"/>
+            <ComboBox x:Name="comboBoxSpecialization" Width="150" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center"
+                      SelectionChanged="comboBoxSpecialization_SelectionChanged">
+                <ComboBoxItem Content="Все"/>
+                <ComboBoxItem Content="Программисты"/>
+                <ComboBoxItem Content="Черная металлургия"/>
+                <ComboBoxItem Content="Обработка металлов давлением"/>
+                <ComboBoxItem Content="Мехатроники"/>
+                <ComboBoxItem Content="Электрики"/>
+                <ComboBoxItem Content="Механники"/>
+                <ComboBoxItem Content="Гидравлики"/>
+                <ComboBoxItem Content="КиП"/>
+                <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
         </StackPanel>
         <ListView x:Name="listPrograms" Grid.Row="1" Margin="20">

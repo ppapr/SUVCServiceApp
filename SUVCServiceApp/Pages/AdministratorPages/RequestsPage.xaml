@@ -20,14 +20,7 @@
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
             <TextBox x:Name="textBoxSearch" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
-                     Width="500" Margin="10" Height="35" TextChanged="textBoxSearch_TextChanged"/>
-            <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
-                          VerticalContentAlignment="Center">
-                <ComboBoxItem Content="Все" IsSelected="True"/>
-                <ComboBoxItem Content="Заявки"/>
-                <ComboBoxItem Content="Обращения"/>
-                <ComboBoxItem Content="Задачи"/>
-            </ComboBox>
+                     Width="700" Margin="10" Height="35" TextChanged="textBoxSearch_TextChanged"/>
         </StackPanel>
         <ListView x:Name="listRequests" Grid.Row="1" Margin="20" SelectionChanged="listRequests_SelectionChanged">
             <ListView.ItemTemplate>

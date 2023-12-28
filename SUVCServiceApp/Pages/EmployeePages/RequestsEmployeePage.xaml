@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="700" Margin="10" Height="35"/>
+            <TextBox x:Name="textBoxSearch" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="700" Margin="10" Height="35" TextChanged="textBoxSearch_TextChanged"/>
         </StackPanel>
         <ListView x:Name="listRequests" Grid.Row="1" Margin="20">
             <ListView.ItemTemplate>

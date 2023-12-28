@@ -35,5 +35,12 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments");
         }
+
+        private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = textBoxSearch.Text;
+            Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
+            await dataGridLoader.LoadData(listEquipments, $"Equipments", searchProperty, searchTerm);
+        }
     }
 }

@@ -95,9 +95,11 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             await UpdateStatusRequest(3);
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            string searchTerm = textBoxSearch.Text;
+            Func<ResponseRequests, string> searchProperty = item => item.Description;
+            await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm)
         }
     }
 }
