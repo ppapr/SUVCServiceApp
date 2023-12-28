@@ -44,5 +44,60 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             new Windows.InteractiveMapWindow().ShowDialog();
         }
+        private ResponseRequests currentRequest;
+        private void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentRequest = (ResponseRequests)listRequests.SelectedItem;
+        }
+
+        async Task UpdateStatusRequest(int statusID)
+        {
+            try
+            {
+                ApiDataProvider apiDataProvider = new ApiDataProvider();
+                int currentRequestID = currentRequest.ID;
+                ResponseRequests request = new ResponseRequests
+                {
+                    ID = currentRequest.ID,
+                    Description = currentRequest.Description,
+                    DateCreateRequest = currentRequest.DateCreateRequest,
+                    DateExecuteRequest = currentRequest.DateExecuteRequest,
+                    IDStatus = statusID,
+                    IDPriority = currentRequest.IDPriority,
+                    IDEquipment = currentRequest.IDEquipment,
+                    IDUserRequest = currentRequest.IDUserRequest,
+                    IDExecutorRequest = currentRequest.IDExecutorRequest
+                };
+
+                bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Вы изменили статус заявки сотрудника {currentRequest.UserRequestName}");
+                }
+                else
+                {
+                    MessageBox.Show("Произошла ошибка! Проверьте поля ввода данных!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте корректность данных и соеднинение с интернетом!");
+            }
+        }
+
+        private async void buttonStartExecute_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateStatusRequest(2);
+        }
+
+        private async void buttonEndExecute_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateStatusRequest(3);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

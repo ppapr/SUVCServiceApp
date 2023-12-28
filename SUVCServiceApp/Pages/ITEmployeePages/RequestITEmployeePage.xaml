@@ -19,16 +19,9 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35"/>
-            <ComboBox Width="100" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
-                          VerticalContentAlignment="Center">
-                <ComboBoxItem Content="Все" IsSelected="True"/>
-                <ComboBoxItem Content="Заявки"/>
-                <ComboBoxItem Content="Обращения"/>
-                <ComboBoxItem Content="Задачи"/>
-            </ComboBox>
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="700" Margin="10" Height="35" TextChanged="TextBox_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listRequests" Grid.Row="1" Margin="20">
+        <ListView x:Name="listRequests" Grid.Row="1" Margin="20" SelectionChanged="listRequests_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -54,9 +47,9 @@
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonStartExecute" Content="Начать выполнение" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
-            <Button x:Name="buttonAddTask" Content="Отменить выполненной" Width="180" Height="30" Margin="10,0,0,0"
-                    Style="{StaticResource RoundedButtonStyle}"/>
+                          Margin="10,10,30,10" Click="buttonStartExecute_Click"/>
+            <Button x:Name="buttonEndExecute" Content="Отметить выполненной" Width="180" Height="30" Margin="10,0,0,0"
+                    Style="{StaticResource RoundedButtonStyle}" Click="buttonEndExecute_Click"/>
             <Button x:Name="buttonShowMap" Content="Показать оборудование на карте" Width="200" Height="30" Margin="30,0,0,0"
                     Style="{StaticResource RoundedButtonStyle}" Click="buttonShowMap_Click"/>
         </StackPanel>
