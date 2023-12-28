@@ -50,7 +50,7 @@ namespace SUVCServiceApp.Pages.EmployeePages
         {
             string searchTerm = textBoxSearch.Text;
             Func<ResponseRequests, string> searchProperty = item => item.Description;
-            await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm)
+            await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm);
         }
     }
 }

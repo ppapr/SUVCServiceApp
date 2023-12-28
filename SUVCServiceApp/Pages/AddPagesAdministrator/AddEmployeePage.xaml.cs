@@ -1,8 +1,12 @@
-﻿using SUVCServiceApp.Controller;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using SUVCServiceApp.Classes;
+using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,7 +63,7 @@ namespace SUVCServiceApp.Pages
 
             catch
             {
-                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
+                MessageBox.Show("Проверьте заполненность данных и соединение с интернетом!");
             }
         }
 
@@ -67,5 +71,41 @@ namespace SUVCServiceApp.Pages
         {
             administratorWindow.FrameWorkspace.Navigate(new EmployeePage(administratorWindow));
         }
+
+        private async void buttonAddFromExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx;*.xls",
+                    Title = "Выберите файл Excel"
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string filePath = openFileDialog.FileName;
+                    var userProcessor = new ExcelDataAdd<ResponseUsers>(
+                            "Users",
+                            record => new ResponseUsers
+                            {
+                            Name = record["Имя"].ToString(),
+                            Surname = record["Фамилия"].ToString(),
+                            MiddleName = record["Отчество"].ToString(),
+                            Login = record["Логин"].ToString(),
+                            Password = record["Пароль"].ToString(),
+                            IDRole = GetRoleIdByDepartment(record["Отдел"].ToString())
+                            });
+
+                    await userProcessor.AddDataFromExcel(filePath); ;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+            }
+        }
+        private int GetRoleIdByDepartment(string department)
+        => department == "Учебный" ? 3 : department == "ИТ" ? 2 : 0;
     }
 }

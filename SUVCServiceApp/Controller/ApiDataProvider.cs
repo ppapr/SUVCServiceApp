@@ -47,8 +47,8 @@ namespace SUVCServiceApp.Controller
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                                 
                 HttpResponseMessage response = await client.PostAsync(apiEndpoint, content);
-                string responseContent = await response.Content.ReadAsStringAsync();
-                MessageBox.Show(responseContent);
+                //string responseContent = await response.Content.ReadAsStringAsync();
+                //MessageBox.Show(responseContent);
 
                 return response.IsSuccessStatusCode;
             }

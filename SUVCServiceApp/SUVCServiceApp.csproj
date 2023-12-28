@@ -128,6 +128,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ExcelDataAdd.cs" />
     <Compile Include="Controller\ApiDataProvider.cs" />
     <Compile Include="Controller\DataGridLoader.cs" />
     <Compile Include="Pages\AddPagesAdministrator\AddEmployeePage.xaml.cs">
@@ -417,5 +418,6 @@
     <Resource Include="Resources\etaj.PNG" />
     <Resource Include="Resources\kab.PNG" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

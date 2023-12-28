@@ -1,4 +1,6 @@
-﻿using SUVCServiceApp.Controller;
+﻿using Microsoft.Win32;
+using SUVCServiceApp.Classes;
+using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
 using System;
@@ -81,5 +83,54 @@ namespace SUVCServiceApp.Pages
         {
             administratorWindow.FrameWorkspace.Navigate(new EquipmentPage(administratorWindow));
         }
+
+        private async void buttonAddFromExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx;*.xls",
+                    Title = "Выберите файл Excel"
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string filePath = openFileDialog.FileName;
+                    var users = await apiDataProvider.GetDataFromApi<ResponseUsers>("Users");
+
+                    var equipmentProcessor = new ExcelDataAdd<ResponseEquipment>(
+                        "Equipments",
+                        record =>
+                        {
+                            string ownerFullName = record["Владелец"].ToString();
+                            int ownerId = GetUserID(users, ownerFullName);
+                            return new ResponseEquipment
+                            {
+                                EquipmentName = record["Название"].ToString(),
+                                EquipmentDescription = record["Описание"].ToString(),
+                                InventoryName = record["Инвентарный номер"].ToString(),
+                                NetworkName = record["Сетевое имя"].ToString(),
+                                IDStatus = GetStatusID(record["Статус"].ToString()),
+                                IDOwnerEquipment = ownerId,
+                                LocationAuditorium = Convert.ToInt32(record["Аудитория"].ToString())
+                            };
+                        });
+
+                    await equipmentProcessor.AddDataFromExcel(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+            }
+        }
+        private int GetUserID(IEnumerable<ResponseUsers> users, string fullName)
+        {
+            var currentUser = users.FirstOrDefault(user => user.FullName == fullName);
+            return currentUser?.ID ?? 0;
+        }
+        private int GetStatusID(string status)
+        => status == "Отличное" ? 1 : status == "Среднее" ? 2 : status == "Ремонт" ? 3 : status == "Списание" ? 4 : 0;
     }
 }

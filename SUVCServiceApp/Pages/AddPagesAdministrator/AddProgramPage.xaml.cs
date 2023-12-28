@@ -1,4 +1,6 @@
-﻿using SUVCServiceApp.Controller;
+﻿using Microsoft.Win32;
+using SUVCServiceApp.Classes;
+using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
 using System;
@@ -71,6 +73,50 @@ namespace SUVCServiceApp.Pages
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             administratorWindow.FrameWorkspace.Navigate(new RegsitryProgramPage(administratorWindow));
+        }
+
+        private async void buttonAddFromExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx;*.xls",
+                    Title = "Выберите файл Excel"
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string filePath = openFileDialog.FileName;
+                    var specializations = await apiDataProvider.GetDataFromApi<ResponseSpecialization>("Specializations");
+
+                    var programProccessor = new ExcelDataAdd<ResponseRegistry>(
+                        "RegistryPrograms",
+                        record =>
+                        {
+                            string specializationName = record["Специальность"].ToString();
+                            int specializationID = GetSpecializationID(specializations, specializationName);
+                            return new ResponseRegistry
+                            {
+                                NameProgram = record["Название"].ToString(),
+                                DescriptionProgram = record["Описание"].ToString(),
+                                VersionProgram = record["Версия"].ToString(),
+                                IDSpecialization = specializationID
+                            };
+                        });
+
+                    await programProccessor.AddDataFromExcel(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+            }
+        }
+        private int GetSpecializationID(IEnumerable<ResponseSpecialization> specializations, string specializationName)
+        {
+            var currentSpecialization = specializations.FirstOrDefault(spec => spec.NameSpecialization == specializationName);
+            return currentSpecialization?.ID ?? 0;
         }
     }
 }

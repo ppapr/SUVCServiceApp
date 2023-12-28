@@ -47,7 +47,7 @@
             <Button x:Name="buttonAddEquipment" Content="Добавить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddEquipment_Click" />
             <Button x:Name="buttonAddFromExcel" Content="Добавить из файла Excel" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonAddFromExcel_Click"/>
         </StackPanel>
     </Grid>
 </Page>
