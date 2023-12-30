@@ -132,5 +132,33 @@ namespace SUVCServiceApp.Pages
         }
         private int GetStatusID(string status)
         => status == "Отличное" ? 1 : status == "Среднее" ? 2 : status == "Ремонт" ? 3 : status == "Списание" ? 4 : 0;
+
+        private void buttonDownloadTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Скачать шаблон?",
+                "Шаблон добавления оборудования", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files|*.xlsx|All Files|*.*";
+                saveFileDialog.Title = "Выберите место для сохранения файла";
+                saveFileDialog.FileName = "оборудование.xlsx";
+                bool? dialogResult = saveFileDialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                    try
+                    {
+                        string filePath = saveFileDialog.FileName;
+                        string resourcePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources", "TemplateAddData", "оборудование.xlsx");
+                        System.IO.File.Copy(resourcePath, filePath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
     }
 }

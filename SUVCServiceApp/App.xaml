@@ -186,5 +186,33 @@
                 <SolidColorBrush x:Key="PressedBackgroundBrush" Color="LightBlue"/>
             </Style.Resources>
         </Style>
+        
+        <Style x:Key="TransparentButtonIcon" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Height="20"
+                                VerticalAlignment="Center" Margin="10,0,5,0" />
+                            <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                    <Setter Property="Background" Value="#CECECE"/>
+                </DataTrigger>
+            </Style.Triggers>
+            <Style.Resources>
+                <SolidColorBrush x:Key="PressedBackgroundBrush" Color="LightBlue"/>
+            </Style.Resources>
+        </Style>
     </Application.Resources>
 </Application>

@@ -107,5 +107,34 @@ namespace SUVCServiceApp.Pages
         }
         private int GetRoleIdByDepartment(string department)
         => department == "Учебный" ? 3 : department == "ИТ" ? 2 : 0;
+
+        private void buttonDownloadTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Скачать шаблон?",
+                "Шаблон добавления программ", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files|*.xlsx|All Files|*.*";
+                saveFileDialog.Title = "Выберите место для сохранения файла";
+                saveFileDialog.FileName = "сотрудники.xlsx";
+                bool? dialogResult = saveFileDialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                    try
+                    {
+                        string filePath = saveFileDialog.FileName;
+                        string resourcePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", 
+                                                                    "Resources", "TemplateAddData", "сотрудники.xlsx");
+                        System.IO.File.Copy(resourcePath, filePath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
     }
 }

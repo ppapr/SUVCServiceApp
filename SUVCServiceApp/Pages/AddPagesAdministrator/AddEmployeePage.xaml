@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="720"
       Title="AddEmployeePage">
-
+    <Page.Resources>
+        <BitmapImage x:Key="IconExcel" UriSource="/Resources/iconexcel.png"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -42,9 +44,11 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10" Click="buttonAddUser_Click"/>
+                          Margin="10,10,0,10" Click="buttonAddUser_Click"/>
             <Button x:Name="buttonAddFromExcel" Content="Добавить из файла Excel" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10" Click="buttonAddFromExcel_Click"/>
+                          Margin="10,10,0,10" Click="buttonAddFromExcel_Click"/>
+            <Button x:Name="buttonDownloadTemplate" Width="40" Height="30" 
+                    Style="{StaticResource TransparentButtonIcon}" Tag="{StaticResource IconExcel}" Click="buttonDownloadTemplate_Click"/>
         </StackPanel>
     </Grid>
 </Page>

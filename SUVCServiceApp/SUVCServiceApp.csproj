@@ -371,6 +371,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\Michroma-Regular.ttf" />
+    <None Include="Resources\TemplateAddData\оборудование.xlsx" />
+    <None Include="Resources\TemplateAddData\программы.xlsx" />
+    <None Include="Resources\TemplateAddData\сотрудники.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -418,6 +421,8 @@
     <Resource Include="Resources\etaj.PNG" />
     <Resource Include="Resources\kab.PNG" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\iconexcel.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
