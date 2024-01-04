@@ -40,10 +40,29 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor=10");
         }
 
-        private void buttonShowMap_Click(object sender, RoutedEventArgs e)
+        public ResponseEquipment currentEquipment;
+
+        private async void buttonShowMap_Click(object sender, RoutedEventArgs e)
         {
-            new Windows.InteractiveMapWindow().ShowDialog();
+            if (currentEquipment != null)
+            {
+                await GetCurrentEqipment();
+                new Windows.InteractiveMapWindow(currentEquipment).ShowDialog();
+            }
+            else
+                MessageBox.Show("Выберите оборудование!");
         }
+
+        private async Task GetCurrentEqipment()
+        {
+            List<ResponseEquipment> data = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
+            if (data != null)
+            {
+                var countEquipments = data.Where(equipment => equipment.ID == currentRequest.IDEquipment).ToList();
+                currentEquipment = countEquipments.FirstOrDefault();
+            }
+        }
+
         private ResponseRequests currentRequest;
         private void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

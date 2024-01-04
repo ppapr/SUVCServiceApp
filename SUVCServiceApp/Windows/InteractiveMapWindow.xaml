@@ -10,29 +10,24 @@
          AllowsTransparency="True"
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <BitmapImage x:Key="DefaultMap" UriSource="/Resources/mapDefault.png"/>
-        <BitmapImage x:Key="etaj" UriSource="/Resources/etaj.png"/>
-        <BitmapImage x:Key="kab" UriSource="/Resources/kab.png"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="#797979" Grid.RowSpan="2"/>
-        <StackPanel Orientation="Vertical">
-        <Image Source="{StaticResource kab}" Margin="10" Height="280"  Stretch="Fill"/>
-        <TextBlock Text="Подняться на 4 этаж" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White"/>
-            
-        </StackPanel>
+        <Grid>
+            <Image x:Name="firstImage" Margin="10" Height="280"  Stretch="Fill"/>
+            <Image x:Name="secondImage" Margin="10" Height="280"  Stretch="Fill" Visibility="Hidden"/>
+            <TextBlock x:Name="textBlockAction" Text="Подняться на 4 этаж" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White"/>            
+        </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
         <Button x:Name="buttonPrevSlide" Content="Назад" VerticalAlignment="Bottom" Width="60" Height="30" 
-                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,10,20"  />
+                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,10,20" Click="buttonPrevSlide_Click"  />
         <Button x:Name="buttonCloseMap" Content="Закрыть карту" VerticalAlignment="Bottom" Width="180" Height="30" 
                 Style="{StaticResource RoundedButtonStyle}" Margin="20,20,10,20" Click="buttonCloseMap_Click" />
             <Button x:Name="buttonNextSlide" Content="Вперед" VerticalAlignment="Bottom" Width="60" Height="30" 
-                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,0,20"  />
+                Style="{StaticResource RoundedButtonStyle}" Margin="20,20,0,20" Click="buttonNextSlide_Click"  />
         </StackPanel>
     </Grid>
 </Window>

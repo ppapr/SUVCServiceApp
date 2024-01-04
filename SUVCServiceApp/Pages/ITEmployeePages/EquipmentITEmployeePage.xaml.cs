@@ -1,5 +1,6 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
+using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,19 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             string searchTerm = textBoxSearch.Text;
             Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
             await dataGridLoader.LoadData(listEquipments, $"Equipments", searchProperty, searchTerm);
+        }
+        private ResponseEquipment currentEquipment;
+        private void buttonCheckLocation_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentEquipment != null)
+                new Windows.InteractiveMapWindow(currentEquipment).ShowDialog();
+            else
+                MessageBox.Show("Выберите оборудование!");
+        }
+
+        private void listEquipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentEquipment = (ResponseEquipment)listEquipments.SelectedItem;
         }
     }
 }
