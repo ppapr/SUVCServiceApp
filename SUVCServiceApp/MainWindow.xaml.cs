@@ -43,7 +43,7 @@ namespace SUVCServiceApp
 
                 using (HttpClient client = new HttpClient())
                 {
-                    string apiUrl = $"http://localhost:61895/api/Users?login={login}&password={password}";
+                    string apiUrl = $"http://ppapr4-001-site1.itempurl.com/api/Users?login={login}&password={password}";
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 

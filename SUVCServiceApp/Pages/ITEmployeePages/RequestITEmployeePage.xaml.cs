@@ -36,8 +36,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
 
         private async void LoadDataGrid()
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser}");
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor=10");
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}");
         }
 
         public ResponseEquipment currentEquipment;
@@ -46,7 +45,6 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             if (currentEquipment != null)
             {
-                await GetCurrentEqipment();
                 new Windows.InteractiveMapWindow(currentEquipment).ShowDialog();
             }
             else
@@ -64,9 +62,10 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         }
 
         private ResponseRequests currentRequest;
-        private void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentRequest = (ResponseRequests)listRequests.SelectedItem;
+            await GetCurrentEqipment();
         }
 
         async Task UpdateStatusRequest(int statusID)

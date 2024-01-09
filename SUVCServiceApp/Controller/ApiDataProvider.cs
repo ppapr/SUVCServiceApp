@@ -13,7 +13,7 @@ namespace SUVCServiceApp.Controller
 {
     public class ApiDataProvider
     {
-        private const string ApiBaseUrl = "http://localhost:61895/api/";
+        private const string ApiBaseUrl = "http://ppapr4-001-site1.itempurl.com/api/";
 
         public async Task<List<T>> GetDataFromApi<T>(string apiEndpoint)
         {
