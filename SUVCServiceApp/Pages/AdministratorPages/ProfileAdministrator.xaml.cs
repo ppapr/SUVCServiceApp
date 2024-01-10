@@ -3,6 +3,7 @@ using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,11 +50,26 @@ namespace SUVCServiceApp.Pages.AdministratorPages
             if (Directory.Exists(reportsFolderPath))
             {
                 string[] reportFiles = Directory.GetFiles(reportsFolderPath, "*.docx");
+                var sortedFiles = reportFiles.OrderByDescending(file => GetFileDate(file));
                 listViewReports.Items.Clear();
-                foreach (string reportFile in reportFiles)
+                foreach (string reportFile in sortedFiles)
                 {
                     listViewReports.Items.Add(System.IO.Path.GetFileName(reportFile));
                 }
+            }
+        }
+
+        private DateTime GetFileDate(string filePath)
+        {
+            try
+            {
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                string dateString = fileName.Split('[', ']')[1].Trim();
+                return DateTime.ParseExact(dateString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return DateTime.MinValue;
             }
         }
         private string selectedReport;

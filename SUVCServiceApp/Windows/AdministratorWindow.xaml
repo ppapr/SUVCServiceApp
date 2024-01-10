@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SUVCServiceApp.Windows"
         mc:Ignorable="d"
-        Title="AdministratorWindow" Height="550" Width="900"
+        Title="Рабочее окно администратора" Height="550" Width="900"
         WindowStyle="None"
          AllowsTransparency="True"
         Background="Transparent"

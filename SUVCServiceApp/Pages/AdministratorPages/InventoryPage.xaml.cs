@@ -6,6 +6,7 @@ using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,13 +56,29 @@ namespace SUVCServiceApp.Pages
             if (Directory.Exists(inventoryFolder))
             {
                 string[] inventoryFiles = Directory.GetFiles(inventoryFolder, "*.docx");
+                var sortedFiles = inventoryFiles.OrderByDescending(file => GetFileDate(file));
                 listViewInventory.Items.Clear();
-                foreach (string file in inventoryFiles)
+                foreach (string file in sortedFiles)
                 {
                     listViewInventory.Items.Add(System.IO.Path.GetFileName(file));
                 }
             }
         }
+
+        private DateTime GetFileDate(string filePath)
+        {
+            try
+            {
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                string dateString = fileName.Split('[', ']')[1].Trim();
+                return DateTime.ParseExact(dateString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return DateTime.MinValue;
+            }
+        }
+
         private async void buttonAddInventory_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -69,8 +86,6 @@ namespace SUVCServiceApp.Pages
                 CreateInventoryDirectory();
                 if (await CreateInventory())
                 {
-
-
                     MessageBox.Show("Инвентаризация создана!");
                     LoadInventoryListView();
                 }
