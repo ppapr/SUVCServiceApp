@@ -50,5 +50,24 @@ namespace SUVCServiceApp.Pages
             Func<ResponseEquipment, string> searchProperty = item => item.FullNameEquipment;
             await dataGridLoader.LoadData(listEqipments, "Equipments", searchProperty, searchTerm);
         }
+
+        private async void buttonDeleteEqipment_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите удалить запчасть {currentEquipment.EquipmentName}?",
+                "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await apiDataProvider.DeleteDataFromApi<ResponseEquipment>("Equipments", currentEquipment.ID);
+                MessageBox.Show("Удаление завершено!");
+                LoadDataGrid();
+            }
+        }
+
+        ResponseEquipment currentEquipment;
+        private void listEqipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentEquipment = (ResponseEquipment)listEqipments.SelectedItem;
+        }
     }
 }

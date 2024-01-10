@@ -21,7 +21,7 @@
             <TextBox x:Name="textBoxSearchEquipment" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}"
                      MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearchEquipment_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listEqipments" Grid.Row="1" Margin="20">
+        <ListView x:Name="listEqipments" Grid.Row="1" Margin="20" SelectionChanged="listEqipments_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -50,7 +50,7 @@
             <Button x:Name="buttonAddEquipment" Content="Добавить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddEquipment_Click"/>
             <Button x:Name="buttonDeleteEqipment" Content="Удалить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
-                          Margin="10,10,30,10"/>
+                          Margin="10,10,30,10" Click="buttonDeleteEqipment_Click"/>
         </StackPanel>
     </Grid>
 </Page>

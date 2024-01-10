@@ -3,6 +3,7 @@ using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -75,6 +76,12 @@ namespace SUVCServiceApp
             }
             catch
             { MessageBox.Show("Произошла ошибка. Проверьте подключение к интернету!"); }
+        }
+
+        private void buttonFAQ_Click(object sender, RoutedEventArgs e)
+        {
+            string resourcePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources", "faq.pdf");
+            Process.Start(resourcePath);
         }
     }
 }

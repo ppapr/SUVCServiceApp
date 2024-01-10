@@ -56,12 +56,10 @@ namespace SUVCServiceApp.Pages.AddPagesEmployee
                 if (isRequest)
                 {
                     equipmentID = (int)equipment.ID;
-                    MessageBox.Show("Заявка");
                 }
                 else
                 {
                     equipmentID = 61;
-                    MessageBox.Show("Обращение");
                 }
                 ResponseRequests requests = new ResponseRequests
                 {
