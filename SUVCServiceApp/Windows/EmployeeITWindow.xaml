@@ -20,6 +20,9 @@
         <BitmapImage x:Key="IconExit" UriSource="/Resources/iconexit.png"/>
         <BitmapImage x:Key="IconRequest" UriSource="/Resources/iconrequest.png"/>
         <BitmapImage x:Key="IconProfile" UriSource="/Resources/iconprofile.png"/>
+        <BitmapImage x:Key="IconClose" UriSource="/Resources/close.png"/>
+        <BitmapImage x:Key="IconMinimize" UriSource="/Resources/minimize.png"/>
+        <BitmapImage x:Key="IconMaximize" UriSource="/Resources/maximize.png"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,6 +41,11 @@
             <Button x:Name="buttonProfile" VerticalAlignment="Bottom" Content="Личный кабинет" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconProfile}" Margin="0,0,0,50" Height="35" Click="buttonProfile_Click"/>
             <Button x:Name="buttonExit" VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35" Click="buttonExit_Click"/>
         </Grid>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button x:Name="buttonMinimize" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMinimize}" Click="buttonMinimize_Click" Width="40" Background="White" BorderThickness="0"/>
+            <Button x:Name="buttonMaximize" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMaximize}" Click="buttonMaximize_Click" Width="40" Background="White" BorderThickness="0"/>
+            <Button x:Name="buttonCloseApp" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconClose}" Click="buttonCloseApp_Click" Width="40" Background="White" BorderThickness="0"/>
+        </StackPanel>
         <Frame Grid.Column="1" x:Name="frameWorkspace" NavigationUIVisibility="Hidden" Margin="15,35,15,15"/>
     </Grid>
 </Window>
