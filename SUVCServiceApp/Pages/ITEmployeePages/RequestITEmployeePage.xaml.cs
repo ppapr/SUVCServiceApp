@@ -26,22 +26,35 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private readonly DataGridLoader dataGridLoader;
         private ResponseUsers authenticatedUser;
 
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
+
         public RequestITEmployeePage(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
             this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadData(currentPage, sizePage);
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}", currentPage, sizePage);
+            var countEquipment = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
+            maxPages = (int)Math.Ceiling(countEquipment.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         public ResponseEquipment currentEquipment;
 
-        private async void buttonShowMap_Click(object sender, RoutedEventArgs e)
+        private void buttonShowMap_Click(object sender, RoutedEventArgs e)
         {
             if (currentEquipment != null)
             {
@@ -118,6 +131,21 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             string searchTerm = textBoxSearch.Text;
             Func<ResponseRequests, string> searchProperty = item => item.Description;
             await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm);
+        }
+
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }

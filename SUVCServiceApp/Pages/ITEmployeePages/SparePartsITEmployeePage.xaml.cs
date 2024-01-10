@@ -25,17 +25,30 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         private readonly Windows.EmployeeITWindow employeeITWindow;
+
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public SparePartsITEmployeePage(Windows.EmployeeITWindow employeeITWindow)
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadData(currentPage, sizePage);
             this.employeeITWindow = employeeITWindow;
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseSpare>(listSpares, "SparesEquipments");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseSpare>(listSpares, "SparesEquipments", currentPage, sizePage);
+            var countSpares = await apiDataProvider.GetDataFromApi<ResponseSpare>($"SparesEquipments");
+            maxPages = (int)Math.Ceiling(countSpares.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         private void buttonAddSpare_Click(object sender, RoutedEventArgs e)
@@ -48,6 +61,21 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             string searchTerm = textBoxSearchSpares.Text;
             Func<ResponseSpare, string> searchProperty = item => item.SpareName;
             await dataGridLoader.LoadData(listSpares, "SparesEquipments", searchProperty, searchTerm);
+        }
+
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }

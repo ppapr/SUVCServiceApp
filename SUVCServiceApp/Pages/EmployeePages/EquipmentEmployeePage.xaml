@@ -14,14 +14,14 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="6*"/>
-            <RowDefinition/>
+            <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBox x:Name="textBoxSearch" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
                      MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearch_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listEquipments" Grid.Row="1" Margin="20">
+        <ListView x:Name="listEquipments" Grid.Row="1" Margin="0,0,0,40">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -46,6 +46,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="buttonPreviousPage" Content="&lt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Top" Margin="305,429,385,0" Grid.RowSpan="2" Click="buttonPreviousPage_Click" />
+        <Label x:Name="labelPage" Content="0" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+        <Button x:Name="buttonNextPage" Content="&gt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="80,0,0,0" Click="buttonNextPage_Click" />
     </Grid>
 </Page>
 

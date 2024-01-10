@@ -27,18 +27,31 @@ namespace SUVCServiceApp.Pages.EmployeePages
         private readonly DataGridLoader dataGridLoader;
         private ResponseUsers authenticatedUser;
         private readonly EmployeeWindow employeeWindow;
+
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public RequestsEmployeePage(ResponseUsers authenticatedUser, EmployeeWindow employeeWindow)
         {
             InitializeComponent();
             this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadData(currentPage,sizePage);
             this.employeeWindow = employeeWindow;
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUser.ID}");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUser.ID}",currentPage, sizePage);
+            var countEquipment = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userRequest={authenticatedUser.ID}");
+            maxPages = (int)Math.Ceiling(countEquipment.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         private void buttonAddRequest_Click(object sender, RoutedEventArgs e)
@@ -51,6 +64,21 @@ namespace SUVCServiceApp.Pages.EmployeePages
             string searchTerm = textBoxSearch.Text;
             Func<ResponseRequests, string> searchProperty = item => item.Description;
             await dataGridLoader.LoadData(listRequests, "Requests", searchProperty, searchTerm);
+        }
+
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }

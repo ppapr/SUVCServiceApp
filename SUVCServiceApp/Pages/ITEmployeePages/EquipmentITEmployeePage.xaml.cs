@@ -25,16 +25,29 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
+
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public EquipmentITEmployeePage()
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadData(currentPage, sizePage);
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseEquipment>(listEquipments, "Equipments", currentPage, sizePage);
+            var countEquipment = await apiDataProvider.GetDataFromApi<ResponseEquipment>($"Equipments");
+            maxPages = (int)Math.Ceiling(countEquipment.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         private async void textBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,6 +68,21 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private void listEquipments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentEquipment = (ResponseEquipment)listEquipments.SelectedItem;
+        }
+
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }

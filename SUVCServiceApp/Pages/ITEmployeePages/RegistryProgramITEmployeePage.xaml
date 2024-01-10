@@ -33,7 +33,7 @@
                 <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
         </StackPanel>
-        <ListView x:Name="listPrograms" Grid.Row="1" Margin="20">
+        <ListView x:Name="listPrograms" Grid.Row="1" Margin="0,0,0,50">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -53,6 +53,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="buttonPreviousPage" Content="&lt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                Margin="0,0,80,10"  VerticalAlignment="Bottom" Click="buttonPreviousPage_Click"/>
+        <Label x:Name="labelPage" Content="0" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="0,0,0,10"/>
+        <Button x:Name="buttonNextPage" Content="&gt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="80,0,0,10" Click="buttonNextPage_Click"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
