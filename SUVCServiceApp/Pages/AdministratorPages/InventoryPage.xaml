@@ -17,9 +17,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" MinWidth="700" Margin="10" Height="35"/>
-        </StackPanel>
+        <DockPanel Grid.Row="0">
+            <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Margin="10" Height="35"/>
+        </DockPanel>
         <ListView x:Name="listViewInventory" Grid.Row="1" Margin="20" SelectionChanged="listViewInventory_SelectionChanged">
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

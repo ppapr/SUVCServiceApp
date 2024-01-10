@@ -62,14 +62,18 @@ namespace SUVCServiceApp.Pages
                 }
             }
         }
-        private void buttonAddInventory_Click(object sender, RoutedEventArgs e)
+        private async void buttonAddInventory_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 CreateInventoryDirectory();
-                CreateInventory();
+                if (await CreateInventory())
+                {
 
-                MessageBox.Show("Инвентаризация создана!");
+
+                    MessageBox.Show("Инвентаризация создана!");
+                    LoadInventoryListView();
+                }
             }
             catch
             {
@@ -78,11 +82,27 @@ namespace SUVCServiceApp.Pages
             }
         }
 
-        async Task CreateInventory()
+        async Task<bool> CreateInventory()
         {
-            List<ResponseEquipment> equipmentData = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
+            List<ResponseEquipment> data = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
+            List<ResponseEquipment> equipmentData = data.Where(equipment => equipment.ID != 42 && equipment.ID != 61).ToList();
             var countEquipment = equipmentData.Count.ToString();
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Inventories", $"Инвентаризация за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
+                "Inventories", $"[{DateTime.Now.ToShortDateString()}] Инвентаризация.docx");
+
+            if (File.Exists(filePath))
+            {
+                MessageBoxResult result = MessageBox.Show("Файл уже существует. Заменить предыдущий файл?", "Подтверждение", 
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Создание инвентаризации отменено!");
+                    return false;
+                }
+            }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 XWPFDocument doc = new XWPFDocument();
                 XWPFParagraph paragraph1 = doc.CreateParagraph();
@@ -101,8 +121,11 @@ namespace SUVCServiceApp.Pages
                     table.GetRow(i + 1).GetCell(1).SetText(equipmentData[i].OwnerName);
                 }
                 doc.Write(fs);
+
+                return true;
             }
         }
+
         private string selectedInventory;
         private void listViewInventory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

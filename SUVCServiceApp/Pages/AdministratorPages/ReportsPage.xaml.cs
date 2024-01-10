@@ -61,7 +61,7 @@ namespace SUVCServiceApp.Pages
             reportRun.SetText(textParagraph);
         }
 
-        async void ReportForRequests()
+        async Task<bool> ReportForRequests()
         {
             DateTime selectedStartDate = dateStartPeriod.SelectedDate ?? DateTime.MinValue;
             DateTime selectedEndDate = dateEndPeriod.SelectedDate ?? DateTime.MaxValue;
@@ -69,19 +69,15 @@ namespace SUVCServiceApp.Pages
             var filteredData = dataForPeriod
                 .Where(request => request.DateCreateRequest >= selectedStartDate && request.DateCreateRequest < selectedEndDate)
                 .ToList();
-            // Общее количество заявок за период
             int completedRequestsCount = filteredData.Count(request => request.IDStatus == 3);
-            // Пользователь, у которого наиболее часто возникают проблемы
             string mostIncidentUser = filteredData
                 .GroupBy(request => request.UserRequestName)
                 .OrderByDescending(group => group.Count())
                 .FirstOrDefault()?.Key;
-            // Сотрудник, максимально выполнивший заявки
             string topExecutor = filteredData
                 .GroupBy(request => request.UserExecutorName)
                 .OrderByDescending(group => group.Count())
                 .FirstOrDefault()?.Key;
-            // Сотрудник, минимально выполнивший заявки
             string leastBusyExecutor = filteredData
                 .GroupBy(request => request.UserExecutorName)
                 .OrderBy(group => group.Count())
@@ -100,21 +96,46 @@ namespace SUVCServiceApp.Pages
                 CreateNewParagraph(doc, "Заведующий отделом ИТ Чухарев В.М. ____________", 80, ParagraphAlignment.RIGHT);
 
                 string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
-                string reportFilePath = System.IO.Path.Combine(reportsFolderPath, $"Отчет по заявкам за {DateTime.Now.ToShortDateString()}.docx");
+                string reportFilePath = System.IO.Path.Combine(reportsFolderPath, $"[{DateTime.Now.ToShortDateString()}] Отчет по заявкам.docx");
+                if (File.Exists(reportFilePath))
+                {
+                    MessageBoxResult result = MessageBox.Show("Файл уже существует. Заменить предыдущий файл?", "Подтверждение",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+                    if (result == MessageBoxResult.No)
+                    {
+                        MessageBox.Show("Создание отчета отменено!");
+                        return false;
+                    }
+                }
                 using (FileStream fs = new FileStream(reportFilePath, FileMode.Create, FileAccess.Write))
                 {
                     doc.Write(fs);
+
+                    return true;
                 }
             }
         }
 
 
-        async Task CreateSpareEquipmentReport()
+        async Task<bool> CreateSpareEquipmentReport()
         {
             List<ResponseSpare> sparesData = await apiDataProvider.GetDataFromApi<ResponseSpare>("SparesEquipments");
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", 
-                $"Отчет по запчастям за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports",
+                $"[{DateTime.Now.ToShortDateString()}] Отчет по запчастям.docx");
+            if (File.Exists(filePath))
+            {
+                MessageBoxResult result = MessageBox.Show("Файл уже существует. Заменить предыдущий файл?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Создание отчета отменено!");
+                    return false;
+                }
+            }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 XWPFDocument doc = new XWPFDocument();
                 XWPFParagraph titleParagraph = doc.CreateParagraph();
@@ -131,15 +152,31 @@ namespace SUVCServiceApp.Pages
                     table.GetRow(i + 1).GetCell(1).SetText(sparesData[i].Equipment);
                 }
                 doc.Write(fs);
+
+                return true;
             }
         }
-        async Task CreateWriteOffEquipmentReport()
+        async Task<bool> CreateWriteOffEquipmentReport()
         {
 
             List<ResponseEquipment> writeOffEquipmentData = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
             writeOffEquipmentData = writeOffEquipmentData.Where(equipment => equipment.IDStatus == 4).ToList();
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports", 
-                $"Отчет по оборудованию за {DateTime.Now.ToShortDateString()}.docx"), FileMode.Create, FileAccess.Write))
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports",
+                $"[{DateTime.Now.ToShortDateString()}] Отчет по оборудованию.docx");
+
+            if (File.Exists(filePath))
+            {
+                MessageBoxResult result = MessageBox.Show("Файл уже существует. Заменить предыдущий файл?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Создание отчета отменено!");
+                    return false;
+                }
+            }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 XWPFDocument doc = new XWPFDocument();
                 XWPFParagraph titleParagraph = doc.CreateParagraph();
@@ -164,6 +201,8 @@ namespace SUVCServiceApp.Pages
                     table.GetRow(i + 1).GetCell(6).SetText(writeOffEquipmentData[i].StatusName);
                 }
                 doc.Write(fs);
+
+                return true;
             }
         }
         void CreateReportDirectory()
@@ -182,13 +221,14 @@ namespace SUVCServiceApp.Pages
             }
         }
 
-        private void buttonRequestReport_Click(object sender, RoutedEventArgs e)
+        private async void buttonRequestReport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 CreateReportDirectory();
-                ReportForRequests();
-                MessageBox.Show("Отчет создан!");
+                if (await ReportForRequests())
+                    MessageBox.Show("Отчет создан!");
+
             }
             catch
             {
@@ -202,8 +242,8 @@ namespace SUVCServiceApp.Pages
             try
             {
                 CreateReportDirectory();
-                await CreateSpareEquipmentReport();
-                MessageBox.Show("Отчет создан!");
+                if (await CreateSpareEquipmentReport())
+                    MessageBox.Show("Отчет создан!");
             }
             catch
             {
@@ -217,8 +257,8 @@ namespace SUVCServiceApp.Pages
             try
             {
                 CreateReportDirectory();
-                await CreateWriteOffEquipmentReport();
-                MessageBox.Show("Отчет создан!");
+                if (await CreateWriteOffEquipmentReport())
+                    MessageBox.Show("Отчет создан!");
             }
             catch
             {

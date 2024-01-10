@@ -18,9 +18,15 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBox x:Name="textBoxSearchProgram" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35" TextChanged="textBoxSearchProgram_TextChanged"/>
-            <ComboBox x:Name="comboBoxSpecialization" Width="150" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center"
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="textBoxSearchProgram" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
+                     Margin="10" Height="35" TextChanged="textBoxSearchProgram_TextChanged"/>
+            <ComboBox Grid.Column="1" x:Name="comboBoxSpecialization" Width="150" Margin="10" HorizontalAlignment="Right" Height="30" 
+                      HorizontalContentAlignment="Center"
                       SelectionChanged="comboBoxSpecialization_SelectionChanged">
                 <ComboBoxItem Content="Все"/>
                 <ComboBoxItem Content="Программисты"/>
@@ -33,7 +39,7 @@
                 <ComboBoxItem Content="КиП"/>
                 <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
-        </StackPanel>
+        </Grid>
         <ListView x:Name="listPrograms" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listPrograms_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>

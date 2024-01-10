@@ -9,7 +9,7 @@
         WindowStyle="None"
          AllowsTransparency="True"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
         <BitmapImage x:Key="IconKey" UriSource="/Resources/iconkey.png"/>
         <BitmapImage x:Key="IconPerson" UriSource="/Resources/iconperson.png"/>
@@ -29,7 +29,7 @@
             <TextBlock Text="Здравствуйте! Авторизуйтесь, чтобы начать работу" Margin="20,0,0,30" Foreground="Gray"/>
             <TextBox x:Name="textBoxLogin" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconPerson}" Width="250" Margin="10"/>
             <PasswordBox x:Name="textBoxPassword" Style="{StaticResource RoundedPasswordBoxWithIcon}" Tag="{StaticResource IconKey}" Width="250" Margin="10"/>
-            
+            <CheckBox x:Name="checkBoxSaveLogin" Content="Сохранить вход" HorizontalAlignment="Center" Margin="100,0,0,0" Foreground="Gray"/>
             <Button x:Name="buttonAuthorization" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Авторизоваться" Margin="0,30,0,10" Click="buttonAuthorization_Click"/>
             <Button x:Name="buttonExit" Style="{StaticResource RoundedButtonStyle}" Width="150" Height="30" Content="Выход" Click="buttonExit_Click"/>
         </StackPanel>

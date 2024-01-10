@@ -69,6 +69,9 @@ namespace SUVCServiceApp.Windows
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.login = "";
+            Properties.Settings.Default.password = "";
+            Properties.Settings.Default.Save();
             new MainWindow().Show();
             Close();
         }
@@ -76,6 +79,28 @@ namespace SUVCServiceApp.Windows
         private void buttonProfile_Click(object sender, RoutedEventArgs e)
         {
             frameWorkspace.Navigate(new Pages.AdministratorPages.ProfileAdministrator(currentUser));
+        }
+
+        private void buttonMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void buttonMaximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void buttonCloseApp_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

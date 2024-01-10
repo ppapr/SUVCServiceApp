@@ -29,7 +29,8 @@ namespace SUVCServiceApp
         {
             InitializeComponent();
         }
-
+        string login;
+        string password;
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
@@ -37,42 +38,17 @@ namespace SUVCServiceApp
 
         private async void buttonAuthorization_Click(object sender, RoutedEventArgs e)
         {
-            string login = textBoxLogin.Text;
-            string password = textBoxPassword.Password;
+            login = textBoxLogin.Text;
+            password = textBoxPassword.Password;
             try
             {
-
-                using (HttpClient client = new HttpClient())
-                {
-                    string apiUrl = $"http://ppapr4-001-site1.itempurl.com/api/Users?login={login}&password={password}";
-
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
+                AuthorizationUser(login, password);
+                    if (checkBoxSaveLogin.IsChecked == true)
                     {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                        ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
-                        if (authenticatedUser.Role == "Администратор")
-                        {
-                            new AdministratorWindow(authenticatedUser).Show();
-                            Close();
-                        }
-                        else if (authenticatedUser.Role == "ИТ-Отдел")
-                        {
-                            new EmployeeITWindow(authenticatedUser).Show();
-                            Close();
-                        }
-                        else if (authenticatedUser.Role == "Сотрудник")
-                        {
-                            new EmployeeWindow(authenticatedUser).Show();
-                            Close();
-                        }
+                        Properties.Settings.Default.login = login;
+                        Properties.Settings.Default.password = password;
+                        Properties.Settings.Default.Save();
                     }
-                    else
-                    {
-                        MessageBox.Show("Ошибка аутентификации");
-                    }
-                }
             }
             catch
             { MessageBox.Show("Произошла ошибка. Проверьте подключение к интернету!"); }
@@ -82,6 +58,51 @@ namespace SUVCServiceApp
         {
             string resourcePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources", "faq.pdf");
             Process.Start(resourcePath);
+        }
+
+        async void AuthorizationUser(string login, string password)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = $"http://ppapr4-001-site1.itempurl.com/api/Users?login={login}&password={password}";
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
+                    ResponseUsers authenticatedUser = JsonConvert.DeserializeObject<ResponseUsers>(responseData);
+                    if (authenticatedUser.Role == "Администратор")
+                    {
+                        new AdministratorWindow(authenticatedUser).Show();
+                        Close();
+                    }
+                    else if (authenticatedUser.Role == "ИТ-Отдел")
+                    {
+                        new EmployeeITWindow(authenticatedUser).Show();
+                        Close();
+                    }
+                    else if (authenticatedUser.Role == "Сотрудник")
+                    {
+                        new EmployeeWindow(authenticatedUser).Show();
+                        Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка аутентификации");
+                }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.login != "" && Properties.Settings.Default.password != "")
+            {
+                login = Properties.Settings.Default.login.ToString();
+                password = Properties.Settings.Default.password.ToString();
+                AuthorizationUser(login, password);
+            }
         }
     }
 }

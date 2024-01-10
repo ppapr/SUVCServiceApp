@@ -18,15 +18,22 @@
             <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBox x:Name="textBoxSearchUser" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Width="500" Margin="10" Height="35" TextChanged="textBoxSearchUser_TextChanged"/>
-            <ComboBox x:Name="comboBoxCategoryUser" Width="150" Margin="10" HorizontalAlignment="Right" Height="30" HorizontalContentAlignment="Center" 
-                          VerticalContentAlignment="Center" SelectionChanged="comboBoxCategoryUser_SelectionChanged">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="textBoxSearchUser" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Margin="10" Height="35" 
+             TextChanged="textBoxSearchUser_TextChanged" />
+
+            <ComboBox x:Name="comboBoxCategoryUser" Grid.Column="1" Margin="10" Width="150" Height="30" HorizontalContentAlignment="Center" 
+              VerticalContentAlignment="Center" SelectionChanged="comboBoxCategoryUser_SelectionChanged">
                 <ComboBoxItem Content="Все"/>
                 <ComboBoxItem Content="ИТ-Отдел"/>
                 <ComboBoxItem Content="Сотрудник"/>
             </ComboBox>
-        </StackPanel>
+        </Grid>
         <ListView x:Name="listEmployees" Grid.Row="1" Margin="0,0,0,40">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -34,6 +34,9 @@ namespace SUVCServiceApp.Windows
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.login = "";
+            Properties.Settings.Default.password = "";
+            Properties.Settings.Default.Save();
             new MainWindow().Show();
             Close();
         }
