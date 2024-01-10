@@ -47,9 +47,10 @@ namespace SUVCServiceApp.Pages
             maxPages = (int)Math.Ceiling(countEquipments.Count * 1.0 / sizePage);
             if (currentPage == maxPages)
                 buttonNextPage.IsEnabled = false;
-            else if (currentPage == 1)
+            else buttonNextPage.IsEnabled = true;
+            if (currentPage == 1)
                 buttonPreviousPage.IsEnabled = false;
-            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         private void buttonAddEquipment_Click(object sender, RoutedEventArgs e)

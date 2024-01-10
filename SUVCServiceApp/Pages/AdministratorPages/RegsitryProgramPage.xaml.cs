@@ -43,13 +43,13 @@ namespace SUVCServiceApp.Pages
             labelPage.Content = currentPage.ToString();
             await dataGridLoader.LoadData<ResponseRegistry>(listPrograms, "RegistryPrograms", currentPage, sizePage);
             var countRegistry = await apiDataProvider.GetDataFromApi<ResponseRegistry>("RegistryPrograms");
-            MessageBox.Show(countRegistry.Count.ToString());
             maxPages = (int)Math.Ceiling(countRegistry.Count * 1.0 / sizePage);
             if (currentPage == maxPages)
                 buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
             if (currentPage == 1)
                 buttonPreviousPage.IsEnabled = false;
-            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
+            else  buttonPreviousPage.IsEnabled = true; 
         }
 
         private void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -110,7 +110,7 @@ namespace SUVCServiceApp.Pages
         }
 
         private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             currentPage++;
             await LoadData(currentPage, sizePage);
         }

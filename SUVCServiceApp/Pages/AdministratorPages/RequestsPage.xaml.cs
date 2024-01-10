@@ -47,9 +47,10 @@ namespace SUVCServiceApp.Pages
             maxPages = (int)Math.Ceiling(countRequests.Count * 1.0 / sizePage);
             if (currentPage == maxPages)
                 buttonNextPage.IsEnabled = false;
+            else buttonNextPage.IsEnabled = true;
             if (currentPage == 1)
                 buttonPreviousPage.IsEnabled = false;
-            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
+            else buttonPreviousPage.IsEnabled = true;
         }
 
         private async void buttonAddTask_Click(object sender, RoutedEventArgs e)
