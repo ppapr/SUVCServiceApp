@@ -26,18 +26,30 @@ namespace SUVCServiceApp.Pages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         private readonly AdministratorWindow administratorWindow;
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public RegsitryProgramPage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
             this.administratorWindow = administratorWindow;
-            LoadDataGrid();
+            LoadData(currentPage,sizePage);
             comboBoxSpecialization.SelectedIndex = 0;
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseRegistry>(listPrograms, "RegistryPrograms");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseRegistry>(listPrograms, "RegistryPrograms", currentPage, sizePage);
+            var countRegistry = await apiDataProvider.GetDataFromApi<ResponseRegistry>("RegistryPrograms");
+            MessageBox.Show(countRegistry.Count.ToString());
+            maxPages = (int)Math.Ceiling(countRegistry.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
         }
 
         private void buttonAddProgram_Click(object sender, RoutedEventArgs e)
@@ -63,7 +75,7 @@ namespace SUVCServiceApp.Pages
                     await dataGridLoader.LoadData(listPrograms, "RegistryPrograms", searchProperty, selectedSpecialization);
                 }
                 else 
-                    LoadDataGrid();
+                    await LoadData(currentPage,sizePage);
             }
         }
         ResponseRegistry currentProgram;
@@ -78,7 +90,7 @@ namespace SUVCServiceApp.Pages
                 {
                     await apiDataProvider.DeleteDataFromApi<ResponseSpare>("RegistryPrograms", currentProgram.ID);
                     MessageBox.Show("Удаление завершено!");
-                    LoadDataGrid();
+                    await LoadData(currentPage,sizePage);
                 }
             }
             else MessageBox.Show("Выберите программу!");
@@ -87,6 +99,20 @@ namespace SUVCServiceApp.Pages
         private void listPrograms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentProgram = (ResponseRegistry)listPrograms.SelectedItem;
+        }
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }

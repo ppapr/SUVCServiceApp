@@ -33,12 +33,39 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data;
             }
         }
+        public async Task LoadData<T>(ListView listView, string apiEndpoint, int currentPage, int sizePage)
+        {
+            List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
+            if (data != null)
+            {
+                listView.ItemsSource = data.Skip((currentPage - 1) * sizePage).Take(sizePage);
+            }
+        }
+
         public async Task LoadData<T>(ComboBox comboBox, string apiEndpoint)
         {
             List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
             if (data != null)
             {
                 comboBox.ItemsSource = data;
+            }
+        }
+        public async Task LoadFilteredData<T>(ListView listView, string apiEndpoint, Func<T, bool> filterCondition, int currentPage, int sizePage)
+        {
+            List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
+            if (data != null)
+            {
+                var filteredData = data.Where(filterCondition).ToList();
+                listView.ItemsSource = filteredData.Skip((currentPage - 1) * sizePage).Take(sizePage);
+            }
+        }
+        public async Task LoadFilteredData<T>(ListView listView, string apiEndpoint, Func<T, bool> filterCondition)
+        {
+            List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
+            if (data != null)
+            {
+                var filteredData = data.Where(filterCondition).ToList();
+                listView.ItemsSource = filteredData;
             }
         }
         public async Task LoadData<T>(ListView listView, string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
@@ -49,6 +76,7 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data;
             }
         }
+
         public async Task LoadData<T>(DataGrid dataGrid, string apiEndpoint, Func<T, string> searchProperty, string searchTerm)
         {
             List<T> data = await apiDataProvider.SearchData<T>(apiEndpoint, searchProperty, searchTerm);

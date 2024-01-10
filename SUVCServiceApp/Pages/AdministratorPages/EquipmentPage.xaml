@@ -21,7 +21,7 @@
             <TextBox x:Name="textBoxSearchEquipment" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}"
                      MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearchEquipment_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listEqipments" Grid.Row="1" Margin="20" SelectionChanged="listEqipments_SelectionChanged">
+        <ListView x:Name="listEqipments" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listEqipments_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -46,6 +46,13 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="buttonPreviousPage" Content="&lt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="0,0,80,0" Click="buttonPreviousPage_Click"/>
+        <Label x:Name="labelPage" Content="0" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+        <Button x:Name="buttonNextPage" Content="&gt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="80,0,0,0" Click="buttonNextPage_Click"/>
+
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddEquipment" Content="Добавить оборудование" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10,10,30,10" Click="buttonAddEquipment_Click"/>

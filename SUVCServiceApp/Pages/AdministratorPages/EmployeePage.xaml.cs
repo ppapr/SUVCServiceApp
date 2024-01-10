@@ -28,18 +28,30 @@ namespace SUVCServiceApp.Pages
         private readonly DataGridLoader dataGridLoader;
         private readonly AdministratorWindow administratorWindow;
         public ResponseUsers selectedEmployee;
+
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public EmployeePage(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadDataGrid(currentPage, sizePage);
             comboBoxCategoryUser.SelectedIndex = 0;
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadDataGrid(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseUsers>(listEmployees, "Users");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseUsers>(listEmployees, "Users", currentPage, sizePage);
+            var countUsers = await apiDataProvider.GetDataFromApi<ResponseUsers>("Users");
+            maxPages = (int)Math.Ceiling(countUsers.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
         }
 
         private void buttonAddUser_Click(object sender, RoutedEventArgs e)
@@ -54,7 +66,7 @@ namespace SUVCServiceApp.Pages
                 ChangeEmployee changeWindow = new ChangeEmployee(selectedEmployee);
                 changeWindow.Closed += (s, args) =>
                 {
-                    LoadDataGrid();
+                    LoadDataGrid(currentPage, sizePage);
                 };
                 changeWindow.ShowDialog();
             }
@@ -85,8 +97,23 @@ namespace SUVCServiceApp.Pages
                     await dataGridLoader.LoadData(listEmployees, "Users", searchProperty, selectedCategory);
                 }
                 else
-                    LoadDataGrid();
+                    await LoadDataGrid(currentPage, sizePage);
             }
+        }
+
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadDataGrid(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadDataGrid(currentPage, sizePage);
         }
     }
 }

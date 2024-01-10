@@ -27,7 +27,7 @@
                 <ComboBoxItem Content="Сотрудник"/>
             </ComboBox>
         </StackPanel>
-        <ListView x:Name="listEmployees" Grid.Row="1" Margin="20">
+        <ListView x:Name="listEmployees" Grid.Row="1" Margin="0,0,0,40">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
@@ -38,8 +38,8 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding FullName, StringFormat={} Сотрудник: {0}}" Margin="0,0,20,0"/>
                         <StackPanel Grid.Column="1" Margin="0,0,20,0">
-                            <TextBlock Text="{Binding Login, StringFormat={} Логин: {0}}"/>
-                            <TextBlock Text="{Binding Password, StringFormat={} Пароль: {0}}"/>
+                            <TextBlock Text="{Binding Login, StringFormat={} Логин: {0}}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding Password, StringFormat={} Пароль: {0}}" TextWrapping="Wrap"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="{Binding Role, StringFormat={} Отдел сотрудника: {0}}"/>
@@ -48,6 +48,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="buttonPreviousPage" Content="&lt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="0,0,80,0" Click="buttonPreviousPage_Click"/>
+        <Label x:Name="labelPage" Content="0" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
+        <Button x:Name="buttonNextPage" Content="&gt;" Style="{StaticResource RoundedButtonStyle}" Grid.Row="1" Width="30" Height="30" 
+                VerticalAlignment="Bottom" Margin="80,0,0,0" Click="buttonNextPage_Click"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddUser" Content="Добавить сотрудника" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                           Margin="10" Click="buttonAddUser_Click"/>

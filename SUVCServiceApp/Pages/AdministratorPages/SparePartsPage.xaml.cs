@@ -26,17 +26,28 @@ namespace SUVCServiceApp.Pages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         private readonly AdministratorWindow administratorWindow;
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public SparePartsPages(AdministratorWindow administratorWindow)
         {
             InitializeComponent();
             this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid();
+            LoadDataGrid(currentPage,sizePage);
         }
 
-        private async void LoadDataGrid()
+        private async Task LoadDataGrid(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseSpare>(listSpares, "SparesEquipments");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseSpare>(listSpares, "SparesEquipments", currentPage, sizePage);
+            var countSpare = await apiDataProvider.GetDataFromApi<ResponseSpare>("SparesEquipments");
+            maxPages = (int)Math.Ceiling(countSpare.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
         }
 
         private void buttonAddSpare_Click(object sender, RoutedEventArgs e)
@@ -60,13 +71,27 @@ namespace SUVCServiceApp.Pages
             {
                 await apiDataProvider.DeleteDataFromApi<ResponseSpare>("SparesEquipments", currentSpare.ID);
                 MessageBox.Show("Удаление завершено!");
-                LoadDataGrid();
+                await LoadDataGrid(currentPage,sizePage);
             }
         }
 
         private void listSpares_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentSpare = (ResponseSpare)listSpares.SelectedItem;
+        }
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadDataGrid(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadDataGrid(currentPage, sizePage);
         }
     }
 }

@@ -29,16 +29,27 @@ namespace SUVCServiceApp.Pages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         public ResponseRequests selectedRequest;
+        int currentPage = 1;
+        int sizePage = 20;
+        int maxPages = 0;
         public RequestsPage()
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadData();
+            LoadData(currentPage, sizePage);
         }
 
-        private async void LoadData()
+        private async Task LoadData(int currentPage, int sizePage)
         {
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests");
+            labelPage.Content = currentPage.ToString();
+            await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests", currentPage, sizePage);
+            var countRequests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+            maxPages = (int)Math.Ceiling(countRequests.Count * 1.0 / sizePage);
+            if (currentPage == maxPages)
+                buttonNextPage.IsEnabled = false;
+            if (currentPage == 1)
+                buttonPreviousPage.IsEnabled = false;
+            else { buttonNextPage.IsEnabled = true; buttonPreviousPage.IsEnabled = true; }
         }
 
         private async void buttonAddTask_Click(object sender, RoutedEventArgs e)
@@ -58,7 +69,7 @@ namespace SUVCServiceApp.Pages
             if (isSuccess)
             {
                 MessageBox.Show($"Задача успешно добавлена!");
-                LoadData();
+                LoadData(currentPage, sizePage);
                 textBoxTask.Clear();
             }
             else
@@ -81,7 +92,7 @@ namespace SUVCServiceApp.Pages
                 ChangeExecutor changeWindow = new ChangeExecutor(selectedRequest);
                 changeWindow.Closed += (s, args) =>
                 {
-                    LoadData();
+                    LoadData(currentPage, sizePage);
                 };
                 changeWindow.ShowDialog();
             }
@@ -117,7 +128,7 @@ namespace SUVCServiceApp.Pages
                 if (isSuccess)
                 {
                     MessageBox.Show($"Заявка отклонена!");
-                    LoadData();
+                    await LoadData(currentPage, sizePage);
                 }
                 else
                 {
@@ -128,6 +139,20 @@ namespace SUVCServiceApp.Pages
             {
                 MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
+        }
+        private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage++;
+            await LoadData(currentPage, sizePage);
         }
     }
 }
