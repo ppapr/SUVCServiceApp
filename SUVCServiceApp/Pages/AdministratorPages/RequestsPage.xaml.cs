@@ -18,6 +18,10 @@ using System.Net.Http.Headers;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Controller;
 using SUVCServiceApp.Windows.ChangeWindowsAdministrator;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
+using System.Drawing;
+using System.Windows.Threading;
 
 namespace SUVCServiceApp.Pages
 {
@@ -29,6 +33,12 @@ namespace SUVCServiceApp.Pages
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         public ResponseRequests selectedRequest;
+
+        private NotifyIcon notifyIcon;
+        private List<ResponseRequests> requests;
+        private int lastKnownRequestsCount;
+
+        private DispatcherTimer timer;
         int currentPage = 1;
         int sizePage = 20;
         int maxPages = 0;
@@ -36,15 +46,43 @@ namespace SUVCServiceApp.Pages
         {
             InitializeComponent();
             dataGridLoader = new DataGridLoader(apiDataProvider);
+            notifyIcon = new NotifyIcon
+            {
+                Icon = SystemIcons.Information,
+                Visible = true
+            };
+
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Start();
+
             LoadData(currentPage, sizePage);
         }
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            await LoadData(currentPage, sizePage);
+        }
 
+        private void ShowNotification(ResponseRequests request)
+        {
+            notifyIcon.ShowBalloonTip(3000, "Новая заявка от пользователя", $"Имя пользователя: {request.UserRequestName}\nОписание заявки: {request.Description}", ToolTipIcon.Info);
+        }
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests", currentPage, sizePage);
-            var countRequests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
-            maxPages = (int)Math.Ceiling(countRequests.Count * 1.0 / sizePage);
+            requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+            maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
+            lastKnownRequestsCount = Properties.Settings.Default.LastRequestCount;
+            if (lastKnownRequestsCount != requests.Count)
+            {
+            lastKnownRequestsCount = requests.Count;
+                ShowNotification(requests[requests.Count - 1]);
+                Properties.Settings.Default.LastRequestCount = lastKnownRequestsCount;
+                Properties.Settings.Default.Save();
+            }
+
             if (currentPage == maxPages)
                 buttonNextPage.IsEnabled = false;
             else buttonNextPage.IsEnabled = true;
@@ -52,7 +90,6 @@ namespace SUVCServiceApp.Pages
                 buttonPreviousPage.IsEnabled = false;
             else buttonPreviousPage.IsEnabled = true;
         }
-
         private async void buttonAddTask_Click(object sender, RoutedEventArgs e)
         {
             ResponseRequests request = new ResponseRequests

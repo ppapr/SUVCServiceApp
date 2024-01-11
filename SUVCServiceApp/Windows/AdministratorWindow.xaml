@@ -47,7 +47,7 @@
         <StackPanel Grid.Column="1" Orientation="Horizontal" Height="30" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right">
             <Button x:Name="buttonMinimize" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMinimize}" Margin="3" Click="buttonMinimize_Click" Width="30" Background="White" BorderThickness="0"/>
             <Button x:Name="buttonMaximize" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMaximize}" Margin="3" Click="buttonMaximize_Click" Width="30" Background="White" BorderThickness="0"/>
-            <Button x:Name="buttonCloseApp" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconClose}" Margin="3" Click="buttonCloseApp_Click" Width="30" Background="White" BorderThickness="0"/>
+            <Button x:Name="buttonCloseApp" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconClose}" Margin="3" Click="buttonCloseApp_Click" Width="30" Background="White" BorderThickness="0" MouseEnter="buttonCloseApp_MouseEnter"/>
         </StackPanel>
         <Frame Grid.Column="1" x:Name="frameWorkspace" NavigationUIVisibility="Hidden" Margin="15,35,15,15"/>
     </Grid>

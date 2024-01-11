@@ -102,5 +102,10 @@ namespace SUVCServiceApp.Windows
         {
             Environment.Exit(0);
         }
+
+        private void buttonCloseApp_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }
