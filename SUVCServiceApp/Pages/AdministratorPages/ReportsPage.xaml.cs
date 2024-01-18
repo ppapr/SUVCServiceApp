@@ -74,14 +74,21 @@ namespace SUVCServiceApp.Pages
                 .GroupBy(request => request.UserRequestName)
                 .OrderByDescending(group => group.Count())
                 .FirstOrDefault()?.Key;
+            int mostIncidentUserCount = filteredData
+                .Count(request => request.UserRequestName == mostIncidentUser);
             string topExecutor = filteredData
+                .Where(user => user.IDExecutorRequest != 10)
                 .GroupBy(request => request.UserExecutorName)
                 .OrderByDescending(group => group.Count())
                 .FirstOrDefault()?.Key;
+            int topExecutorRequestCount = filteredData
+                .Count(request => request.UserExecutorName == topExecutor);
             string leastBusyExecutor = filteredData
                 .GroupBy(request => request.UserExecutorName)
                 .OrderBy(group => group.Count())
                 .FirstOrDefault()?.Key;
+            int leastBusyExecutortCount = filteredData
+                .Count(request => request.UserExecutorName == leastBusyExecutor);
 
             using (var doc = new XWPFDocument())
             {
@@ -90,9 +97,9 @@ namespace SUVCServiceApp.Pages
                 CreateNewParagraph(doc, "Отчет информационного отдела", 30, ParagraphAlignment.CENTER);
                 CreateNewParagraph(doc, $"Отчет с {selectedStartDate} по {selectedEndDate}", 15, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {completedRequestsCount}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {topExecutor}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {leastBusyExecutor}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {mostIncidentUser}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {topExecutor} ({topExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {leastBusyExecutor} ({leastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {mostIncidentUser} ({mostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, "Заведующий отделом ИТ Чухарев В.М. ____________", 80, ParagraphAlignment.RIGHT);
 
                 string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");

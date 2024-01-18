@@ -74,12 +74,12 @@ namespace SUVCServiceApp.Pages
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests", currentPage, sizePage);
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
             maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
-            lastKnownRequestsCount = Properties.Settings.Default.LastRequestCount;
+            lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountAdmin;
             if (lastKnownRequestsCount != requests.Count)
             {
             lastKnownRequestsCount = requests.Count;
                 ShowNotification(requests[requests.Count - 1]);
-                Properties.Settings.Default.LastRequestCount = lastKnownRequestsCount;
+                Properties.Settings.Default.LastRequestCountAdmin = lastKnownRequestsCount;
                 Properties.Settings.Default.Save();
             }
 

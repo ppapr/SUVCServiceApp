@@ -50,12 +50,24 @@ namespace SUVCServiceApp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int LastRequestCount {
+        public int LastRequestCountAdmin {
             get {
-                return ((int)(this["LastRequestCount"]));
+                return ((int)(this["LastRequestCountAdmin"]));
             }
             set {
-                this["LastRequestCount"] = value;
+                this["LastRequestCountAdmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastRequestCountIT {
+            get {
+                return ((int)(this["LastRequestCountIT"]));
+            }
+            set {
+                this["LastRequestCountIT"] = value;
             }
         }
     }

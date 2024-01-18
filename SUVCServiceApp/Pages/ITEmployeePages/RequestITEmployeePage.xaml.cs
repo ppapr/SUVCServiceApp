@@ -2,6 +2,7 @@
 using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using MessageBox = System.Windows.MessageBox;
 
 namespace SUVCServiceApp.Pages.ITEmployeePages
 {
@@ -30,12 +34,36 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         int sizePage = 20;
         int maxPages = 0;
 
+        private NotifyIcon notifyIcon;
+        private List<ResponseRequests> requests;
+        private int lastKnownRequestsCount;
+
+        private DispatcherTimer timer;
+
         public RequestITEmployeePage(ResponseUsers authenticatedUser)
         {
             InitializeComponent();
             this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
+            notifyIcon = new NotifyIcon
+            {
+                Icon = SystemIcons.Information,
+                Visible = true
+            };
+
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Start();
             LoadData(currentPage, sizePage);
+        }
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            await LoadData(currentPage, sizePage);
+        }
+        private void ShowNotification(ResponseRequests request)
+        {
+            notifyIcon.ShowBalloonTip(3000, "Назначена заявка", $"Имя пользователя: {request.UserRequestName}\nОписание заявки: {request.Description}", ToolTipIcon.Info);
         }
 
         private async Task LoadData(int currentPage, int sizePage)
@@ -44,6 +72,14 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}", currentPage, sizePage);
             var countEquipment = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
             maxPages = (int)Math.Ceiling(countEquipment.Count * 1.0 / sizePage);
+            lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
+            if (lastKnownRequestsCount != requests.Count)
+            {
+                lastKnownRequestsCount = requests.Count;
+                ShowNotification(requests[requests.Count - 1]);
+                Properties.Settings.Default.LastRequestCountAdmin = lastKnownRequestsCount;
+                Properties.Settings.Default.Save();
+            }
             if (currentPage == maxPages)
                 buttonNextPage.IsEnabled = false;
             else buttonNextPage.IsEnabled = true;
