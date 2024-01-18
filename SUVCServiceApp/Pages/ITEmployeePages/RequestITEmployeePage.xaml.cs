@@ -70,8 +70,8 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             labelPage.Content = currentPage.ToString();
             await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}", currentPage, sizePage);
-            var countEquipment = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
-            maxPages = (int)Math.Ceiling(countEquipment.Count * 1.0 / sizePage);
+            requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
+            maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
             lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
             if (lastKnownRequestsCount != requests.Count)
             {
