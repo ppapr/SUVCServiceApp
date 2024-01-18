@@ -24,6 +24,7 @@ namespace SUVCServiceApp.Windows.ChangeWindowsAdministrator
         ResponseRequests response;
         private readonly DataGridLoader gridLoader;
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
+        private int idPriority;
         public ChangeExecutor(ResponseRequests responseRequests)
         {
             InitializeComponent();
@@ -33,7 +34,10 @@ namespace SUVCServiceApp.Windows.ChangeWindowsAdministrator
             LoadData();
         }
 
-        async void LoadData() => await gridLoader.LoadData<ResponseUsers>(comboBoxExecutors, "Users?idrole=2");
+        async void LoadData()
+        {
+            await gridLoader.LoadData<ResponseUsers>(comboBoxExecutors, "Users?idrole=2");
+        }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
@@ -42,40 +46,50 @@ namespace SUVCServiceApp.Windows.ChangeWindowsAdministrator
 
         private async void buttonSetExecutor_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var selectedExecutor = (ResponseUsers)comboBoxExecutors.SelectedItem;
+            if (selectedExecutor != null && idPriority != null)
             {
-                ApiDataProvider apiDataProvider = new ApiDataProvider();
-                int currentRequestID = response.ID;
-                var selectedExecutor = (ResponseUsers)comboBoxExecutors.SelectedItem;
-                int executorID = selectedExecutor.ID;
-                ResponseRequests request = new ResponseRequests
+                try
                 {
-                    ID = response.ID,
-                    Description = response.Description,
-                    DateCreateRequest = response.DateCreateRequest,
-                    DateExecuteRequest = response.DateExecuteRequest,
-                    IDStatus = 1,
-                    IDPriority = response.IDPriority,
-                    IDEquipment = response.IDEquipment,
-                    IDUserRequest = response.IDUserRequest,
-                    IDExecutorRequest = executorID
-                };
+                    ApiDataProvider apiDataProvider = new ApiDataProvider();
+                    int currentRequestID = response.ID;
+            int executorID = selectedExecutor.ID;
 
-                bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
-                if (isSuccess)
-                {
-                    MessageBox.Show($"На заявку {response.UserRequestName + " " + response.EquipmentName} успешно назначен исполнитель" +
-                        $" {selectedExecutor.FullName}!");
+                    ResponseRequests request = new ResponseRequests
+                    {
+                        ID = response.ID,
+                        Description = response.Description,
+                        DateCreateRequest = response.DateCreateRequest,
+                        DateExecuteRequest = response.DateExecuteRequest,
+                        IDStatus = 1,
+                        IDPriority = idPriority,
+                        IDEquipment = response.IDEquipment,
+                        IDUserRequest = response.IDUserRequest,
+                        IDExecutorRequest = executorID
+                    };
+
+                    bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show($"На заявку {response.UserRequestName + " " + response.EquipmentName} успешно назначен исполнитель" +
+                            $" {selectedExecutor.FullName}!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                    MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
                 }
             }
-            catch
-            {
-                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
-            }
+            else MessageBox.Show("Укажите исполнителя и приоритет заявки!");
+        }
+
+        private void comboBoxPriority_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            idPriority = comboBoxPriority.SelectedIndex + 1;
         }
     }
 }
