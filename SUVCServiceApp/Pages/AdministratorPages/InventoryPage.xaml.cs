@@ -1,6 +1,4 @@
 ﻿using NPOI.XWPF.UserModel;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using System;
