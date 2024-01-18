@@ -46,7 +46,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История выполненных заявок:" Margin="5"/>
-                <ListView x:Name="listViewHistory" Margin="5" Height="300">
+                <ListView x:Name="listViewHistory" Margin="5" Height="300" ScrollViewer.CanContentScroll="False">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="10">

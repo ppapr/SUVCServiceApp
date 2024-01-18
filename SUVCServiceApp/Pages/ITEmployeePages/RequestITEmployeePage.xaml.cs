@@ -69,7 +69,8 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}", currentPage, sizePage);
+            await dataGridLoader.LoadFilteredData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}",
+               request => request.IDStatus == 1 || request.IDStatus == 2, currentPage, sizePage);
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
             maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
             lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
@@ -77,7 +78,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
             {
                 lastKnownRequestsCount = requests.Count;
                 ShowNotification(requests[requests.Count - 1]);
-                Properties.Settings.Default.LastRequestCountAdmin = lastKnownRequestsCount;
+                Properties.Settings.Default.LastRequestCountIT = lastKnownRequestsCount;
                 Properties.Settings.Default.Save();
             }
             if (currentPage == maxPages)

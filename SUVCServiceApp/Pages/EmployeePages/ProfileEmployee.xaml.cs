@@ -45,8 +45,11 @@ namespace SUVCServiceApp.Pages.EmployeePages
         private async void LoadDataGrid()
         {
             var requestsUser = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userRequest={authenticatedUser.ID}");
-            List<ResponseRequests> requestsHistory = requestsUser.Where(x => x.IDStatus == 3 | x.IDStatus == 4).ToList();
-            listViewHistoryRequest.ItemsSource = requestsHistory;
+            if (requestsUser != null)
+            {
+                List<ResponseRequests> requestsHistory = requestsUser.Where(x => x.IDStatus == 3 || x.IDStatus == 4).ToList();
+                listViewHistoryRequest.ItemsSource = requestsHistory;
+            }
         }
 
         private async void buttonSaveChanges_Click(object sender, RoutedEventArgs e)

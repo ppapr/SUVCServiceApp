@@ -34,7 +34,7 @@
                 <ComboBoxItem Content="Сотрудник"/>
             </ComboBox>
         </Grid>
-        <ListView x:Name="listEmployees" Grid.Row="1" Margin="0,0,0,40">
+        <ListView x:Name="listEmployees" Grid.Row="1" Margin="0,0,0,40" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

@@ -20,7 +20,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBox x:Name="textBoxSearchSpares" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" MinWidth="700" Margin="10" Height="35" TextChanged="textBoxSearchSpares_TextChanged"/>
         </StackPanel>
-        <ListView x:Name="listSpares" Grid.Row="1" Margin="0,0,0,40">
+        <ListView x:Name="listSpares" Grid.Row="1" Margin="0,0,0,40" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

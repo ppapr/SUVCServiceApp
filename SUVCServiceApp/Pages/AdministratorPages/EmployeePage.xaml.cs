@@ -37,11 +37,11 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
             this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid(currentPage, sizePage);
+            LoadData(currentPage, sizePage);
             comboBoxCategoryUser.SelectedIndex = 0;
         }
 
-        private async Task LoadDataGrid(int currentPage, int sizePage)
+        private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
             await dataGridLoader.LoadData<ResponseUsers>(listEmployees, "Users", currentPage, sizePage);
@@ -67,7 +67,7 @@ namespace SUVCServiceApp.Pages
                 ChangeEmployee changeWindow = new ChangeEmployee(selectedEmployee);
                 changeWindow.Closed += (s, args) =>
                 {
-                    LoadDataGrid(currentPage, sizePage);
+                    LoadData(currentPage, sizePage);
                 };
                 changeWindow.ShowDialog();
             }
@@ -98,7 +98,7 @@ namespace SUVCServiceApp.Pages
                     await dataGridLoader.LoadData(listEmployees, "Users", searchProperty, selectedCategory);
                 }
                 else
-                    await LoadDataGrid(currentPage, sizePage);
+                    await LoadData(currentPage, sizePage);
             }
         }
 
@@ -107,14 +107,14 @@ namespace SUVCServiceApp.Pages
             if (currentPage > 1)
             {
                 currentPage--;
-                await LoadDataGrid(currentPage, sizePage);
+                await LoadData(currentPage, sizePage);
             }
         }
 
         private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
         {
             currentPage++;
-            await LoadDataGrid(currentPage, sizePage);
+            await LoadData(currentPage, sizePage);
         }
     }
 }

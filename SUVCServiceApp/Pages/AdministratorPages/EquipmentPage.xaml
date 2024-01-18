@@ -21,7 +21,7 @@
             <TextBox x:Name="textBoxSearchEquipment" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}"
                       Margin="10" Height="35" TextChanged="textBoxSearchEquipment_TextChanged"/>
         </DockPanel>
-        <ListView x:Name="listEqipments" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listEqipments_SelectionChanged">
+        <ListView x:Name="listEqipments" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listEqipments_SelectionChanged" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

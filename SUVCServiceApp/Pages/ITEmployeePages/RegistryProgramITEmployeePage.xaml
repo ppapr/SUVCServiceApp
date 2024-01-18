@@ -33,7 +33,7 @@
                 <ComboBoxItem Content="Стандартные"/>
             </ComboBox>
         </StackPanel>
-        <ListView x:Name="listPrograms" Grid.Row="1" Margin="0,0,0,50">
+        <ListView x:Name="listPrograms" Grid.Row="1" Margin="0,0,0,50" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

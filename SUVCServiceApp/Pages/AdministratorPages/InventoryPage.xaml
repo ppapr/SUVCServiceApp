@@ -20,7 +20,7 @@
         <DockPanel Grid.Row="0">
             <TextBox Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" Margin="10" Height="35"/>
         </DockPanel>
-        <ListView x:Name="listViewInventory" Grid.Row="1" Margin="20" SelectionChanged="listViewInventory_SelectionChanged">
+        <ListView x:Name="listViewInventory" Grid.Row="1" Margin="20" SelectionChanged="listViewInventory_SelectionChanged" ScrollViewer.CanContentScroll="False">
         </ListView>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="buttonAddInventory" Content="Провести инвентаризацию" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 

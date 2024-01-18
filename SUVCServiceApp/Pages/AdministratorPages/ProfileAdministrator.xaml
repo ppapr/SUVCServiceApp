@@ -40,7 +40,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="История сформированных отчетов:" Margin="5"/>
-                <ListView Height="300" x:Name="listViewReports" Margin="5" SelectionChanged="listViewReports_SelectionChanged">
+                <ListView Height="300" x:Name="listViewReports" Margin="5" SelectionChanged="listViewReports_SelectionChanged" ScrollViewer.CanContentScroll="False">
                 </ListView>
             </StackPanel>
         <Button Grid.Column="0" Grid.Row="2" x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" 

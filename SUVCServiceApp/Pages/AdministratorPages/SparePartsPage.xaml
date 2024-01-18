@@ -22,7 +22,7 @@
             <TextBox x:Name="textBoxSearchSpares" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
                     Margin="10" Height="35" TextChanged="textBoxSearchSpares_TextChanged"/>
         </DockPanel>
-        <ListView x:Name="listSpares" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listSpares_SelectionChanged">
+        <ListView x:Name="listSpares" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listSpares_SelectionChanged" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">

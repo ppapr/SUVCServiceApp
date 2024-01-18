@@ -72,7 +72,8 @@ namespace SUVCServiceApp.Pages.EmployeePages
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUser.ID}",currentPage, sizePage);
+            await dataGridLoader.LoadFilteredData<ResponseRequests>(listRequests, $"Requests?userRequest={authenticatedUser.ID}",
+              r => r.IDStatus == 1 || r.IDStatus == 2, currentPage, sizePage);
             var request = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userRequest={authenticatedUser.ID}");
             maxPages = (int)Math.Ceiling(request.Count * 1.0 / sizePage);
             previousRequests = new List<ResponseRequests>(listRequests.Items.OfType<ResponseRequests>());
