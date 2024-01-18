@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
 using System.Drawing;
 using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace SUVCServiceApp.Pages
 {
@@ -71,8 +72,9 @@ namespace SUVCServiceApp.Pages
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
-            await dataGridLoader.LoadData<ResponseRequests>(listRequests, "Requests", currentPage, sizePage);
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+            requests = requests.OrderByDescending(r => r.DateCreateRequest).ToList();
+            dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
             maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
             lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountAdmin;
             if (lastKnownRequestsCount != requests.Count)

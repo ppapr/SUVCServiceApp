@@ -28,7 +28,9 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
     {
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
+
         private ResponseUsers authenticatedUser;
+        private ResponseRequests currentRequest;
 
         int currentPage = 1;
         int sizePage = 20;
@@ -59,7 +61,8 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         }
         private async void Timer_Tick(object sender, EventArgs e)
         {
-            await LoadData(currentPage, sizePage);
+            if (currentRequest == null)
+                await LoadData(currentPage, sizePage);
         }
         private void ShowNotification(ResponseRequests request)
         {
@@ -69,9 +72,10 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
-            await dataGridLoader.LoadFilteredData<ResponseRequests>(listRequests, $"Requests?userExecutor={authenticatedUser.ID}",
-               request => request.IDStatus == 1 || request.IDStatus == 2, currentPage, sizePage);
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
+
+            requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
+            dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
             maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
             lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
             if (lastKnownRequestsCount != requests.Count)
@@ -103,15 +107,16 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
 
         private async Task GetCurrentEqipment()
         {
-            List<ResponseEquipment> data = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
-            if (data != null)
+            if (currentRequest != null)
             {
-                var countEquipments = data.Where(equipment => equipment.ID == currentRequest.IDEquipment).ToList();
-                currentEquipment = countEquipments.FirstOrDefault();
+                List<ResponseEquipment> data = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
+                if (data != null)
+                {
+                    var countEquipments = data.Where(equipment => equipment.ID == currentRequest.IDEquipment).ToList();
+                    currentEquipment = countEquipments.FirstOrDefault();
+                }
             }
         }
-
-        private ResponseRequests currentRequest;
         private async void listRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentRequest = (ResponseRequests)listRequests.SelectedItem;
@@ -120,37 +125,41 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
 
         async Task UpdateStatusRequest(int statusID)
         {
-            try
+            if (currentRequest != null)
             {
-                ApiDataProvider apiDataProvider = new ApiDataProvider();
-                int currentRequestID = currentRequest.ID;
-                ResponseRequests request = new ResponseRequests
+                try
                 {
-                    ID = currentRequest.ID,
-                    Description = currentRequest.Description,
-                    DateCreateRequest = currentRequest.DateCreateRequest,
-                    DateExecuteRequest = currentRequest.DateExecuteRequest,
-                    IDStatus = statusID,
-                    IDPriority = currentRequest.IDPriority,
-                    IDEquipment = currentRequest.IDEquipment,
-                    IDUserRequest = currentRequest.IDUserRequest,
-                    IDExecutorRequest = currentRequest.IDExecutorRequest
-                };
+                    ApiDataProvider apiDataProvider = new ApiDataProvider();
+            int currentRequestID = currentRequest.ID;
+                    ResponseRequests request = new ResponseRequests
+                    {
+                        ID = currentRequest.ID,
+                        Description = currentRequest.Description,
+                        DateCreateRequest = currentRequest.DateCreateRequest,
+                        DateExecuteRequest = currentRequest.DateExecuteRequest,
+                        IDStatus = statusID,
+                        IDPriority = currentRequest.IDPriority,
+                        IDEquipment = currentRequest.IDEquipment,
+                        IDUserRequest = currentRequest.IDUserRequest,
+                        IDExecutorRequest = currentRequest.IDExecutorRequest
+                    };
 
-                bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
-                if (isSuccess)
-                {
-                    MessageBox.Show($"Вы изменили статус заявки сотрудника {currentRequest.UserRequestName}");
+                    bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show($"Вы изменили статус заявки сотрудника {currentRequest.UserRequestName}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Произошла ошибка! Проверьте поля ввода данных!");
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Произошла ошибка! Проверьте поля ввода данных!");
+                    MessageBox.Show("Проверьте корректность данных и соеднинение с интернетом!");
                 }
             }
-            catch
-            {
-                MessageBox.Show("Проверьте корректность данных и соеднинение с интернетом!");
-            }
+            else MessageBox.Show("Выберите заявку!");
         }
 
         private async void buttonStartExecute_Click(object sender, RoutedEventArgs e)

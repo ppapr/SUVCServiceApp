@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +32,12 @@ namespace SUVCServiceApp.Windows
             this.currentUser = authenticatedUser;
             frameWorkspace.Navigate(new Pages.RequestsPage());
         }
-
+        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            // Изменяем размеры окна
+            Width = Math.Max(MinWidth, Width + e.HorizontalChange);
+            Height = Math.Max(MinHeight, Height + e.VerticalChange);
+        }
         private void buttonRequests_Click(object sender, RoutedEventArgs e)
         {
             frameWorkspace.Navigate(new Pages.RequestsPage());
@@ -79,33 +85,6 @@ namespace SUVCServiceApp.Windows
         private void buttonProfile_Click(object sender, RoutedEventArgs e)
         {
             frameWorkspace.Navigate(new Pages.AdministratorPages.ProfileAdministrator(currentUser));
-        }
-
-        private void buttonMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void buttonMaximize_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-            }
-        }
-
-        private void buttonCloseApp_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void buttonCloseApp_MouseEnter(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

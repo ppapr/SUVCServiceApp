@@ -45,7 +45,7 @@ namespace SUVCServiceApp.Windows
         }
         private void SetImage(Image image, string imageName)
         {
-            string imagePath = $"/SUVCServiceApp;component/Resources/InteractiveMap/" + imageName;
+            string imagePath = $"/SUVC Service;component/Resources/InteractiveMap/" + imageName;
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(imagePath, UriKind.Relative);

@@ -65,27 +65,5 @@ namespace SUVCServiceApp.Windows
         {
             frameWorkspace.Navigate(new Pages.ITEmployeePages.ProfileITEmployee(authenticatedUser));
         }
-
-        private void buttonMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void buttonMaximize_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-            }
-        }
-
-        private void buttonCloseApp_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
     }
 }
