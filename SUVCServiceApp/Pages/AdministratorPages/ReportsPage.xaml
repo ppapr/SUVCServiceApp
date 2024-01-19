@@ -29,7 +29,7 @@
                    Width="180"  Height="50"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
         <StackPanel Grid.Row="1">
             <TextBlock Text="Выберите дату начала" Margin="5"/>
-            <DatePicker x:Name="dateStartPeriod" Width="200" />
+            <DatePicker x:Name="dateStartPeriod" Width="200"/>
             <TextBlock Text="Выберите дату завершения" Margin="5"/>
             <DatePicker x:Name="dateEndPeriod" Width="200"/>
         </StackPanel>

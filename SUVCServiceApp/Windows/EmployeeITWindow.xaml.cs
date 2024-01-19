@@ -65,5 +65,10 @@ namespace SUVCServiceApp.Windows
         {
             frameWorkspace.Navigate(new Pages.ITEmployeePages.ProfileITEmployee(authenticatedUser));
         }
+
+        private void buttonMap_Click(object sender, RoutedEventArgs e)
+        {
+            frameWorkspace.Navigate(new Pages.ITEmployeePages.MapITEmployeePage(authenticatedUser));
+        }
     }
 }

@@ -40,6 +40,13 @@ namespace SUVCServiceApp.Controller
                 listView.ItemsSource = data.Skip((currentPage - 1) * sizePage).Take(sizePage);
             }
         }
+        public void LoadData<T>(ListView listView, List<T> data)
+        {
+            if (data != null)
+            {
+                listView.ItemsSource = data;
+            }
+        }
         public async Task LoadData<T>(ListView listView, string apiEndpoint, int currentPage, int sizePage)
         {
             List<T> data = await apiDataProvider.GetDataFromApi<T>(apiEndpoint);
@@ -72,6 +79,14 @@ namespace SUVCServiceApp.Controller
             {
                 var filteredData = data.Where(filterCondition).ToList();
                 listView.ItemsSource = filteredData.Skip((currentPage - 1) * sizePage).Take(sizePage);
+            }
+        }
+        public void LoadFilteredData<T>(ListView listView, List<T> data, Func<T, bool> filterCondition)
+        {
+            if (data != null)
+            {
+                var filteredData = data.Where(filterCondition).ToList();
+                listView.ItemsSource = filteredData;
             }
         }
         public async Task LoadFilteredData<T>(ListView listView, string apiEndpoint, Func<T, bool> filterCondition)
