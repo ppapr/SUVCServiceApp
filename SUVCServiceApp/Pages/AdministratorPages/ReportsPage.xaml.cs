@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
 
 namespace SUVCServiceApp.Pages
 {
@@ -44,12 +45,6 @@ namespace SUVCServiceApp.Pages
             }
         }
 
-        public async Task<List<ResponseRequests>> GetDataFromApiForPeriod(DateTime startDate, DateTime endDate)
-        {
-            string apiEndpoint = $"Requests?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
-            return await apiDataProvider.GetDataFromApi<ResponseRequests>(apiEndpoint);
-        }
-
         void CreateNewParagraph(XWPFDocument doc, string textParagraph, double spacing, ParagraphAlignment paragraphAlignment)
         {
             XWPFParagraph reportParagraph = doc.CreateParagraph();
@@ -58,46 +53,61 @@ namespace SUVCServiceApp.Pages
             XWPFRun reportRun = reportParagraph.CreateRun();
             reportRun.SetText(textParagraph);
         }
+        public async Task<List<ResponseRequests>> GetDataFromApiForPeriod(DateTime startDate, DateTime endDate)
+        {
+            string apiEndpoint = $"Requests";
+            List<ResponseRequests> data = await apiDataProvider.GetDataFromApi<ResponseRequests>(apiEndpoint);
+            return data.Where(r => r.DateCreateRequest.Date >= startDate && r.DateCreateRequest.Date <=endDate).ToList();
+        }
+
+        public async Task<ReportData> GetReportData(DateTime selectedStartDate, DateTime selectedEndDate)
+        {
+            List<ResponseRequests> data = await GetDataFromApiForPeriod(selectedStartDate, selectedEndDate);
+            return new ReportData(data);
+        }
+
 
         async Task<bool> ReportForRequests()
         {
-            DateTime selectedStartDate = dateStartPeriod.SelectedDate ?? DateTime.MinValue;
-            DateTime selectedEndDate = dateEndPeriod.SelectedDate ?? DateTime.MaxValue;
-            List<ResponseRequests> dataForPeriod = await GetDataFromApiForPeriod(selectedStartDate, selectedEndDate);
-            var filteredData = dataForPeriod
-                .Where(request => request.DateCreateRequest >= selectedStartDate && request.DateCreateRequest < selectedEndDate)
-                .ToList();
-            int completedRequestsCount = filteredData.Count(request => request.IDStatus == 3);
-            string mostIncidentUser = filteredData
-                .GroupBy(request => request.UserRequestName)
-                .OrderByDescending(group => group.Count())
-                .FirstOrDefault()?.Key;
-            int mostIncidentUserCount = filteredData
-                .Count(request => request.UserRequestName == mostIncidentUser);
-            string topExecutor = filteredData
-                .Where(user => user.IDExecutorRequest != 10)
-                .GroupBy(request => request.UserExecutorName)
-                .OrderByDescending(group => group.Count())
-                .FirstOrDefault()?.Key;
-            int topExecutorRequestCount = filteredData
-                .Count(request => request.UserExecutorName == topExecutor);
-            string leastBusyExecutor = filteredData
-                .GroupBy(request => request.UserExecutorName)
-                .OrderBy(group => group.Count())
-                .FirstOrDefault()?.Key;
-            int leastBusyExecutortCount = filteredData
-                .Count(request => request.UserExecutorName == leastBusyExecutor);
+            DateTime firstStartDate = dateStartPeriodFirst.SelectedDate ?? DateTime.MinValue;
+            DateTime firstEndDate = dateEndPeriodFirst.SelectedDate ?? DateTime.MinValue;
+
+            DateTime secondStartDate = dateStartPeriodSecond.SelectedDate ?? DateTime.MinValue;
+            DateTime secondEndDate = dateEndPeriodSecond.SelectedDate ?? DateTime.MinValue;
+
+            ReportData reportDataFirst = await GetReportData(firstStartDate, firstEndDate);
+            ReportData reportDataSecond = await GetReportData(secondStartDate, secondEndDate);
 
             using (var doc = new XWPFDocument())
             {
                 CreateNewParagraph(doc, "Государственное бюджетное профессиональное образовательное учреждение " +
                                     "\"Южно-Уральский многопрофильный колледж\"", 0, ParagraphAlignment.CENTER);
                 CreateNewParagraph(doc, "Отчет информационного отдела", 30, ParagraphAlignment.CENTER);
-                CreateNewParagraph(doc, $"Отчет с {selectedStartDate} по {selectedEndDate}", 15, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {completedRequestsCount}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {topExecutor} ({topExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {leastBusyExecutor} ({leastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {mostIncidentUser} ({mostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Период с {firstStartDate} по {firstEndDate}", 15, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {reportDataFirst.CompletedRequestsCount}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {reportDataFirst.TopExecutor} ({reportDataFirst.TopExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {reportDataFirst.LeastBusyExecutor} ({reportDataFirst.LeastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {reportDataFirst.MostIncidentUser} ({reportDataFirst.MostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок в обработке: {reportDataFirst.CountRequestProcessed}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок выполняется: {reportDataFirst.CountRequestExecuted}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок выполнено: {reportDataFirst.CountRequestCompleted}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок отказано: {reportDataFirst.CountRequestRejected}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Всего заявок: {reportDataFirst.CountRequestTotal}", 0, ParagraphAlignment.LEFT);
+
+
+                CreateNewParagraph(doc, $"Период с {secondStartDate} по {secondEndDate}", 15, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {reportDataSecond.CompletedRequestsCount}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {reportDataSecond.TopExecutor} ({reportDataSecond.TopExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {reportDataSecond.LeastBusyExecutor} ({reportDataSecond.LeastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {reportDataSecond.MostIncidentUser} ({reportDataSecond.MostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок в обработке: {reportDataSecond.CountRequestProcessed}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок выполняется: {reportDataSecond.CountRequestExecuted}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок выполнено: {reportDataSecond.CountRequestCompleted}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Заявок отказано: {reportDataSecond.CountRequestRejected}", 0, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Всего заявок: {reportDataSecond.CountRequestTotal}", 0, ParagraphAlignment.LEFT);
+
+                
+
                 CreateNewParagraph(doc, "Заведующий отделом ИТ Чухарев В.М. ____________", 80, ParagraphAlignment.RIGHT);
 
                 string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
@@ -235,10 +245,10 @@ namespace SUVCServiceApp.Pages
                     MessageBox.Show("Отчет создан!");
 
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBox.Show("Не удалось создать отчет! Возможно произошла ошибка, " +
-                    "проверьте соединение с интернетом или попробуйте позже!");
+                    "проверьте соединение с интернетом или попробуйте позже!" + ex.ToString());
             }
         }
 
@@ -272,4 +282,57 @@ namespace SUVCServiceApp.Pages
             }
         }
     }
+    public class ReportData
+    {
+        private static ApiDataProvider apiDataProvider = new ApiDataProvider();
+        public int CompletedRequestsCount { get; set; }
+        public string MostIncidentUser { get; set; }
+        public int MostIncidentUserCount { get; set; }
+        public string TopExecutor { get; set; }
+        public int TopExecutorRequestCount { get; set; }
+        public string LeastBusyExecutor { get; set; }
+        public int LeastBusyExecutortCount { get; set; }
+        public int CountRequestExecuted { get; set; }
+        public int CountRequestProcessed { get; set; }
+        public int CountRequestCompleted { get; set; }
+        public int CountRequestRejected { get; set; }
+        public int CountRequestTotal { get; set; }
+
+        public ReportData(List<ResponseRequests> data)
+        {
+            this.CompletedRequestsCount = data
+                .Where(request => request.IDStatus == 3)
+                .Count();
+            this.MostIncidentUser = data
+                .GroupBy(request => request.UserRequestName)
+                .OrderByDescending(group => group.Count())
+                .FirstOrDefault()?.Key;
+            this.MostIncidentUserCount = data
+                .Count(request => request.UserRequestName == this.MostIncidentUser);
+            this.TopExecutor = data
+                .Where(user => user.IDExecutorRequest != 10)
+                .GroupBy(request => request.UserExecutorName)
+                .OrderByDescending(group => group.Count())
+                .FirstOrDefault()?.Key;
+            this.TopExecutorRequestCount = data
+                .Count(request => request.UserExecutorName == this.TopExecutor);
+            this.LeastBusyExecutor = data
+                .GroupBy(request => request.UserExecutorName)
+                .OrderBy(group => group.Count())
+                .FirstOrDefault()?.Key;
+            this.LeastBusyExecutortCount = data
+                .Count(request => request.UserExecutorName == this.LeastBusyExecutor);
+            this.CountRequestExecuted = data
+                .Count(request => request.IDStatus == 2); // выполняется
+            this.CountRequestCompleted = data
+                .Count(request => request.IDStatus == 3); // выполнено
+            this.CountRequestProcessed = data
+                .Count(request => request.IDStatus == 1); // В обработке
+            this.CountRequestRejected = data
+                .Count(request => request.IDStatus == 4); // Отказано
+            this.CountRequestTotal = data 
+                .Count();                               // Всего
+        }
+    }
+
 }

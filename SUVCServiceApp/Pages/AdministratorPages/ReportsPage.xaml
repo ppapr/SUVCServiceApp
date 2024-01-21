@@ -9,8 +9,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="110"/>
+            <RowDefinition/>
+            <RowDefinition Height="5*"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,23 +23,36 @@
         <Rectangle Fill="#e4e4e4" Grid.Column="2" Grid.RowSpan="3"/>
         <TextBlock Grid.Column="0" Text="Формирование отчета по заявкам за определенный период" TextWrapping="Wrap"  
                    Width="180" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
-            <TextBlock Grid.Column="1" Text="Формирование отчета по закупке необходимых запчастей" TextWrapping="Wrap" 
+        <TextBlock Grid.Column="1" Text="Формирование отчета по закупке необходимых запчастей" TextWrapping="Wrap" 
                        Width="180" Height="50"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
         <TextBlock Grid.Column="2" Text="Формирование отчета по списанию оборудования" TextWrapping="Wrap" 
                    Width="180"  Height="50"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="Выберите дату начала" Margin="5"/>
-            <DatePicker x:Name="dateStartPeriod" Width="200"/>
-            <TextBlock Text="Выберите дату завершения" Margin="5"/>
-            <DatePicker x:Name="dateEndPeriod" Width="200"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <StackPanel Margin="15">
+                <TextBlock Text="Выберите период первого месяца" Margin="5" FontWeight="Bold"/>
+                <TextBlock Text="Выберите дату начала" Margin="5"/>
+                <DatePicker x:Name="dateStartPeriodFirst" Width="200"/>
+                <TextBlock Text="Выберите дату завершения" Margin="5"/>
+                <DatePicker x:Name="dateEndPeriodFirst" Width="200"/>
+            </StackPanel>
+            <StackPanel Margin="15">
+                <TextBlock Text="Выберите период второго месяца" Margin="5" FontWeight="Bold"/>
+                <TextBlock Text="Выберите дату начала" Margin="5"/>
+                <DatePicker x:Name="dateStartPeriodSecond" Width="200"/>
+                <TextBlock Text="Выберите дату завершения" Margin="5"/>
+                <DatePicker x:Name="dateEndPeriodSecond" Width="200"/>
+            </StackPanel>
         </StackPanel>
-        <Button x:Name="buttonRequestReport" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Content="Сформировать отчет" 
+
+        <Button x:Name="buttonRequestReport" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Content="Сформировать отчет" 
                     Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonRequestReport_Click" />
-        <TextBlock x:Name="textBlockCountSpares" Grid.Row="1" Grid.Column="1" Text="Количество необходимых к покупке запчастей на данный момент: " TextWrapping="Wrap" Margin="5"/>
-        <Button x:Name="buttonSpareReport" Grid.Column="1" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Top"
+        <TextBlock x:Name="textBlockCountSpares" Grid.Row="1" Grid.Column="1" Text="Количество необходимых к покупке запчастей на данный момент: " 
+                   TextWrapping="Wrap" Margin="5" VerticalAlignment="Center"/>
+        <Button x:Name="buttonSpareReport" Grid.Column="1" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Center"
                     Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonSpareReport_Click" />
-        <TextBlock Name="textBlockCountEquipments" Grid.Row="1" Grid.Column="2" Text="Количество необходимых к списанию оборудования на данный момент: " TextWrapping="Wrap" Margin="5"/>
-        <Button x:Name="buttonEquipmentReport" Grid.Column="2" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Top"
+        <TextBlock Name="textBlockCountEquipments" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" 
+                   Text="Количество необходимых к списанию оборудования на данный момент: " TextWrapping="Wrap" Margin="5"/>
+        <Button x:Name="buttonEquipmentReport" Grid.Column="2" Grid.Row="2" Content="Сформировать отчет" VerticalAlignment="Center"
                     Width="180" Height="30" Margin="10" Style="{StaticResource RoundedButtonStyle}" Click="buttonEquipmentReport_Click" />
     </Grid>
 </Page>
