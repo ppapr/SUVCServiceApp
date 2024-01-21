@@ -1,0 +1,52 @@
+﻿<Window x:Class="SUVCServiceApp.Windows.ChangeWindowsAdministrator.ChangeEquipment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SUVCServiceApp.Windows.ChangeWindowsAdministrator"
+        mc:Ignorable="d"
+        Title="ChangeEquipment" Height="380" Width="400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#d3d3d3" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Название оборудования:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Описание:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Сетевое имя:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Инвентарный номер:" Margin="0,10,0,0" Height="35"/>
+                <TextBlock Text="Владелец:" Margin="0,5,0,0" Height="35"/>
+                <TextBlock Text="Статус:" Margin="0,00,0,0" Height="35"/>
+                <TextBlock Text="Аудитория:" Margin="0,00,0,0" Height="35"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox x:Name="textBoxNameEquipment" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxDescriptionEquipment" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxNetworkName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <TextBox x:Name="textBoxInventoryName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+                <ComboBox x:Name="comboBoxOwner"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="FullName"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID"></ComboBox>
+                <ComboBox x:Name="comboBoxStatus"  Width="200" Height="25" Margin="5"
+                          DisplayMemberPath="NameStatus"
+                          SelectedValue="{Binding ID}"
+                          SelectedValuePath="ID"></ComboBox>
+                <TextBox x:Name="textBoxAuditoriumName" Style="{StaticResource RoundedTextBox}" Width="200" Height="35" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button  x:Name="buttonSaveChanges" Content="Сохранить изменения" Width="180" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                         Margin="5" Click="buttonSaveChanges_Click" />
+            <Button  x:Name="buttonExit" Content="Выход" Width="80" Height="30" Style="{StaticResource RoundedButtonStyle}" 
+                         Margin="5" Click="buttonExit_Click" />
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -17,6 +17,7 @@
         <BitmapImage x:Key="IconExit" UriSource="/Resources/iconexit.png"/>
         <BitmapImage x:Key="IconRequest" UriSource="/Resources/iconrequest.png"/>
         <BitmapImage x:Key="IconProfile" UriSource="/Resources/iconprofile.png"/>
+        <BitmapImage x:Key="IconMap" UriSource="/Resources/iconmap.png"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,7 +32,7 @@
                 <Button x:Name="buttonEquipment" Content="Оборудование" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMonitor}" Margin="0,25,0,0" Height="35" Click="buttonEquipment_Click"/>
                 <Button x:Name="buttonSpareParts" Content="Запчасти" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconWrench}" Margin="0,25,0,0" Height="35" Click="buttonSpareParts_Click"/>
                 <Button x:Name="buttonRegistryProgram" Content="Реестр ПО" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35" Click="buttonRegistryProgram_Click"/>
-                <Button x:Name="buttonMap" Content="Карта" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconInfo}" Margin="0,25,0,0" Height="35" Click="buttonMap_Click"/>
+                <Button x:Name="buttonMap" Content="Карта" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconMap}" Margin="0,25,0,0" Height="35" Click="buttonMap_Click"/>
             </StackPanel>
             <Button x:Name="buttonProfile" VerticalAlignment="Bottom" Content="Личный кабинет" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconProfile}" Margin="0,0,0,50" Height="35" Click="buttonProfile_Click"/>
             <Button x:Name="buttonExit" VerticalAlignment="Bottom" Content="Выход" Style="{StaticResource ButtonWithIcon}" Tag="{StaticResource IconExit}" Margin="0,0,0,15" Height="35" Click="buttonExit_Click"/>

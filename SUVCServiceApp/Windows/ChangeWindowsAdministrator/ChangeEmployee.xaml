@@ -36,7 +36,6 @@
                          Margin="5" Click="buttonSaveChanges_Click" />
             <Button  x:Name="buttonExit" Content="Выход" Width="80" Height="30" Style="{StaticResource RoundedButtonStyle}" 
                          Margin="5" Click="buttonExit_Click" />
-
         </StackPanel>
     </Grid>
 </Window>

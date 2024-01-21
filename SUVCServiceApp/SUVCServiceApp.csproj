@@ -156,6 +156,9 @@
     <Compile Include="Classes\ExcelDataAdd.cs" />
     <Compile Include="Controller\ApiDataProvider.cs" />
     <Compile Include="Controller\DataGridLoader.cs" />
+    <Compile Include="Controls\FloorsControl.xaml.cs">
+      <DependentUpon>FloorsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MapControl.xaml.cs">
       <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
@@ -241,6 +244,9 @@
     <Compile Include="Windows\ChangeWindowsAdministrator\ChangeEmployee.xaml.cs">
       <DependentUpon>ChangeEmployee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ChangeWindowsAdministrator\ChangeEquipment.xaml.cs">
+      <DependentUpon>ChangeEquipment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ChangeWindowsAdministrator\ChangeExecutor.xaml.cs">
       <DependentUpon>ChangeExecutor.xaml</DependentUpon>
     </Compile>
@@ -256,6 +262,10 @@
     <Compile Include="Windows\MapRequestsWindow.xaml.cs">
       <DependentUpon>MapRequestsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\FloorsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -368,11 +378,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\floors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\AdministratorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ChangeWindowsAdministrator\ChangeEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangeWindowsAdministrator\ChangeEquipment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -588,6 +606,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\iconmap.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

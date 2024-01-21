@@ -1,6 +1,7 @@
 ﻿using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using SUVCServiceApp.Windows;
+using SUVCServiceApp.Windows.ChangeWindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +36,10 @@ namespace SUVCServiceApp.Pages
             InitializeComponent();
             this.administratorWindow = administratorWindow;
             dataGridLoader = new DataGridLoader(apiDataProvider);
-            LoadDataGrid(currentPage, sizePage);
+            LoadData(currentPage, sizePage);
         }
 
-        private async Task LoadDataGrid(int currentPage, int sizePage)
+        private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
             await dataGridLoader.LoadFilteredData<ResponseEquipment>(listEqipments, "Equipments", 
@@ -74,7 +75,7 @@ namespace SUVCServiceApp.Pages
             {
                 await apiDataProvider.DeleteDataFromApi<ResponseEquipment>("Equipments", currentEquipment.ID);
                 MessageBox.Show("Удаление завершено!");
-                await LoadDataGrid(currentPage, sizePage);
+                await LoadData(currentPage, sizePage);
             }
         }
 
@@ -87,7 +88,7 @@ namespace SUVCServiceApp.Pages
         private async void buttonNextPage_Click(object sender, RoutedEventArgs e)
         {
             currentPage++;
-            await LoadDataGrid(currentPage, sizePage);
+            await LoadData(currentPage, sizePage);
         }
 
         private async void buttonPreviousPage_Click(object sender, RoutedEventArgs e)
@@ -95,7 +96,20 @@ namespace SUVCServiceApp.Pages
             if (currentPage > 1)
             {
                 currentPage--;
-                await LoadDataGrid(currentPage, sizePage);
+                await LoadData(currentPage, sizePage);
+            }
+        }
+
+        private void buttonChangeEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentEquipment != null)
+            {
+                ChangeEquipment changeWindow = new ChangeEquipment(currentEquipment);
+                changeWindow.Closed += (s, args) =>
+                {
+                    LoadData(currentPage, sizePage);
+                };
+                changeWindow.ShowDialog();
             }
         }
     }

@@ -10,6 +10,11 @@
       Title="MapITEmployeePage">
 
     <Grid>
-        <ctrls:MapControl Margin="10" AuthenticatedUser="{Binding AuthenticatedUser}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <ctrls:FloorsControl Margin="1"/>
+        <ctrls:MapControl Grid.Column="1" Margin="10" AuthenticatedUser="{Binding AuthenticatedUser}"/>
     </Grid>
 </Page>

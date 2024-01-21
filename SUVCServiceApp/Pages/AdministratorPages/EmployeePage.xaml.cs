@@ -75,10 +75,6 @@ namespace SUVCServiceApp.Pages
                 MessageBox.Show("Выберите сотрудника!");
         }
 
-        private void dataGridUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedEmployee = (ResponseUsers)listEmployees.SelectedItem;
-        }
 
         private async void textBoxSearchUser_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -115,6 +111,11 @@ namespace SUVCServiceApp.Pages
         {
             currentPage++;
             await LoadData(currentPage, sizePage);
+        }
+
+        private void listEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedEmployee = (ResponseUsers)listEmployees.SelectedItem;
         }
     }
 }
