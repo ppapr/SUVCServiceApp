@@ -17,6 +17,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
+using System.Windows.Forms.DataVisualization.Charting;
+using NPOI.Util;
+using OxyPlot;
+using OxyPlot.Series;
+using OxyPlot.Wpf;
+using OxyPlot.Axes;
 
 namespace SUVCServiceApp.Pages
 {
@@ -57,7 +63,7 @@ namespace SUVCServiceApp.Pages
         {
             string apiEndpoint = $"Requests";
             List<ResponseRequests> data = await apiDataProvider.GetDataFromApi<ResponseRequests>(apiEndpoint);
-            return data.Where(r => r.DateCreateRequest.Date >= startDate && r.DateCreateRequest.Date <=endDate).ToList();
+            return data.Where(r => r.DateCreateRequest.Date >= startDate && r.DateCreateRequest.Date <= endDate).ToList();
         }
 
         public async Task<ReportData> GetReportData(DateTime selectedStartDate, DateTime selectedEndDate)
@@ -65,8 +71,23 @@ namespace SUVCServiceApp.Pages
             List<ResponseRequests> data = await GetDataFromApiForPeriod(selectedStartDate, selectedEndDate);
             return new ReportData(data);
         }
+        byte[] ExportToImage(PlotModel model, int width, int height)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var pngExporter = new PngExporter { Width = width, Height = height };
+                pngExporter.Export(model, stream);
+                return stream.ToArray();
+            }
+        }
 
-
+        void CreateChartParagraph(XWPFDocument doc, byte[] chartBytes)
+        {
+            XWPFParagraph chartParagraph = doc.CreateParagraph();
+            chartParagraph.Alignment = ParagraphAlignment.CENTER;
+            XWPFRun chartRun = chartParagraph.CreateRun();
+            chartRun.AddPicture(new MemoryStream(chartBytes), (int)PictureType.PNG, "Гистограмма", Units.ToEMU(500), Units.ToEMU(300));
+        }
         async Task<bool> ReportForRequests()
         {
             DateTime firstStartDate = dateStartPeriodFirst.SelectedDate ?? DateTime.MinValue;
@@ -88,26 +109,61 @@ namespace SUVCServiceApp.Pages
                 CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {reportDataFirst.TopExecutor} ({reportDataFirst.TopExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {reportDataFirst.LeastBusyExecutor} ({reportDataFirst.LeastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {reportDataFirst.MostIncidentUser} ({reportDataFirst.MostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок в обработке: {reportDataFirst.CountRequestProcessed}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок выполняется: {reportDataFirst.CountRequestExecuted}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок выполнено: {reportDataFirst.CountRequestCompleted}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок отказано: {reportDataFirst.CountRequestRejected}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Всего заявок: {reportDataFirst.CountRequestTotal}", 0, ParagraphAlignment.LEFT);
 
-
-                CreateNewParagraph(doc, $"Период с {secondStartDate} по {secondEndDate}", 15, ParagraphAlignment.LEFT);
+                CreateNewParagraph(doc, $"Период с {secondStartDate} по {secondEndDate}", 30, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"Количество выполненных заявок информационным отделом: {reportDataSecond.CompletedRequestsCount}", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"ИТ-специалист, выполнивший максимальное число заявок: {reportDataSecond.TopExecutor} ({reportDataSecond.TopExecutorRequestCount.ToString()})", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"ИТ-специалист, выполнивший минимальное число заявок: {reportDataSecond.LeastBusyExecutor} ({reportDataSecond.LeastBusyExecutortCount.ToString()})", 0, ParagraphAlignment.LEFT);
                 CreateNewParagraph(doc, $"Сотрудник, оставивший наибольшее число заявок за период: {reportDataSecond.MostIncidentUser} ({reportDataSecond.MostIncidentUserCount.ToString()})", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок в обработке: {reportDataSecond.CountRequestProcessed}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок выполняется: {reportDataSecond.CountRequestExecuted}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок выполнено: {reportDataSecond.CountRequestCompleted}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Заявок отказано: {reportDataSecond.CountRequestRejected}", 0, ParagraphAlignment.LEFT);
-                CreateNewParagraph(doc, $"Всего заявок: {reportDataSecond.CountRequestTotal}", 0, ParagraphAlignment.LEFT);
 
-                
 
+                var plotModelSecond = new PlotModel();
+
+                var categoryAxisSecond = new CategoryAxis
+                {
+                    Position = AxisPosition.Left,
+                    TickStyle = TickStyle.None,
+                    ItemsSource = new[]
+                    {
+        "Выполнено I",
+        "Выполнено II",
+        "В обработке I",
+        "В обработке II",
+        "Отказано I",
+        "Отказано II",
+        "Выполняется I",
+        "Выполняется II",
+        "Всего I",
+        "Всего II"
+    }
+                };
+
+                plotModelSecond.Axes.Add(categoryAxisSecond);
+
+                var barSeriesSecond = new BarSeries
+                {
+                    ItemsSource = new[]
+                    {
+        new BarItem { Value = reportDataFirst.CountRequestCompleted },
+        new BarItem { Value = reportDataSecond.CountRequestCompleted },
+        new BarItem { Value = reportDataFirst.CountRequestProcessed },
+        new BarItem { Value = reportDataSecond.CountRequestProcessed },
+        new BarItem { Value = reportDataFirst.CountRequestRejected },
+        new BarItem { Value = reportDataSecond.CountRequestRejected },
+        new BarItem { Value = reportDataFirst.CountRequestExecuted },
+        new BarItem { Value = reportDataSecond.CountRequestExecuted },
+        new BarItem { Value = reportDataFirst.CountRequestTotal },
+        new BarItem { Value = reportDataSecond.CountRequestTotal }
+    },
+                    LabelPlacement = LabelPlacement.Middle,
+                    LabelFormatString = "{0}"
+                };
+
+                plotModelSecond.Series.Add(barSeriesSecond);
+
+                var chartImageSecond = ExportToImage(plotModelSecond, 900, 600);
+
+                CreateChartParagraph(doc, chartImageSecond);
                 CreateNewParagraph(doc, "Заведующий отделом ИТ Чухарев В.М. ____________", 80, ParagraphAlignment.RIGHT);
 
                 string reportsFolderPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
@@ -330,7 +386,7 @@ namespace SUVCServiceApp.Pages
                 .Count(request => request.IDStatus == 1); // В обработке
             this.CountRequestRejected = data
                 .Count(request => request.IDStatus == 4); // Отказано
-            this.CountRequestTotal = data 
+            this.CountRequestTotal = data
                 .Count();                               // Всего
         }
     }
