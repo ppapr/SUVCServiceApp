@@ -10,11 +10,6 @@
       Title="MapITEmployeePage">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="8*"/>
-        </Grid.ColumnDefinitions>
-        <ctrls:FloorsControl Margin="1"/>
-        <ctrls:MapControl Grid.Column="1" Margin="10" AuthenticatedUser="{Binding AuthenticatedUser}"/>
+        <ctrls:MapControl Margin="10" AuthenticatedUser="{Binding AuthenticatedUser, RelativeSource={RelativeSource AncestorType={x:Type local:MapITEmployeePage}}}"/>
     </Grid>
 </Page>

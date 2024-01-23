@@ -1,4 +1,5 @@
-﻿using SUVCServiceApp.ViewModel;
+﻿using SUVCServiceApp.Controls;
+using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
     /// </summary>
     public partial class MapITEmployeePage : Page
     {
-        private readonly ResponseUsers authenticatedUser;
+        private ResponseUsers authenticatedUser;
 
         public ResponseUsers AuthenticatedUser
         {
@@ -29,8 +30,8 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         }
         public MapITEmployeePage(ResponseUsers user)
         {
-            InitializeComponent();
             this.authenticatedUser = user;
+            InitializeComponent();
             DataContext = this;
         }
 

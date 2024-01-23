@@ -340,7 +340,6 @@ namespace SUVCServiceApp.Pages
     }
     public class ReportData
     {
-        private static ApiDataProvider apiDataProvider = new ApiDataProvider();
         public int CompletedRequestsCount { get; set; }
         public string MostIncidentUser { get; set; }
         public int MostIncidentUserCount { get; set; }

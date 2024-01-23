@@ -20,7 +20,7 @@ namespace SUVCServiceApp.Windows
     /// </summary>
     public partial class EmployeeITWindow : Window
     {
-        private readonly ResponseUsers authenticatedUser;
+        private ResponseUsers authenticatedUser;
         public Frame FrameWorkspace
         {
             get { return frameWorkspace; }

@@ -24,19 +24,30 @@ namespace SUVCServiceApp.Windows
         private readonly ApiDataProvider apiDataProvider = new ApiDataProvider();
         private readonly DataGridLoader dataGridLoader;
         private ResponseUsers authenticatedUser;
-        public MapRequestsWindow(ResponseUsers authenticatedUser)
+        private Rectangle rect;
+        public MapRequestsWindow(ResponseUsers authenticatedUser, Rectangle rect)
         {
             InitializeComponent();
             this.authenticatedUser = authenticatedUser;
             dataGridLoader = new DataGridLoader(apiDataProvider);
+
+            this.rect = rect;
             LoadData();
         }
 
         async Task LoadData()
         {
-            List<ResponseRequests> requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
-            requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
-            dataGridLoader.LoadData(listRequests, requests);
+            try
+            {
+                string equipment = rect.Name.ToString().Substring(1);
+                List<ResponseRequests> requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
+                if (requests != null)
+                {
+                    requests = requests.Where(r => (r.IDStatus == 1 || r.IDStatus == 2) && r.EquipmentName.Contains(equipment)).OrderByDescending(r => r.DateCreateRequest).ToList();
+                    dataGridLoader.LoadData(listRequests, requests);
+                }
+            }
+            catch { MessageBox.Show("Произошла ошибка при получении данных! Проверьте соединение с интернетом"); }
         }
     }
 }
