@@ -36,22 +36,22 @@ namespace SUVCServiceApp
             Environment.Exit(0);
         }
 
-        private async void buttonAuthorization_Click(object sender, RoutedEventArgs e)
+        private void buttonAuthorization_Click(object sender, RoutedEventArgs e)
         {
             login = textBoxLogin.Text;
             password = textBoxPassword.Password;
-            try
-            {
-                AuthorizationUser(login, password);
+                try
+                {
+                    AuthorizationUser(login, password);
                     if (checkBoxSaveLogin.IsChecked == true)
                     {
                         Properties.Settings.Default.login = login;
                         Properties.Settings.Default.password = password;
                         Properties.Settings.Default.Save();
                     }
-            }
-            catch
-            { MessageBox.Show("Произошла ошибка. Проверьте подключение к интернету!"); }
+                }
+                catch
+                { MessageBox.Show("Произошла ошибка. Проверьте подключение к интернету!"); }
         }
 
         private void buttonFAQ_Click(object sender, RoutedEventArgs e)
@@ -90,7 +90,8 @@ namespace SUVCServiceApp
                 }
                 else
                 {
-                    MessageBox.Show("Ошибка аутентификации");
+                    MessageBox.Show("Проверьте правильность введеного логина, пароля и подключения к интернету!", 
+                        "Ошибка аутентификации!");
                 }
             }
         }

@@ -5,27 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SUVCServiceApp.Windows"
         mc:Ignorable="d"
-        Title="MapRequestsWindow" Height="450" Width="300">
+        Title="Заявки по кабинету" Height="300" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <ListView x:Name="listRequests" Grid.Row="1" Margin="0,0,0,40" ScrollViewer.CanContentScroll="False">
+        <ListView x:Name="listRequests" Grid.Row="1" Margin="0,0,0,40" ScrollViewer.CanContentScroll="False" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,20,0">
                             <TextBlock Text="{Binding UserRequestName, StringFormat={} Заявитель: {0}}"/>
-                            <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
-                            <TextBlock Text="{Binding DateExecuteRequest, StringFormat={} Дата исполнения заявки: {0}}"/>
-                            <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
                             <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Description, StringFormat={} Описание заявки: {0}}"/>
-                            <TextBlock Text="{Binding UserExecutorName, StringFormat={} Ответственный: {0}}" Margin="0,0,0,30"/>
-                            <TextBlock Text="{Binding PriorityName, StringFormat={} Приоритет: {0}}"/>
-                            <TextBlock Text="{Binding StatusName, StringFormat={} Статус: {0}}"/>
+                            <TextBlock Text="{Binding DateCreateRequest, StringFormat={} Дата создания заявки: {0}}"/>
+                            <TextBlock Text="{Binding EquipmentName,StringFormat={} Оборудование: {0}}"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

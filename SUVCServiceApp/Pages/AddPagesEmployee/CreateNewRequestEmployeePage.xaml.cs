@@ -52,39 +52,45 @@ namespace SUVCServiceApp.Pages.AddPagesEmployee
             {
                 DateTime executeDefault = DateTime.Parse("01-01-0001");
                 var equipment = (ResponseEquipment)comboBoxEquipment.SelectedItem;
-                int equipmentID = 0;
-                if (isRequest)
-                {
-                    equipmentID = (int)equipment.ID;
-                }
+                if (equipment == null && textBoxRequestDescription.Text == null)  
+                    MessageBox.Show("Выберите оборудование и напишите описание заявки!"); 
                 else
                 {
-                    equipmentID = 61;
-                }
-                ResponseRequests requests = new ResponseRequests
-                {
-                    Description = textBoxRequestDescription.Text,
-                    DateCreateRequest = DateTime.Parse(DateTime.Now.ToShortDateString()),
-                    DateExecuteRequest = executeDefault,
-                    IDStatus = 1,
-                    IDPriority = 2,
-                    IDEquipment = equipmentID,
-                    IDUserRequest = authenticatedUser.ID,
-                    IDExecutorRequest = 10
-                };
-                bool isSuccess = await apiDataProvider.AddDataToApi("Requests", requests);
-                if (isSuccess)
-                {
-                    MessageBox.Show($"Ваша заявка успешно создана!");
-                }
-                else
-                {
-                    MessageBox.Show("Произошла ошибка при добавлении данных! Проверьте поля ввода данных!");
+                    int equipmentID = 0;
+                    if (isRequest)
+                    {
+                        equipmentID = (int)equipment.ID;
+                    }
+                    else
+                    {
+                        equipmentID = 61;
+                    }
+                    ResponseRequests requests = new ResponseRequests
+                    {
+                        Description = textBoxRequestDescription.Text,
+                        DateCreateRequest = DateTime.Parse(DateTime.Now.ToLongDateString()),
+                        DateExecuteRequest = executeDefault,
+                        IDStatus = 1,
+                        IDPriority = 2,
+                        IDEquipment = equipmentID,
+                        IDUserRequest = authenticatedUser.ID,
+                        IDExecutorRequest = 10
+                    };
+                    bool isSuccess = await apiDataProvider.AddDataToApi("Requests", requests);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show($"Ваша заявка успешно создана!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Произошла ошибка при добавлении данных! " +
+                            "Проверьте поля ввода данных и содеинение с интернетом!");
+                    }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!" + ex.ToString());
+                MessageBox.Show("Проверьте заполненность данных и соеднинение с интернетом!");
             }
         }
 
