@@ -14,7 +14,6 @@ namespace SUVCServiceApp.Classes
     {
         private readonly string _apiEndpoint;
         private readonly Func<IDataRecord, T> _dataMapper;
-
         public ExcelDataAdd(string apiEndpoint, Func<IDataRecord, T> dataMapper)
         {
             _apiEndpoint = apiEndpoint;

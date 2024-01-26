@@ -18,10 +18,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Grid.RowSpan="3"/>
-        <DockPanel Grid.Row="0">
-            <TextBox x:Name="textBoxSearch" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" x:Name="textBoxSearch" Style="{StaticResource RoundedTextBoxWithIcon}" Tag="{StaticResource IconSearch}" 
                      Margin="10" Height="35" TextChanged="textBoxSearch_TextChanged"/>
-        </DockPanel>
+            <CheckBox x:Name="checkBoxShowCompletedReject" Grid.Column="1" VerticalAlignment="Center" Margin="10" Checked="checkBoxShowCompletedReject_Checked">
+                <CheckBox.Content>
+                    <TextBlock Text="Скрыть выполненные/отказанные" TextWrapping="Wrap" Width="150"/>
+                </CheckBox.Content>
+            </CheckBox>
+        </Grid>
         <ListView x:Name="listRequests" Grid.Row="1" Margin="0,0,0,40" SelectionChanged="listRequests_SelectionChanged" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -51,14 +51,6 @@ namespace SUVCServiceApp.Pages
             }
         }
 
-        void CreateNewParagraph(XWPFDocument doc, string textParagraph, double spacing, ParagraphAlignment paragraphAlignment)
-        {
-            XWPFParagraph reportParagraph = doc.CreateParagraph();
-            reportParagraph.Alignment = paragraphAlignment;
-            reportParagraph.setSpacingBetween(spacing, LineSpacingRule.EXACT);
-            XWPFRun reportRun = reportParagraph.CreateRun();
-            reportRun.SetText(textParagraph);
-        }
         public async Task<List<ResponseRequests>> GetDataFromApiForPeriod(DateTime startDate, DateTime endDate)
         {
             string apiEndpoint = $"Requests";
@@ -87,6 +79,14 @@ namespace SUVCServiceApp.Pages
             chartParagraph.Alignment = ParagraphAlignment.CENTER;
             XWPFRun chartRun = chartParagraph.CreateRun();
             chartRun.AddPicture(new MemoryStream(chartBytes), (int)PictureType.PNG, "Гистограмма", Units.ToEMU(500), Units.ToEMU(300));
+        }
+        void CreateNewParagraph(XWPFDocument doc, string textParagraph, double spacing, ParagraphAlignment paragraphAlignment)
+        {
+            XWPFParagraph reportParagraph = doc.CreateParagraph();
+            reportParagraph.Alignment = paragraphAlignment;
+            reportParagraph.setSpacingBetween(spacing, LineSpacingRule.EXACT);
+            XWPFRun reportRun = reportParagraph.CreateRun();
+            reportRun.SetText(textParagraph);
         }
         async Task<bool> ReportForRequests()
         {

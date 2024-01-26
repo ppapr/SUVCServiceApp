@@ -72,14 +72,22 @@ namespace SUVCServiceApp.Pages
         private async Task LoadData(int currentPage, int sizePage)
         {
             labelPage.Content = currentPage.ToString();
-            requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
-            requests = requests.OrderByDescending(r => r.DateCreateRequest).ToList();
+            if (showCompletedRejected)
+            {
+                requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+                requests = requests.OrderByDescending(r => r.DateCreateRequest).ToList();
+            }
+            else if (!showCompletedRejected)
+            {
+                requests = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+                requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
+            }
             dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
             maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
             lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountAdmin;
             if (lastKnownRequestsCount != requests.Count)
             {
-            lastKnownRequestsCount = requests.Count;
+                lastKnownRequestsCount = requests.Count;
                 ShowNotification(requests[requests.Count - 1]);
                 Properties.Settings.Default.LastRequestCountAdmin = lastKnownRequestsCount;
                 Properties.Settings.Default.Save();
@@ -193,6 +201,20 @@ namespace SUVCServiceApp.Pages
         {
             currentPage++;
             await LoadData(currentPage, sizePage);
+        }
+        bool showCompletedRejected = true;
+        private async void checkBoxShowCompletedReject_Checked(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxShowCompletedReject.IsChecked == true)
+            {
+                showCompletedRejected = false;
+                await LoadData(currentPage, sizePage);
+            }
+            else
+            {
+                showCompletedRejected = true;
+                await LoadData(currentPage, sizePage);
+            }
         }
     }
 }

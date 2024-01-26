@@ -40,10 +40,13 @@ namespace SUVCServiceApp.Windows
             try
             {
                 string equipment = rect.Name.ToString().Substring(1);
-                List<ResponseRequests> requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
+                List<ResponseRequests> requests = await apiDataProvider
+                        .GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
                 if (requests != null)
                 {
-                    requests = requests.Where(r => (r.IDStatus == 1 || r.IDStatus == 2) && r.EquipmentName.Contains(equipment)).OrderByDescending(r => r.DateCreateRequest).ToList();
+                    requests = requests.Where(r => (r.IDStatus == 1 || r.IDStatus == 2) &&
+                                                r.EquipmentName.Contains(equipment))
+                                                .OrderByDescending(r => r.DateCreateRequest).ToList();
                     dataGridLoader.LoadData(listRequests, requests);
                 }
             }
