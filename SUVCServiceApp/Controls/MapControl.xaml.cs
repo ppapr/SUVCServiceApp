@@ -49,7 +49,9 @@ namespace SUVCServiceApp.Controls
         private async void InitializeAsync()
         {
             await GetRequestAsync(); 
-            FindAndProcessRectangles(this);
+            try { FindAndProcessRectangles(this); } 
+            catch 
+            { MessageBox.Show("Ошибка инициализации карты! Попробуйте перезапустить окно создания карты"); }
         }
 
         private void FindAndProcessRectangles(DependencyObject parent)
@@ -57,18 +59,13 @@ namespace SUVCServiceApp.Controls
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-
                 if (child is Rectangle rectangle && rectangle.Name.StartsWith("c"))
                 {
                     string cabinetNumber = rectangle.Name.Substring(1);
                     ResponseRequests matchingRequest = requestsList.FirstOrDefault(r => r.EquipmentName.Contains(cabinetNumber));
-
                     if (matchingRequest != null)
-                    {
                         rectangle.Fill = new SolidColorBrush(Colors.Green);
-                    }
                 }
-
                 FindAndProcessRectangles(child);
             }
         }
@@ -76,7 +73,9 @@ namespace SUVCServiceApp.Controls
         public async Task GetRequestAsync()
         {
             var requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={AuthenticatedUser.ID}");
-            requestsList = requests.ToList();
+            if (requests != null)
+                requestsList = requests.ToList();
+            else MessageBox.Show("Заявки отсутствуют. Возможно отсутствует соединение с интернетом, либо заявки не были присвоены!");
         }
 
 
