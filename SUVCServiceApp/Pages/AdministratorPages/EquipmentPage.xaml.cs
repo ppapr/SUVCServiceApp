@@ -68,7 +68,7 @@ namespace SUVCServiceApp.Pages
 
         private async void buttonDeleteEqipment_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите удалить запчасть {currentEquipment.EquipmentName}?",
+            MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите удалить оборудование {currentEquipment.EquipmentName}?",
                 "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)

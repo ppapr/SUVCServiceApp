@@ -73,18 +73,20 @@ namespace SUVCServiceApp.Pages.EmployeePages
         {
             labelPage.Content = currentPage.ToString();
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userRequest={authenticatedUser.ID}");
+            if (requests != null)
+            {
+                requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
+                dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
 
-            requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
-            dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
-
-            maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
-            previousRequests = new List<ResponseRequests>(listRequests.Items.OfType<ResponseRequests>());
-            if (currentPage == maxPages)
-                buttonNextPage.IsEnabled = false;
-            else buttonNextPage.IsEnabled = true;
-            if (currentPage == 1)
-                buttonPreviousPage.IsEnabled = false;
-            else buttonPreviousPage.IsEnabled = true;
+                maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
+                previousRequests = new List<ResponseRequests>(listRequests.Items.OfType<ResponseRequests>());
+                if (currentPage == maxPages)
+                    buttonNextPage.IsEnabled = false;
+                else buttonNextPage.IsEnabled = true;
+                if (currentPage == 1)
+                    buttonPreviousPage.IsEnabled = false;
+                else buttonPreviousPage.IsEnabled = true;
+            }
         }
 
         private void CheckStatusChange()

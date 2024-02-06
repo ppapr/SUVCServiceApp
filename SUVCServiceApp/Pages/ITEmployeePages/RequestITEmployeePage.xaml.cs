@@ -1,4 +1,5 @@
-﻿using SUVCServiceApp.Controller;
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using SUVCServiceApp.Controller;
 using SUVCServiceApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
 
         private NotifyIcon notifyIcon;
         private List<ResponseRequests> requests;
+        private List<ResponseRequests> requestsAll;
         private int lastKnownRequestsCount;
 
         private DispatcherTimer timer;
@@ -73,24 +75,37 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
         {
             labelPage.Content = currentPage.ToString();
             requests = await apiDataProvider.GetDataFromApi<ResponseRequests>($"Requests?userExecutor={authenticatedUser.ID}");
-
-            requests = requests.Where(r => r.IDStatus == 1 || r.IDStatus == 2).OrderByDescending(r => r.DateCreateRequest).ToList();
-            dataGridLoader.LoadData(listRequests, requests, currentPage, sizePage);
-            maxPages = (int)Math.Ceiling(requests.Count * 1.0 / sizePage);
-            lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
-            if (lastKnownRequestsCount != requests.Count)
+            requestsAll = await apiDataProvider.GetDataFromApi<ResponseRequests>("Requests");
+            requestsAll = requestsAll.Where(r => r.IDEquipment == 42 && r.IDExecutorRequest == 10).ToList();
+            if (requests != null && requestsAll != null)
             {
-                lastKnownRequestsCount = requests.Count;
-                ShowNotification(requests[requests.Count - 1]);
-                Properties.Settings.Default.LastRequestCountIT = lastKnownRequestsCount;
-                Properties.Settings.Default.Save();
+                var request = requests.Concat(requestsAll).ToList();
+                request = request
+                    .Where(r => r.IDStatus == 1 || r.IDStatus == 2)
+                    .OrderByDescending(r => r.DateCreateRequest)
+                    .ToList();
+
+                dataGridLoader.LoadData(listRequests, request, currentPage, sizePage);
+                maxPages = (int)Math.Ceiling(request.Count * 1.0 / sizePage);
+                lastKnownRequestsCount = Properties.Settings.Default.LastRequestCountIT;
+                if (lastKnownRequestsCount != request.Count)
+                {
+                    try
+                    {
+                        lastKnownRequestsCount = request.Count;
+                        ShowNotification(request[request.Count]);
+                        Properties.Settings.Default.LastRequestCountIT = lastKnownRequestsCount;
+                        Properties.Settings.Default.Save();
+                    }
+                    catch { }
+                }
+                if (currentPage == maxPages)
+                    buttonNextPage.IsEnabled = false;
+                else buttonNextPage.IsEnabled = true;
+                if (currentPage == 1)
+                    buttonPreviousPage.IsEnabled = false;
+                else buttonPreviousPage.IsEnabled = true;
             }
-            if (currentPage == maxPages)
-                buttonNextPage.IsEnabled = false;
-            else buttonNextPage.IsEnabled = true;
-            if (currentPage == 1)
-                buttonPreviousPage.IsEnabled = false;
-            else buttonPreviousPage.IsEnabled = true;
         }
 
         public ResponseEquipment currentEquipment;
@@ -112,7 +127,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
                 List<ResponseEquipment> data = await apiDataProvider.GetDataFromApi<ResponseEquipment>("Equipments");
                 if (data != null)
                 {
-                    var countEquipments = data.Where(equipment => equipment.ID == currentRequest.IDEquipment).ToList();
+                    var countEquipments = data.Where(equipment => equipment.ID != 42 && equipment.ID != 61 && equipment.ID == currentRequest.IDEquipment).ToList();
                     currentEquipment = countEquipments.FirstOrDefault();
                 }
             }
@@ -130,7 +145,7 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
                 try
                 {
                     ApiDataProvider apiDataProvider = new ApiDataProvider();
-            int currentRequestID = currentRequest.ID;
+                    int currentRequestID = currentRequest.ID;
                     ResponseRequests request = new ResponseRequests
                     {
                         ID = currentRequest.ID,
@@ -141,13 +156,14 @@ namespace SUVCServiceApp.Pages.ITEmployeePages
                         IDPriority = currentRequest.IDPriority,
                         IDEquipment = currentRequest.IDEquipment,
                         IDUserRequest = currentRequest.IDUserRequest,
-                        IDExecutorRequest = currentRequest.IDExecutorRequest
+                        IDExecutorRequest = authenticatedUser.ID
                     };
 
                     bool isSuccess = await apiDataProvider.UpdateDataToApi("Requests", currentRequestID, request);
                     if (isSuccess)
                     {
                         MessageBox.Show($"Вы изменили статус заявки сотрудника {currentRequest.UserRequestName}");
+                        await LoadData(currentPage, sizePage);
                     }
                     else
                     {
